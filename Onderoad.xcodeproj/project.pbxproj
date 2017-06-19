@@ -3,16 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110817D21EF6E08A00581BE0 /* AddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110817D11EF6E08A00581BE0 /* AddressInfo.swift */; };
 		11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA292D1EF5456F00C4D54D /* AppDelegate.swift */; };
-		11DA29301EF5456F00C4D54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA292F1EF5456F00C4D54D /* ViewController.swift */; };
 		11DA29331EF5456F00C4D54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29311EF5456F00C4D54D /* Main.storyboard */; };
 		11DA29351EF5456F00C4D54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29341EF5456F00C4D54D /* Assets.xcassets */; };
 		11DA29381EF5456F00C4D54D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */; };
 		11DA29431EF5456F00C4D54D /* OnderoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA29421EF5456F00C4D54D /* OnderoadTests.swift */; };
+		11DA294E1EF5711300C4D54D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA294D1EF5711300C4D54D /* MainViewController.swift */; };
+		11DA29501EF5741400C4D54D /* MyTravelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */; };
+		11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */; };
+		11FDF0DB1EF683E00079D443 /* IconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FDF0DA1EF683E00079D443 /* IconLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,9 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		110817D11EF6E08A00581BE0 /* AddressInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInfo.swift; sourceTree = "<group>"; };
 		11DA292A1EF5456F00C4D54D /* Onderoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onderoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DA292D1EF5456F00C4D54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		11DA292F1EF5456F00C4D54D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		11DA29321EF5456F00C4D54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11DA29341EF5456F00C4D54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11DA29371EF5456F00C4D54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +40,10 @@
 		11DA293E1EF5456F00C4D54D /* OnderoadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnderoadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DA29421EF5456F00C4D54D /* OnderoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnderoadTests.swift; sourceTree = "<group>"; };
 		11DA29441EF5456F00C4D54D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11DA294D1EF5711300C4D54D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTravelViewController.swift; sourceTree = "<group>"; };
+		11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelDetailTableViewCell.swift; sourceTree = "<group>"; };
+		11FDF0DA1EF683E00079D443 /* IconLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		110817D01EF6DF7B00581BE0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				110817D11EF6E08A00581BE0 /* AddressInfo.swift */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 		11DA29211EF5456F00C4D54D = {
 			isa = PBXGroup;
 			children = (
@@ -77,12 +93,16 @@
 		11DA292C1EF5456F00C4D54D /* Onderoad */ = {
 			isa = PBXGroup;
 			children = (
+				110817D01EF6DF7B00581BE0 /* model */,
 				11DA292D1EF5456F00C4D54D /* AppDelegate.swift */,
-				11DA292F1EF5456F00C4D54D /* ViewController.swift */,
 				11DA29311EF5456F00C4D54D /* Main.storyboard */,
 				11DA29341EF5456F00C4D54D /* Assets.xcassets */,
 				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
 				11DA29391EF5456F00C4D54D /* Info.plist */,
+				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
+				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
+				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
+				11FDF0DA1EF683E00079D443 /* IconLabel.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -146,19 +166,17 @@
 				TargetAttributes = {
 					11DA29291EF5456F00C4D54D = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = QZFEK3DRW9;
 						ProvisioningStyle = Automatic;
 					};
 					11DA293D1EF5456F00C4D54D = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = QZFEK3DRW9;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 11DA29291EF5456F00C4D54D;
 					};
 				};
 			};
 			buildConfigurationList = 11DA29251EF5456F00C4D54D /* Build configuration list for PBXProject "Onderoad" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -201,8 +219,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11DA29301EF5456F00C4D54D /* ViewController.swift in Sources */,
+				11DA29501EF5741400C4D54D /* MyTravelViewController.swift in Sources */,
+				11DA294E1EF5711300C4D54D /* MainViewController.swift in Sources */,
+				11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */,
 				11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */,
+				110817D21EF6E08A00581BE0 /* AddressInfo.swift in Sources */,
+				11FDF0DB1EF683E00079D443 /* IconLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +434,7 @@
 				11DA29491EF5456F00C4D54D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		11DA294A1EF5456F00C4D54D /* Build configuration list for PBXNativeTarget "OnderoadTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +443,7 @@
 				11DA294C1EF5456F00C4D54D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
