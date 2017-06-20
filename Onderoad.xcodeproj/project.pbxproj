@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11062BFD1EF822B500E78D9D /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11062BFC1EF822B500E78D9D /* CreateViewController.swift */; };
 		110817D21EF6E08A00581BE0 /* AddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110817D11EF6E08A00581BE0 /* AddressInfo.swift */; };
 		11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA292D1EF5456F00C4D54D /* AppDelegate.swift */; };
 		11DA29331EF5456F00C4D54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29311EF5456F00C4D54D /* Main.storyboard */; };
@@ -16,7 +17,11 @@
 		11DA294E1EF5711300C4D54D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA294D1EF5711300C4D54D /* MainViewController.swift */; };
 		11DA29501EF5741400C4D54D /* MyTravelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */; };
 		11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */; };
-		11FDF0DB1EF683E00079D443 /* IconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FDF0DA1EF683E00079D443 /* IconLabel.swift */; };
+		11E594911EF7DA2E00C03069 /* CarInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E594901EF7DA2E00C03069 /* CarInfo.swift */; };
+		11E594931EF7DBC800C03069 /* SpotInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E594921EF7DBC800C03069 /* SpotInfo.swift */; };
+		11E594951EF7DBFE00C03069 /* SpotInfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E594941EF7DBFE00C03069 /* SpotInfoTable.swift */; };
+		11E5949A1EF7EF7E00C03069 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E594991EF7EF7E00C03069 /* User.swift */; };
+		11E5949C1EF7F01000C03069 /* TravelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E5949B1EF7F01000C03069 /* TravelInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11062BFC1EF822B500E78D9D /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		110817D11EF6E08A00581BE0 /* AddressInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInfo.swift; sourceTree = "<group>"; };
+		11415E341EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		11415E351EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		11DA292A1EF5456F00C4D54D /* Onderoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onderoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DA292D1EF5456F00C4D54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11DA29321EF5456F00C4D54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -43,7 +51,11 @@
 		11DA294D1EF5711300C4D54D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTravelViewController.swift; sourceTree = "<group>"; };
 		11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelDetailTableViewCell.swift; sourceTree = "<group>"; };
-		11FDF0DA1EF683E00079D443 /* IconLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconLabel.swift; sourceTree = "<group>"; };
+		11E594901EF7DA2E00C03069 /* CarInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarInfo.swift; sourceTree = "<group>"; };
+		11E594921EF7DBC800C03069 /* SpotInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfo.swift; sourceTree = "<group>"; };
+		11E594941EF7DBFE00C03069 /* SpotInfoTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfoTable.swift; sourceTree = "<group>"; };
+		11E594991EF7EF7E00C03069 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		11E5949B1EF7F01000C03069 /* TravelInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,9 +79,14 @@
 		110817D01EF6DF7B00581BE0 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				11E594901EF7DA2E00C03069 /* CarInfo.swift */,
 				110817D11EF6E08A00581BE0 /* AddressInfo.swift */,
+				11E594921EF7DBC800C03069 /* SpotInfo.swift */,
+				11E594941EF7DBFE00C03069 /* SpotInfoTable.swift */,
+				11E594991EF7EF7E00C03069 /* User.swift */,
+				11E5949B1EF7F01000C03069 /* TravelInfo.swift */,
 			);
-			name = model;
+			path = model;
 			sourceTree = "<group>";
 		};
 		11DA29211EF5456F00C4D54D = {
@@ -102,7 +119,7 @@
 				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
 				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
 				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
-				11FDF0DA1EF683E00079D443 /* IconLabel.swift */,
+				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -140,9 +157,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11DA294A1EF5456F00C4D54D /* Build configuration list for PBXNativeTarget "OnderoadTests" */;
 			buildPhases = (
+				598411D8821E5E85072CE3F6 /* [CP] Check Pods Manifest.lock */,
 				11DA293A1EF5456F00C4D54D /* Sources */,
 				11DA293B1EF5456F00C4D54D /* Frameworks */,
 				11DA293C1EF5456F00C4D54D /* Resources */,
+				3A514BE60E6B31832DF9BA8A /* [CP] Embed Pods Frameworks */,
+				9F37BD1E54A99C56B5C0347E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -214,17 +234,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3A514BE60E6B31832DF9BA8A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnderoadTests/Pods-OnderoadTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		598411D8821E5E85072CE3F6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9F37BD1E54A99C56B5C0347E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnderoadTests/Pods-OnderoadTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		11DA29261EF5456F00C4D54D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11062BFD1EF822B500E78D9D /* CreateViewController.swift in Sources */,
 				11DA29501EF5741400C4D54D /* MyTravelViewController.swift in Sources */,
+				11E594911EF7DA2E00C03069 /* CarInfo.swift in Sources */,
 				11DA294E1EF5711300C4D54D /* MainViewController.swift in Sources */,
+				11E5949C1EF7F01000C03069 /* TravelInfo.swift in Sources */,
+				11E594931EF7DBC800C03069 /* SpotInfo.swift in Sources */,
+				11E594951EF7DBFE00C03069 /* SpotInfoTable.swift in Sources */,
 				11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */,
 				11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */,
 				110817D21EF6E08A00581BE0 /* AddressInfo.swift in Sources */,
-				11FDF0DB1EF683E00079D443 /* IconLabel.swift in Sources */,
+				11E5949A1EF7EF7E00C03069 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +324,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				11DA29321EF5456F00C4D54D /* Base */,
+				11415E341EF9590000D24326 /* it */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -259,6 +333,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				11DA29371EF5456F00C4D54D /* Base */,
+				11415E351EF9590000D24326 /* it */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -266,10 +341,11 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		11DA29451EF5456F00C4D54D /* Debug */ = {
+		116810D71EF979BB00561DE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -290,17 +366,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -308,11 +378,42 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+		116810D81EF979BB00561DE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = QZFEK3DRW9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Onderoad",
+				);
+				INFOPLIST_FILE = Onderoad/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.Onderoad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		116810D91EF979BB00561DE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = QZFEK3DRW9;
+				INFOPLIST_FILE = OnderoadTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.OnderoadTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Onderoad.app/Onderoad";
 			};
 			name = Debug;
 		};
@@ -320,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -359,24 +461,15 @@
 			};
 			name = Release;
 		};
-		11DA29481EF5456F00C4D54D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QZFEK3DRW9;
-				INFOPLIST_FILE = Onderoad/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.Onderoad;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
 		11DA29491EF5456F00C4D54D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = QZFEK3DRW9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Onderoad",
+				);
 				INFOPLIST_FILE = Onderoad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.Onderoad;
@@ -384,21 +477,6 @@
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
-		};
-		11DA294B1EF5456F00C4D54D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = QZFEK3DRW9;
-				INFOPLIST_FILE = OnderoadTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.OnderoadTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Onderoad.app/Onderoad";
-			};
-			name = Debug;
 		};
 		11DA294C1EF5456F00C4D54D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -421,8 +499,8 @@
 		11DA29251EF5456F00C4D54D /* Build configuration list for PBXProject "Onderoad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				11DA29451EF5456F00C4D54D /* Debug */,
 				11DA29461EF5456F00C4D54D /* Release */,
+				116810D71EF979BB00561DE5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -430,8 +508,8 @@
 		11DA29471EF5456F00C4D54D /* Build configuration list for PBXNativeTarget "Onderoad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				11DA29481EF5456F00C4D54D /* Debug */,
 				11DA29491EF5456F00C4D54D /* Release */,
+				116810D81EF979BB00561DE5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -439,8 +517,8 @@
 		11DA294A1EF5456F00C4D54D /* Build configuration list for PBXNativeTarget "OnderoadTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				11DA294B1EF5456F00C4D54D /* Debug */,
 				11DA294C1EF5456F00C4D54D /* Release */,
+				116810D91EF979BB00561DE5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
