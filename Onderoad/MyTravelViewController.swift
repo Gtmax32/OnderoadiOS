@@ -9,6 +9,10 @@
 import UIKit
 
 class MyTravelViewController: UITableViewController {
+	
+	//MARK: Properties
+	
+	var travels = [TravelInfo]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +24,34 @@ class MyTravelViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+	
+	
+	//MARK: Table View Methods
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		//TODO: Forse dovrei mettere 2, per visualizzare i viaggi creati da me e quelli di cui sono passeggero
+		return 1
+	}
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return travels.count
+	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cellIdentifier = "TravelDetailTableViewCell"
+		
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TravelDetailTableViewCell else{
+			fatalError("La cella non è di tipo TravelDetailTableViewCell")
+		}
+		
+		let travel = travels[indexPath.row]
+		
+		//TODO: Implementare il resto della modifica dell'interfaccia
+		cell.travelDetailDepartureLabel.text = travel.addressDeparture.streetInfo
+		cell.travelDetailDestinationLabel.text = travel.spotDestination.nameSpot
+		
+		return cell
+	}
 
     /*
     // MARK: - Navigation
