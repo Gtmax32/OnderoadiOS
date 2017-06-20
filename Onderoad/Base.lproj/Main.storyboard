@@ -159,11 +159,127 @@
                             <outlet property="delegate" destination="9Ek-XA-yeV" id="1gg-es-75K"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="My Travel" id="t6r-uL-8pL"/>
+                    <navigationItem key="navigationItem" title="My Travel" id="Smt-UC-nBV">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lJh-ea-3p4">
+                            <connections>
+                                <segue destination="52Q-Xq-FaP" kind="presentation" id="PN3-yB-Les"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySR-Fb-reL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1573.125" y="-176.40845070422534"/>
+            <point key="canvasLocation" x="2268.75" y="-161.61971830985917"/>
+        </scene>
+        <!--Crea il tuo viaggio-->
+        <scene sceneID="qP0-TG-kp2">
+            <objects>
+                <viewController id="peX-cO-I4A" customClass="CreateViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8U8-F7-t53"/>
+                        <viewControllerLayoutGuide type="bottom" id="txJ-nJ-2is"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z9j-GG-hYy">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sk2-1W-2Yc">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="departureInfoLabel" text="Informazioni Partenza" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaJ-zu-GI5">
+                                        <rect key="frame" x="0.0" y="8" width="320" height="20"/>
+                                        <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration" label="Informazioni Partenza"/>
+                                        <fontDescription key="fontDescription" name=".SFNSText" family=".SF NS Text" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" restorationIdentifier="departureInfo" translatesAutoresizingMaskIntoConstraints="NO" id="flN-CT-B7S" userLabel="departureStreetView">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="32"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Partenza:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3N-en-ZSO">
+                                                <rect key="frame" x="8" y="8" width="73" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Inserisci il punto di ritrovo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tvb-AB-fyh">
+                                                <rect key="frame" x="89" y="4" width="223" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="D3N-en-ZSO" firstAttribute="leading" secondItem="flN-CT-B7S" secondAttribute="leading" constant="8" id="ENN-dP-eLg"/>
+                                            <constraint firstAttribute="trailing" secondItem="Tvb-AB-fyh" secondAttribute="trailing" constant="8" id="EdH-5l-tTi"/>
+                                            <constraint firstItem="Tvb-AB-fyh" firstAttribute="leading" secondItem="D3N-en-ZSO" secondAttribute="trailing" constant="8" id="I92-i6-ypQ"/>
+                                            <constraint firstAttribute="height" constant="32" id="Kdo-dq-J4B"/>
+                                            <constraint firstItem="D3N-en-ZSO" firstAttribute="top" secondItem="flN-CT-B7S" secondAttribute="top" constant="8" id="M19-GS-VHG"/>
+                                            <constraint firstItem="Tvb-AB-fyh" firstAttribute="top" secondItem="flN-CT-B7S" secondAttribute="top" constant="4" id="UOl-Jw-eAy"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ZV-ha-QCC" userLabel="departureDateTimeView">
+                                        <rect key="frame" x="0.0" y="62" width="320" height="45"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="calendarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="1SM-UB-HVI">
+                                                <rect key="frame" x="8" y="8" width="25" height="23"/>
+                                            </imageView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Inserisci la data ed ora di partenza" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y2G-oa-h8E">
+                                                <rect key="frame" x="45" y="7" width="267" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="E80-CW-2Jy"/>
+                                            <constraint firstItem="1SM-UB-HVI" firstAttribute="centerY" secondItem="4ZV-ha-QCC" secondAttribute="centerY" id="Jfn-ti-7zI"/>
+                                            <constraint firstItem="1SM-UB-HVI" firstAttribute="top" secondItem="4ZV-ha-QCC" secondAttribute="top" constant="8" id="KFk-ww-0MX"/>
+                                            <constraint firstItem="1SM-UB-HVI" firstAttribute="leading" secondItem="4ZV-ha-QCC" secondAttribute="leading" constant="8" id="S0v-jm-d1w"/>
+                                            <constraint firstAttribute="bottom" secondItem="1SM-UB-HVI" secondAttribute="bottom" constant="8" id="wMN-q1-PNS"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="flN-CT-B7S" secondAttribute="trailing" id="3mX-eZ-ct0"/>
+                                    <constraint firstAttribute="trailing" secondItem="GaJ-zu-GI5" secondAttribute="trailing" id="8zS-iG-UIv"/>
+                                    <constraint firstItem="4ZV-ha-QCC" firstAttribute="centerX" secondItem="sk2-1W-2Yc" secondAttribute="centerX" id="9sp-z2-cnN"/>
+                                    <constraint firstItem="flN-CT-B7S" firstAttribute="width" secondItem="sk2-1W-2Yc" secondAttribute="width" id="AA4-Y0-0IB"/>
+                                    <constraint firstItem="GaJ-zu-GI5" firstAttribute="top" secondItem="sk2-1W-2Yc" secondAttribute="top" constant="8" id="AHg-WF-vzt"/>
+                                    <constraint firstItem="4ZV-ha-QCC" firstAttribute="leading" secondItem="sk2-1W-2Yc" secondAttribute="leading" id="B6v-Ze-vwT"/>
+                                    <constraint firstItem="GaJ-zu-GI5" firstAttribute="width" secondItem="sk2-1W-2Yc" secondAttribute="width" id="BWY-v3-hVE"/>
+                                    <constraint firstItem="flN-CT-B7S" firstAttribute="top" secondItem="GaJ-zu-GI5" secondAttribute="bottom" id="ElU-9W-PlM"/>
+                                    <constraint firstItem="4ZV-ha-QCC" firstAttribute="top" secondItem="flN-CT-B7S" secondAttribute="bottom" constant="2" id="H6T-2f-iRV"/>
+                                    <constraint firstItem="GaJ-zu-GI5" firstAttribute="leading" secondItem="sk2-1W-2Yc" secondAttribute="leading" id="UTS-dV-HPP"/>
+                                    <constraint firstAttribute="bottom" secondItem="4ZV-ha-QCC" secondAttribute="bottom" constant="397" id="iWs-rL-zYe"/>
+                                    <constraint firstAttribute="trailing" secondItem="4ZV-ha-QCC" secondAttribute="trailing" id="lbS-7V-bP9"/>
+                                    <constraint firstItem="flN-CT-B7S" firstAttribute="leading" secondItem="sk2-1W-2Yc" secondAttribute="leading" id="rUP-Xe-UdK"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sk2-1W-2Yc" firstAttribute="centerY" secondItem="Z9j-GG-hYy" secondAttribute="centerY" id="3x5-wM-6eL"/>
+                            <constraint firstItem="sk2-1W-2Yc" firstAttribute="height" secondItem="Z9j-GG-hYy" secondAttribute="height" id="6n6-Zh-yYn"/>
+                            <constraint firstItem="sk2-1W-2Yc" firstAttribute="width" secondItem="Z9j-GG-hYy" secondAttribute="width" id="gny-hA-Q5W"/>
+                            <constraint firstItem="sk2-1W-2Yc" firstAttribute="centerX" secondItem="Z9j-GG-hYy" secondAttribute="centerX" id="jM1-UZ-aS3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Crea il tuo viaggio" id="ooa-ys-T4W">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wnr-UZ-q9f"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="JIZ-9j-sQB"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dateTimePicker" destination="Y2G-oa-h8E" id="RjP-dx-zHE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r4j-n8-PcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4333.125" y="-160.56338028169014"/>
         </scene>
         <!--Home-->
         <scene sceneID="o8B-tV-DO6">
@@ -214,7 +330,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="Sy7-jp-gEV" kind="relationship" relationship="viewControllers" id="i77-NS-nfj"/>
-                        <segue destination="9Ek-XA-yeV" kind="relationship" relationship="viewControllers" id="h9V-57-BFp"/>
+                        <segue destination="Mh8-Xu-eGo" kind="relationship" relationship="viewControllers" id="h9V-57-BFp"/>
                         <segue destination="GyJ-7K-8C9" kind="relationship" relationship="viewControllers" id="Z38-S6-Uk7"/>
                     </connections>
                 </tabBarController>
@@ -222,8 +338,46 @@
             </objects>
             <point key="canvasLocation" x="-818" y="-160"/>
         </scene>
+        <!--My Travel-->
+        <scene sceneID="soI-u7-c3b">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mh8-Xu-eGo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Travel" id="t6r-uL-8pL"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Arq-pU-Yc6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Ek-XA-yeV" kind="relationship" relationship="rootViewController" id="dTl-dT-eGW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8eH-TS-fia" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1271.25" y="-161.61971830985917"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pTt-nh-0je">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="52Q-Xq-FaP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="zCm-pR-hCc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="peX-cO-I4A" kind="relationship" relationship="rootViewController" id="F6m-Tm-38z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ae-Mb-ob4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339.375" y="-162.67605633802816"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="calendarIcon" width="25" height="25"/>
         <image name="departureIcon" width="48" height="48"/>
         <image name="destinationIcon" width="25" height="25"/>
         <image name="euroIcon" width="25" height="25"/>

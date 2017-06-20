@@ -1,0 +1,45 @@
+
+/* Class = "UILabel"; text = "Destination"; ObjectID = "56o-au-FzZ"; */
+"56o-au-FzZ.text" = "Destination";
+
+/* Class = "UILabel"; text = "Partenza:"; ObjectID = "D3N-en-ZSO"; */
+"D3N-en-ZSO.text" = "Partenza:";
+
+/* Class = "UILabel"; accessibilityLabel = "Informazioni Partenza"; ObjectID = "GaJ-zu-GI5"; */
+"GaJ-zu-GI5.accessibilityLabel" = "Informazioni Partenza";
+
+/* Class = "UILabel"; text = "Informazioni Partenza"; ObjectID = "GaJ-zu-GI5"; */
+"GaJ-zu-GI5.text" = "Informazioni Partenza";
+
+/* Class = "UINavigationItem"; title = "My Travel"; ObjectID = "Smt-UC-nBV"; */
+"Smt-UC-nBV.title" = "My Travel";
+
+/* Class = "UITextField"; placeholder = "Inserisci il punto di ritrovo"; ObjectID = "Tvb-AB-fyh"; */
+"Tvb-AB-fyh.placeholder" = "Inserisci il punto di ritrovo";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "Waf-Al-PnO"; */
+"Waf-Al-PnO.text" = "Price";
+
+/* Class = "UITextField"; placeholder = "Inserisci la data ed ora di partenza"; ObjectID = "Y2G-oa-h8E"; */
+"Y2G-oa-h8E.placeholder" = "Inserisci la data ed ora di partenza";
+
+/* Class = "UITabBarItem"; title = "Spot"; ObjectID = "jzJ-q9-qD5"; */
+"jzJ-q9-qD5.title" = "Spot";
+
+/* Class = "UILabel"; text = "Time"; ObjectID = "kOU-bG-jqP"; */
+"kOU-bG-jqP.text" = "Time";
+
+/* Class = "UILabel"; text = "Departure"; ObjectID = "mFc-D7-Cve"; */
+"mFc-D7-Cve.text" = "Departure";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "nME-kU-tch"; */
+"nME-kU-tch.text" = "Date";
+
+/* Class = "UINavigationItem"; title = "Crea il tuo viaggio"; ObjectID = "ooa-ys-T4W"; */
+"ooa-ys-T4W.title" = "Crea il tuo viaggio";
+
+/* Class = "UITabBarItem"; title = "My Travel"; ObjectID = "t6r-uL-8pL"; */
+"t6r-uL-8pL.title" = "My Travel";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "u8L-6S-JSe"; */
+"u8L-6S-JSe.title" = "Home";
