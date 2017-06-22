@@ -16,6 +16,10 @@ class AddressInfo {
 	var longitudeInfo: Double
 	var latitudeInfo: Double
 	
+	public var description: String {
+		return "AddressInfo:\nStreetInfo: \(streetInfo)\nProvinceInfo: \(provinceInfo)\nLongitudeInfo: \(longitudeInfo)\nLatitudeInfo: \(latitudeInfo)\n"
+	}
+	
 	//MARK: Initialization
 	
 	init(street: String, province: String, longitude: Double, latitude: Double){

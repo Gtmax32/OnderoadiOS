@@ -22,6 +22,8 @@ class TravelInfo {
 	var ownerTravel: User
 	var passengersTravel = [User]()
 	
+	//MARK: Initialization
+	
 	init(address: AddressInfo, dataTime: Int, destination: SpotInfo, price: Int, car: CarInfo, outbounded: Bool, note: String, owner: User, passengersList: [User]) {
 		self.addressDeparture = address
 		self.dataTimeDeparture = dataTime
