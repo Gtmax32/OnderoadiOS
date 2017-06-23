@@ -183,7 +183,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sk2-1W-2Yc">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="sk2-1W-2Yc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="departureInfoLabel" text="Informazioni Partenza" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaJ-zu-GI5">
@@ -263,7 +263,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="spotRegionTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Inserisci la regione dello Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="szT-aA-wTY">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="spotRegionTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Scegli la regione dello Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="szT-aA-wTY">
                                                 <rect key="frame" x="83" y="5" width="229" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -283,14 +283,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9z-lL-Im2" userLabel="destinationProvinceView">
                                         <rect key="frame" x="0.0" y="180" width="320" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provincia:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cH6-cm-2Fp">
-                                                <rect key="frame" x="8" y="10" width="75" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spot:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cH6-cm-2Fp">
+                                                <rect key="frame" x="8" y="10" width="41" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="spotProvinceTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Inserisci la provincia dello Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jaJ-RP-ZWz">
-                                                <rect key="frame" x="91" y="5" width="221" height="30"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="spotNameTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Seleziona lo Spot" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jaJ-RP-ZWz" userLabel="Spot Name Text Field">
+                                                <rect key="frame" x="57" y="5" width="255" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -323,17 +323,20 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="lcv-Ns-HdH">
-                                                <rect key="frame" x="123" y="5" width="94" height="29"/>
-                                            </stepper>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gmW-u2-q12" userLabel="PriceStepper" customClass="PriceStepper" customModule="Onderoad" customModuleProvider="target">
+                                                <rect key="frame" x="131" y="5" width="100" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="bZ8-j1-3Jm" firstAttribute="centerY" secondItem="N6h-Ns-mTM" secondAttribute="centerY" id="5Kr-0t-hcK"/>
                                             <constraint firstAttribute="height" constant="40" id="5ZH-d3-zBc"/>
-                                            <constraint firstItem="lcv-Ns-HdH" firstAttribute="leading" secondItem="bZ8-j1-3Jm" secondAttribute="trailing" constant="57" id="88f-7k-HcT"/>
+                                            <constraint firstItem="gmW-u2-q12" firstAttribute="top" secondItem="N6h-Ns-mTM" secondAttribute="top" constant="5" id="SS1-uQ-EP8"/>
+                                            <constraint firstItem="gmW-u2-q12" firstAttribute="leading" secondItem="bZ8-j1-3Jm" secondAttribute="trailing" constant="65" id="T5B-wb-b3l"/>
                                             <constraint firstItem="bZ8-j1-3Jm" firstAttribute="leading" secondItem="N6h-Ns-mTM" secondAttribute="leading" constant="8" id="VgT-5n-apU"/>
-                                            <constraint firstItem="lcv-Ns-HdH" firstAttribute="centerY" secondItem="N6h-Ns-mTM" secondAttribute="centerY" id="sFK-0R-l3g"/>
+                                            <constraint firstItem="gmW-u2-q12" firstAttribute="centerY" secondItem="N6h-Ns-mTM" secondAttribute="centerY" id="hfd-0H-TFv"/>
+                                            <constraint firstAttribute="trailing" secondItem="gmW-u2-q12" secondAttribute="trailing" constant="89" id="wgo-iB-qmU"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7uM-qt-g0l" userLabel="carPassengerNumberView">
@@ -353,6 +356,9 @@
                                                     <segment title="3"/>
                                                     <segment title="4"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="passengerSCIndexChanged:" destination="peX-cO-I4A" eventType="valueChanged" id="ECz-yJ-ZaA"/>
+                                                </connections>
                                             </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -376,6 +382,9 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="carOutBoundSwitch" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NAO-e1-PlB">
                                                 <rect key="frame" x="179" y="5" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="outboundSwitchValueChanged:" destination="peX-cO-I4A" eventType="valueChanged" id="0zq-de-Bym"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -405,6 +414,9 @@
                                                     <segment title="3"/>
                                                     <segment title="4"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="boardSCIndexChanged:" destination="peX-cO-I4A" eventType="valueChanged" id="e27-Od-nBo"/>
+                                                </connections>
                                             </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -528,7 +540,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="autocompleteTextField" destination="Tvb-AB-fyh" id="UcI-Y9-YEP"/>
+                        <outlet property="boardNumberSegmentedControl" destination="hA1-dd-DjR" id="m2O-aX-fHi"/>
+                        <outlet property="carSupportTypeTextField" destination="E33-j1-x8T" id="9bF-E9-rPE"/>
                         <outlet property="dateTimeTextField" destination="Y2G-oa-h8E" id="kfb-zj-0SA"/>
+                        <outlet property="isOutboundSwitch" destination="NAO-e1-PlB" id="vP2-dA-C5z"/>
+                        <outlet property="mainScrollView" destination="sk2-1W-2Yc" id="WhN-Bd-Z13"/>
+                        <outlet property="navigationCancelButton" destination="wnr-UZ-q9f" id="7RY-yZ-uub"/>
+                        <outlet property="navigationSaveButton" destination="JIZ-9j-sQB" id="8PH-7D-UDB"/>
+                        <outlet property="passengerNumberSegmentedControl" destination="E9H-AF-TMJ" id="BhB-Q8-DSI"/>
+                        <outlet property="spotNameTextField" destination="jaJ-RP-ZWz" id="821-fX-dnT"/>
+                        <outlet property="spotRegionTextField" destination="szT-aA-wTY" id="C1o-0a-OgT"/>
                         <outlet property="travelNoteTextView" destination="bZp-aT-sh7" id="IOI-nd-KOe"/>
                     </connections>
                 </viewController>

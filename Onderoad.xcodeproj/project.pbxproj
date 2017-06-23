@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11062BFD1EF822B500E78D9D /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11062BFC1EF822B500E78D9D /* CreateViewController.swift */; };
+		1152A0901EFD69C10005F28A /* PriceStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1152A08F1EFD69C00005F28A /* PriceStepper.swift */; };
 		116810E91EF9898800561DE5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 116810E41EF9898800561DE5 /* GoogleMapsBase.framework */; };
 		116810EA1EF9898800561DE5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 116810E51EF9898800561DE5 /* GoogleMaps.framework */; };
 		116810EB1EF9898800561DE5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 116810E61EF9898800561DE5 /* GoogleMapsCore.framework */; };
@@ -59,6 +60,7 @@
 		11062BFC1EF822B500E78D9D /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		11415E341EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		11415E351EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1152A08F1EFD69C00005F28A /* PriceStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceStepper.swift; sourceTree = "<group>"; };
 		116810E41EF9898800561DE5 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
 		116810E51EF9898800561DE5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		116810E61EF9898800561DE5 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
 				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
 				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
+				1152A08F1EFD69C00005F28A /* PriceStepper.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				11062BFD1EF822B500E78D9D /* CreateViewController.swift in Sources */,
 				116811161EF98E6200561DE5 /* CarInfo.swift in Sources */,
 				11DA29501EF5741400C4D54D /* MyTravelViewController.swift in Sources */,
+				1152A0901EFD69C10005F28A /* PriceStepper.swift in Sources */,
 				116811171EF98E6200561DE5 /* SpotInfo.swift in Sources */,
 				116811181EF98E6200561DE5 /* SpotInfoTable.swift in Sources */,
 				116811191EF98E6200561DE5 /* TravelInfo.swift in Sources */,

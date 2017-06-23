@@ -9,7 +9,7 @@
 import UIKit
 import GooglePlaces
 
-class CreateViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate {
+class CreateViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 	
 	//MARK: Properties
 	
@@ -21,17 +21,59 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	var locationManager: CLLocationManager?
 	
+	let regionPickerSource = ["Abbruzzo","Basilicata","Calabria","Lombardia","Puglia"]
+	
+	let namePickerSource = ["Bari","Barletta-Andria-Trani","Brindisi","Foggia","Lecce","Taranto"]
+	
+	var passengerNumber = 4
+	
+	var isOutbound = false
+	
+	var boardNumber = 4
+	
+	let supportTypePickerSource = ["Barre porta pacchi", "Soft rack", "Dentro l'auto"]
+	
+	//MARK: UI Reference
+	
+	var dateTimePickerView: UIDatePicker?
+	
+	var spotRegionPicker: UIPickerView?
+	
+	var spotNamePicker: UIPickerView?
+	
+	var carSupportTypePicker: UIPickerView?
+	
 	//MARK: IBOutlets
+	
+	@IBOutlet weak var mainScrollView: UIScrollView!
+	
+	@IBOutlet weak var navigationCancelButton: UIBarButtonItem!
+	
+	@IBOutlet weak var navigationSaveButton: UIBarButtonItem!
+	
+	@IBOutlet weak var autocompleteTextField: UITextField!
 	
 	@IBOutlet weak var dateTimeTextField: UITextField!
 	
-	@IBOutlet weak var travelNoteTextView: UITextView!
+	@IBOutlet weak var spotRegionTextField: UITextField!
 	
-	@IBOutlet weak var autocompleteTextField: UITextField!
+	@IBOutlet weak var spotNameTextField: UITextField!
+	
+	@IBOutlet weak var passengerNumberSegmentedControl: UISegmentedControl!
+	
+	@IBOutlet weak var isOutboundSwitch: UISwitch!
+	
+	@IBOutlet weak var boardNumberSegmentedControl: UISegmentedControl!
+	
+	@IBOutlet weak var carSupportTypeTextField: UITextField!
+	
+	@IBOutlet weak var travelNoteTextView: UITextView!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupDateTimePicker()
+		setupRegionNamePicker()
+		setupSupportTypePicker()
 		
 		travelNoteTextView.delegate = self
 		
@@ -40,26 +82,30 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		locationManager?.requestWhenInUseAuthorization()
 		locationManager?.startUpdatingLocation()
 		
-		/*let notificationCenter = NotificationCenter.default
-		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-		notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)*/
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
+	
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+		
+		super.prepare(for: segue, sender: sender)
+		
+		guard let button = sender as? UIBarButtonItem, button == navigationSaveButton else {
+			print("Errore nella pressione del SaveButton")
+			
+			return
+		}
     }
-    */
 	
 	//MARK: Action Methods
 	
@@ -87,14 +133,28 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		autocompleteController.delegate = self
 		present(autocompleteController, animated: true, completion: nil)
 	}
+	
+	
+	@IBAction func passengerSCIndexChanged(_ sender: UISegmentedControl) {
+		passengerNumber = sender.selectedSegmentIndex
+	}
+	
+	@IBAction func outboundSwitchValueChanged(_ sender: UISwitch) {
+		isOutbound = sender.isOn
+	}
+	
+	
+	@IBAction func boardSCIndexChanged(_ sender: UISegmentedControl) {
+		boardNumber = sender.selectedSegmentIndex
+	}
 
 	//MARK: DatePicker Methods
 	
 	func setupDateTimePicker() {
-		let datePickerView = UIDatePicker()
+		dateTimePickerView = UIDatePicker()
 		
-		datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
-		datePickerView.minuteInterval = 5
+		dateTimePickerView?.datePickerMode = UIDatePickerMode.dateAndTime
+		dateTimePickerView?.minuteInterval = 5
 		
 		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 		let currentDate: Date = Date()
@@ -102,30 +162,28 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		let maxDate: Date = gregorian.date(byAdding: Calendar.Component.day, value: +7, to: currentDate)!
 		
-		datePickerView.minimumDate = minDate
-		datePickerView.maximumDate = maxDate
+		dateTimePickerView?.minimumDate = minDate
+		dateTimePickerView?.maximumDate = maxDate
 		
-		datePickerView.locale = Locale.current
-		
-		datePickerView.addTarget(self, action: #selector(CreateViewController.dateTimePickerValueChanged), for: UIControlEvents.valueChanged)
+		dateTimePickerView?.locale = Locale.current
 		
 		let toolbar = UIToolbar()
 		toolbar.barStyle = UIBarStyle.default
 		toolbar.isTranslucent = true
 		toolbar.sizeToFit()
 		
-		let doneButton = UIBarButtonItem(title: "Ok", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.toolbarButtonClicked))
-		let cancelButton = UIBarButtonItem(title: "Annulla", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.toolbarButtonClicked))
+		let doneButton = UIBarButtonItem(title: "Ok", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.datePickerToolbarButtonClicked))
+		let cancelButton = UIBarButtonItem(title: "Annulla", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.datePickerToolbarButtonClicked))
 		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		
 		toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
 		toolbar.isUserInteractionEnabled = true
 		
-		dateTimeTextField.inputView = datePickerView
+		dateTimeTextField.inputView = dateTimePickerView
 		dateTimeTextField.inputAccessoryView = toolbar
 	}
 	
-	func dateTimePickerValueChanged(sender: UIDatePicker){
+	func dateTimePickerValueChanged(){
 		let locale = Locale.current
 		
 		let dateFormatter = DateFormatter()
@@ -136,48 +194,175 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		dateFormatter.locale = locale
 		
-		let selectedDateString = dateFormatter.string(from: sender.date)
+		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+		
+		let selectedDate: Date = gregorian.date(byAdding: .hour, value: +2, to: (dateTimePickerView?.date)!)!
+		
+		let selectedDateString = dateFormatter.string(from: (dateTimePickerView?.date)!)
 			
 		dateTimeTextField.text = selectedDateString
 		
-		dateTimeMillis = Int64((sender.date.timeIntervalSince1970 * 1000.0).rounded())
+		dateTimeMillis = Int64((selectedDate.timeIntervalSince1970 * 1000.0).rounded())
 		
 		print("Date: \(selectedDateString)\nDateTime in millis:\(dateTimeMillis)")
 	}
 	
-	func toolbarButtonClicked(sender: UIBarButtonItem){
+	func datePickerToolbarButtonClicked(sender: UIBarButtonItem){
 		let buttonText = sender.title ?? ""
 		
-		switch buttonText {
-		case "Ok":
-			print("Ok button pressed")
-		case "Annulla":
-			print("Annulla button pressed")
-		default:
-			print("Error! Button not recognized!")
+		if (buttonText == "Ok"){
+			dateTimePickerValueChanged()
 		}
 		
 		dateTimeTextField.resignFirstResponder()
 	}
 	
-	//MARK: Keyboard Manager Method
+	//MARK: Spot Region-Province Picker Methods
 	
-	func adjustForKeyboard(notification: Notification) {
-		let userInfo = notification.userInfo!
+	func setupRegionNamePicker(){
+		spotRegionPicker = UIPickerView()
+		spotRegionPicker?.dataSource = self
+		spotRegionPicker?.delegate = self
 		
-		let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-		let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+		spotNamePicker = UIPickerView()
+		spotNamePicker?.dataSource = self
+		spotNamePicker?.delegate = self
 		
-		if notification.name == Notification.Name.UIKeyboardWillHide {
-			travelNoteTextView.contentInset = UIEdgeInsets.zero
-		} else {
-			travelNoteTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+		let regionToolbar = UIToolbar()
+		regionToolbar.barStyle = UIBarStyle.default
+		regionToolbar.isTranslucent = true
+		regionToolbar.sizeToFit()
+		
+		let regionDoneButton = UIBarButtonItem(title: "Ok", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.regionPickerToolbarButtonClicked))
+		let regionCancelButton = UIBarButtonItem(title: "Annulla", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.regionPickerToolbarButtonClicked))
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		
+		regionToolbar.setItems([regionCancelButton, spaceButton, regionDoneButton], animated: false)
+		regionToolbar.isUserInteractionEnabled = true
+		
+		spotRegionTextField.inputView = spotRegionPicker
+		spotRegionTextField.inputAccessoryView = regionToolbar
+		
+		let nameToolbar = UIToolbar()
+		nameToolbar.barStyle = UIBarStyle.default
+		nameToolbar.isTranslucent = true
+		nameToolbar.sizeToFit()
+		
+		let nameDoneButton = UIBarButtonItem(title: "Ok", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.namePickerToolbarButtonClicked))
+		let nameCancelButton = UIBarButtonItem(title: "Annulla", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.namePickerToolbarButtonClicked))
+		
+		nameToolbar.setItems([nameCancelButton, spaceButton, nameDoneButton], animated: false)
+		nameToolbar.isUserInteractionEnabled = true
+		
+		spotNameTextField.inputView = spotNamePicker
+		spotNameTextField.inputAccessoryView = nameToolbar
+	}
+	
+	func regionPickerToolbarButtonClicked(sender: UIBarButtonItem){
+		let buttonText = sender.title ?? ""
+		
+		if (buttonText == "Ok"){
+			spotRegionTextField.text = regionPickerSource[(spotRegionPicker?.selectedRow(inComponent: 0))!]
 		}
 		
-		travelNoteTextView.scrollIndicatorInsets = travelNoteTextView.contentInset
+		spotRegionTextField.resignFirstResponder()
+	}
+	
+	func namePickerToolbarButtonClicked(sender: UIBarButtonItem){
+		let buttonText = sender.title ?? ""
 		
-		let selectedRange = travelNoteTextView.selectedRange
-		travelNoteTextView.scrollRangeToVisible(selectedRange)
+		if (buttonText == "Ok"){
+			spotNameTextField.text = namePickerSource[(spotNamePicker?.selectedRow(inComponent: 0))!]
+		}
+		
+		spotNameTextField.resignFirstResponder()
+	}
+	
+	//MARK: Car Support Picker Methods
+	
+	func setupSupportTypePicker(){
+		carSupportTypePicker = UIPickerView()
+		carSupportTypePicker?.dataSource = self
+		carSupportTypePicker?.delegate = self
+		
+		let toolbar = UIToolbar()
+		toolbar.barStyle = UIBarStyle.default
+		toolbar.isTranslucent = true
+		toolbar.sizeToFit()
+		
+		let doneButton = UIBarButtonItem(title: "Ok", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.supportTypePickerToolbarButtonClicked))
+		let cancelButton = UIBarButtonItem(title: "Annulla", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.supportTypePickerToolbarButtonClicked))
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		
+		toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+		toolbar.isUserInteractionEnabled = true
+		
+		carSupportTypeTextField.inputView = carSupportTypePicker
+		carSupportTypeTextField.inputAccessoryView = toolbar
+
+	}
+	
+	func supportTypePickerToolbarButtonClicked(sender: UIBarButtonItem){
+		let buttonText = sender.title ?? ""
+		
+		if (buttonText == "Ok"){
+			carSupportTypeTextField.text = supportTypePickerSource[(carSupportTypePicker?.selectedRow(inComponent: 0))!]
+		}
+		
+		carSupportTypeTextField.resignFirstResponder()
+	}
+	
+	//MARK: UIPickerViewDataSource and UIPickerViewDelegate protocol Methods
+	
+	func numberOfComponents(in : UIPickerView) -> Int{
+		return 1
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+		if pickerView == spotRegionPicker {
+			return regionPickerSource.count
+		} else if pickerView == spotNamePicker{
+			return namePickerSource.count
+		} else if pickerView == carSupportTypePicker{
+			return supportTypePickerSource.count
+		}
+		
+		return 1
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		
+		if pickerView == spotRegionPicker {
+			return regionPickerSource[row]
+		} else if pickerView == spotNamePicker{
+			return namePickerSource[row]
+		} else if pickerView == carSupportTypePicker{
+			return supportTypePickerSource[row]
+		}
+		
+		return ""
+	}
+	
+	//MARK: Keyboard Manager Method
+	
+	func keyboardWillShow(notification:NSNotification){
+		
+		var userInfo = notification.userInfo!
+		var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+		keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+		
+		var contentInset:UIEdgeInsets = mainScrollView.contentInset
+		contentInset.bottom = keyboardFrame.size.height
+		mainScrollView.contentInset = contentInset
+	}
+	
+	func keyboardWillHide(notification:NSNotification){
+		let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+		mainScrollView.contentInset = contentInset
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		textView.resignFirstResponder()
 	}
 }
 
@@ -191,9 +376,6 @@ extension CreateViewController: GMSAutocompleteViewControllerDelegate {
 		print("Place address: \(place.formattedAddress ?? "")")
 		print("Place coordinate: latitude-\(place.coordinate.latitude) longitude-\(place.coordinate.longitude) ")
 		print("Place addressComponents:\n")
-		for component in place.addressComponents!{
-			print("Type: \(component.type)\nName: \(component.name)")
-		}
 		
 		let isRoute = place.addressComponents?.contains(where: {$0.type == "route"})
 		
