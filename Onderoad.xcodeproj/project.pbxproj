@@ -36,6 +36,8 @@
 		116811181EF98E6200561DE5 /* SpotInfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116811121EF98E6200561DE5 /* SpotInfoTable.swift */; };
 		116811191EF98E6200561DE5 /* TravelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116811131EF98E6200561DE5 /* TravelInfo.swift */; };
 		1168111A1EF98E6200561DE5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116811141EF98E6200561DE5 /* User.swift */; };
+		117820641F01749900F034D1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117820631F01749900F034D1 /* HomeViewController.swift */; };
+		117820661F01787C00F034D1 /* SpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117820651F01787C00F034D1 /* SpotViewController.swift */; };
 		11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA292D1EF5456F00C4D54D /* AppDelegate.swift */; };
 		11DA29331EF5456F00C4D54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29311EF5456F00C4D54D /* Main.storyboard */; };
 		11DA29351EF5456F00C4D54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29341EF5456F00C4D54D /* Assets.xcassets */; };
@@ -88,6 +90,8 @@
 		116811121EF98E6200561DE5 /* SpotInfoTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfoTable.swift; sourceTree = "<group>"; };
 		116811131EF98E6200561DE5 /* TravelInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelInfo.swift; sourceTree = "<group>"; };
 		116811141EF98E6200561DE5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		117820631F01749900F034D1 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		117820651F01787C00F034D1 /* SpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotViewController.swift; sourceTree = "<group>"; };
 		11DA292A1EF5456F00C4D54D /* Onderoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onderoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DA292D1EF5456F00C4D54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11DA29321EF5456F00C4D54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -193,25 +197,27 @@
 		11DA292C1EF5456F00C4D54D /* Onderoad */ = {
 			isa = PBXGroup;
 			children = (
-				116810F21EF98A1800561DE5 /* GooglePlacePicker.bundle */,
-				116810F01EF98A0500561DE5 /* GoogleMaps.bundle */,
-				116810EE1EF989CF00561DE5 /* GooglePlaces.bundle */,
-				116810E41EF9898800561DE5 /* GoogleMapsBase.framework */,
-				116810E51EF9898800561DE5 /* GoogleMaps.framework */,
-				116810E61EF9898800561DE5 /* GoogleMapsCore.framework */,
-				116810E71EF9898800561DE5 /* GooglePlaces.framework */,
-				116810E81EF9898800561DE5 /* GooglePlacePicker.framework */,
-				110817D01EF6DF7B00581BE0 /* model */,
 				11DA292D1EF5456F00C4D54D /* AppDelegate.swift */,
-				11DA29311EF5456F00C4D54D /* Main.storyboard */,
 				11DA29341EF5456F00C4D54D /* Assets.xcassets */,
-				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
-				11DA29391EF5456F00C4D54D /* Info.plist */,
-				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
-				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
-				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
 				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
+				116810F01EF98A0500561DE5 /* GoogleMaps.bundle */,
+				116810E51EF9898800561DE5 /* GoogleMaps.framework */,
+				116810E41EF9898800561DE5 /* GoogleMapsBase.framework */,
+				116810E61EF9898800561DE5 /* GoogleMapsCore.framework */,
+				116810F21EF98A1800561DE5 /* GooglePlacePicker.bundle */,
+				116810E81EF9898800561DE5 /* GooglePlacePicker.framework */,
+				116810EE1EF989CF00561DE5 /* GooglePlaces.bundle */,
+				116810E71EF9898800561DE5 /* GooglePlaces.framework */,
+				117820631F01749900F034D1 /* HomeViewController.swift */,
+				11DA29391EF5456F00C4D54D /* Info.plist */,
+				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
+				11DA29311EF5456F00C4D54D /* Main.storyboard */,
+				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
+				110817D01EF6DF7B00581BE0 /* model */,
+				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
 				1152A08F1EFD69C00005F28A /* PriceStepper.swift */,
+				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
+				117820651F01787C00F034D1 /* SpotViewController.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -249,12 +255,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11DA294A1EF5456F00C4D54D /* Build configuration list for PBXNativeTarget "OnderoadTests" */;
 			buildPhases = (
-				598411D8821E5E85072CE3F6 /* [CP] Check Pods Manifest.lock */,
 				11DA293A1EF5456F00C4D54D /* Sources */,
 				11DA293B1EF5456F00C4D54D /* Frameworks */,
 				11DA293C1EF5456F00C4D54D /* Resources */,
-				3A514BE60E6B31832DF9BA8A /* [CP] Embed Pods Frameworks */,
-				9F37BD1E54A99C56B5C0347E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,54 +332,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3A514BE60E6B31832DF9BA8A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnderoadTests/Pods-OnderoadTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		598411D8821E5E85072CE3F6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9F37BD1E54A99C56B5C0347E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnderoadTests/Pods-OnderoadTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		11DA29261EF5456F00C4D54D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -388,11 +343,13 @@
 				1152A0901EFD69C10005F28A /* PriceStepper.swift in Sources */,
 				116811171EF98E6200561DE5 /* SpotInfo.swift in Sources */,
 				116811181EF98E6200561DE5 /* SpotInfoTable.swift in Sources */,
+				117820661F01787C00F034D1 /* SpotViewController.swift in Sources */,
 				116811191EF98E6200561DE5 /* TravelInfo.swift in Sources */,
 				11DA294E1EF5711300C4D54D /* MainViewController.swift in Sources */,
 				11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */,
 				116811151EF98E6200561DE5 /* AddressInfo.swift in Sources */,
 				11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */,
+				117820641F01749900F034D1 /* HomeViewController.swift in Sources */,
 				1168111A1EF98E6200561DE5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

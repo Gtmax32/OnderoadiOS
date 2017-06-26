@@ -17,6 +17,10 @@ class SpotInfoTable{
 	var swellSpot: String
 	var seabedSpot: String
 	
+	public var description: String {
+		return "SpotInfoTable:\nWave Spot: \(waveSpot)\nWind Spot: \(windSpot)\nSwell Spot: \(swellSpot)\nSeabed Spot: \(seabedSpot)\n"
+	}
+	
 	//MARK: Initialization
 	
 	init(wave: String, wind: String, swell: String, seabed: String) {

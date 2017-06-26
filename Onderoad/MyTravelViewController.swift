@@ -25,6 +25,18 @@ class MyTravelViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 	
+	//MARK: Action Methods
+	@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
+		print("In unwindToTravelList")
+		
+		if let sourceViewController = sender.source as? CreateViewController, let travel = sourceViewController.travel {
+			let newIndexPath = IndexPath(row: travels.count, section: 0)
+			
+			travels.append(travel)
+			
+			tableView.insertRows(at: [newIndexPath], with: .automatic)
+		}
+	}	
 	
 	//MARK: Table View Methods
 	
@@ -47,7 +59,7 @@ class MyTravelViewController: UITableViewController {
 		let travel = travels[indexPath.row]
 		
 		//TODO: Implementare il resto della modifica dell'interfaccia
-		cell.travelDetailDepartureLabel.text = travel.addressDeparture.streetInfo
+		cell.travelDetailDepartureLabel.text = travel.addressDeparture.provinceInfo
 		cell.travelDetailDestinationLabel.text = travel.spotDestination.nameSpot
 		
 		return cell

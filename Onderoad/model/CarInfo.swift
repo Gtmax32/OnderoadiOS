@@ -16,6 +16,10 @@ class CarInfo{
 	var surfboardNumber: Int
 	var surfboardType: String
 	
+	public var description: String {
+		return "CarInfo:\nPassenger Number: \(passengerNumber)\nSurfboard Number: \(surfboardNumber)\nSupport type: \(surfboardType)\n"
+	}
+	
 	//MARK: Initialization
 	
 	init(passengers: Int, surfboards: Int, type: String) {

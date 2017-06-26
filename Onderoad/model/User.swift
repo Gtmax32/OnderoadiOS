@@ -16,6 +16,10 @@ class User {
 	var emailUser: String
 	var notificationIdUser: String
 	
+	public var description: String {
+		return "User:\nId User: \(idUser)\nName User: \(nameUser)\nEmail User: \(emailUser)\nNotification Id User: \(notificationIdUser)\n"
+	}
+	
 	init(id: String, name: String, email: String, notificationId: String) {
 		self.idUser = id
 		self.nameUser = name

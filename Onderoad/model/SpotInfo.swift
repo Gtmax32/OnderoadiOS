@@ -21,6 +21,10 @@ class SpotInfo{
 	var descritionSpot: String
 	var tableSpot: SpotInfoTable
 	
+	public var description: String {
+		return "SpotInfo:\nRegion Spot: \(regionSpot)\nProvince Spot: \(provinceSpot)\nCity Spot: \(citySpot)\nName Spot: \(nameSpot)\nLatitude Spot: \(latitudeSpot)\nLongitude Spot: \(longitudeSpot)\nRating Spot: \(ratingSpot)\nDescription Spot: \(descritionSpot)\nTable Spot: \(tableSpot.description)\n"
+	}
+	
 	init(region: String, province: String, city: String, name: String, latitude: Double, longitude: Double, rating: Int, description: String, table: SpotInfoTable) {
 		
 		self.regionSpot = region

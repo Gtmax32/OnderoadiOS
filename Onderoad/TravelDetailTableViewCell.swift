@@ -12,9 +12,10 @@ class TravelDetailTableViewCell: UITableViewCell {
 	
 	//MARK: Properties
 	
+	
 	@IBOutlet weak var travelDetailDateLabel: UILabel!
 	
-	@IBOutlet weak var travelDetailTimeLabel: UILabel!
+	@IBOutlet weak var travelDetailTimeLabel: UILabel!	
 	
 	@IBOutlet weak var travelDetailPriceLabel: UILabel!
 	

@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable class PriceStepper: UIView {
 	
 	//MARK: Stepper Components
-	let minusButton = UIButton(type: .custom)
+	let minusButton = UIButton()
 	let priceLabel = UILabel()
 	let plusButton = UIButton()
 	

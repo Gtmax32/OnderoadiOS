@@ -43,6 +43,8 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	var carSupportTypePicker: UIPickerView?
 	
+	var textViewOffset: CGFloat = 0
+	
 	//MARK: IBOutlets
 	
 	@IBOutlet weak var mainScrollView: UIScrollView!
@@ -59,6 +61,8 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	@IBOutlet weak var spotNameTextField: UITextField!
 	
+	@IBOutlet weak var travelPriceStepper: PriceStepper!
+	
 	@IBOutlet weak var passengerNumberSegmentedControl: UISegmentedControl!
 	
 	@IBOutlet weak var isOutboundSwitch: UISwitch!
@@ -71,6 +75,8 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.hideKeyboardWhenTappedAround()
+		
 		setupDateTimePicker()
 		setupRegionNamePicker()
 		setupSupportTypePicker()
@@ -94,20 +100,91 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-		
+	// Get the new view controller using segue.destinationViewController.
+	// Pass the selected object to the new view controller.
+	/*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
+		
+		/*var modMessage = [String]()
 		
 		guard let button = sender as? UIBarButtonItem, button == navigationSaveButton else {
 			print("Errore nella pressione del SaveButton")
 			
 			return
 		}
-    }
+		
+		modMessage = checkCanCreateTravel()
+		
+		if modMessage.count > 0 {
+			var message = "Non è possibile salvare il viaggio perchè i seguenti campi sono vuoti:"
+			
+			for errorString in modMessage {
+				message.append("\n - \(errorString)")
+			}
+			
+			message.append("\nAssicurati di inserire tutti i dati prima di salvare.")
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+				alertController.dismiss(animated: true, completion: nil)
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		} else {
+			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
+			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, latitude: 45.4937389, longitude: 9.1083639, rating: 0, description: "Fuffa", table: nil)
+			
+			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: spot, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: nil, passengersList: nil)
+			
+		}*/
+		
+		print("In prepare...")
+	}*/
 	
 	//MARK: Action Methods
+	
+	@IBAction func prepareForSave(_ sender: UIBarButtonItem) {
+		print("In prepareForSave")
+		
+		var modMessage = [String]()
+		
+		modMessage = checkCanCreateTravel()
+		
+		if modMessage.count > 0 {
+			var message = "Non è possibile salvare il viaggio perchè i seguenti campi sono vuoti:"
+			
+			for errorString in modMessage {
+				message.append("\n - \(errorString)")
+			}
+			
+			message.append("\nAssicurati di inserire tutti i dati prima di salvare.")
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		} else {
+			print("Preparing travel to send")
+			
+			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
+			let spotTable = SpotInfoTable.init(wave: "SX", wind: "SO moderato", swell: "SE-S", seabed: "Roccia")
+			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, latitude: 45.4937389, longitude: 9.1083639, rating: 0, description: "Fuffa", table: spotTable)
+			let user = User.init(id: "123456", name: "Giuseppe Fabio Trentadue", email: "gtmax_32@hotmail.it", notificationId: "abcdefgh")
+			
+			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: spot, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
+			
+			print(travel?.description ?? "")
+			
+			self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
+		}
+	}
 	
 	@IBAction func autocompleteTextFieldClicked(_ sender: UITextField) {
 		//Creo un GMSCoordinateBounds da assegnare al GMSAutocompleteViewController
@@ -134,7 +211,6 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		present(autocompleteController, animated: true, completion: nil)
 	}
 	
-	
 	@IBAction func passengerSCIndexChanged(_ sender: UISegmentedControl) {
 		passengerNumber = sender.selectedSegmentIndex
 	}
@@ -142,7 +218,6 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	@IBAction func outboundSwitchValueChanged(_ sender: UISwitch) {
 		isOutbound = sender.isOn
 	}
-	
 	
 	@IBAction func boardSCIndexChanged(_ sender: UISegmentedControl) {
 		boardNumber = sender.selectedSegmentIndex
@@ -343,10 +418,42 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		return ""
 	}
 	
-	//MARK: Keyboard Manager Method
+	//MARK: MARK: Check method for saving Travel
+	
+	private func checkCanCreateTravel() -> [String]{
+		var emptyTextFieldArray = [String]()
+		
+		if autocompleteTextField.text == "" {
+			emptyTextFieldArray.append("Indirizzo di partenza")
+		}
+		
+		if (self.dateTimeMillis == 0) {
+			emptyTextFieldArray.append("Data ed ora di partenza")
+		}
+		
+		if spotRegionTextField.text == "" {
+			emptyTextFieldArray.append("Regione dello Spot")
+		}
+		
+		if spotNameTextField.text == "" {
+			emptyTextFieldArray.append("Lo Spot nella regione scelta")
+		}
+		
+		if (travelPriceStepper.value == 0) {
+			emptyTextFieldArray.append("Il prezzo del viaggio")
+		}
+		
+		if carSupportTypeTextField.text == "" {
+			emptyTextFieldArray.append("Il supporto per le tavole")
+		}
+		
+		return emptyTextFieldArray
+		
+	}
+	
+	//MARK: Keyboard Manager Methods
 	
 	func keyboardWillShow(notification:NSNotification){
-		
 		var userInfo = notification.userInfo!
 		var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
 		keyboardFrame = self.view.convert(keyboardFrame, from: nil)
@@ -354,15 +461,47 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		var contentInset:UIEdgeInsets = mainScrollView.contentInset
 		contentInset.bottom = keyboardFrame.size.height
 		mainScrollView.contentInset = contentInset
+		mainScrollView.scrollIndicatorInsets = contentInset
+		
+		print("In keyboardWillShow: \(keyboardFrame.size.height)")
 	}
 	
 	func keyboardWillHide(notification:NSNotification){
+		print("In keyboardWillHide")
 		let contentInset:UIEdgeInsets = UIEdgeInsets.zero
 		mainScrollView.contentInset = contentInset
+		mainScrollView.scrollIndicatorInsets = contentInset
+	}
+	
+	func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+		textViewOffset = mainScrollView.frame.height
+		let point = CGPoint.init(x: 0, y: textViewOffset - 190)
+		
+		mainScrollView.setContentOffset(point, animated: true)
+		
+		print("In textViewShouldBeginEditing: \(textViewOffset)")
+		
+		return true
 	}
 	
 	func textViewDidEndEditing(_ textView: UITextView) {
+		print("In textViewDidEndEditing")
+		
+		textViewOffset = 0
+		
 		textView.resignFirstResponder()
+	}
+}
+
+extension CreateViewController {
+	func hideKeyboardWhenTappedAround() {
+		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateViewController.dismissKeyboard))
+		tap.cancelsTouchesInView = false
+		view.addGestureRecognizer(tap)
+	}
+	
+	func dismissKeyboard() {
+		view.endEditing(true)
 	}
 }
 
