@@ -21,9 +21,9 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	var locationManager: CLLocationManager?
 	
-	let regionPickerSource = ["Abbruzzo","Basilicata","Calabria","Lombardia","Puglia"]
+	let regionPickerSource = Array(RegionSpotDict.DICT.keys).sorted()
 	
-	let namePickerSource = ["Bari","Barletta-Andria-Trani","Brindisi","Foggia","Lecce","Taranto"]
+	var namePickerSource: [String]?
 	
 	var passengerNumber = 4
 	
@@ -97,54 +97,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
         // Dispose of any resources that can be recreated.
     }
 	
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
-	/*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		super.prepare(for: segue, sender: sender)
-		
-		/*var modMessage = [String]()
-		
-		guard let button = sender as? UIBarButtonItem, button == navigationSaveButton else {
-			print("Errore nella pressione del SaveButton")
-			
-			return
-		}
-		
-		modMessage = checkCanCreateTravel()
-		
-		if modMessage.count > 0 {
-			var message = "Non è possibile salvare il viaggio perchè i seguenti campi sono vuoti:"
-			
-			for errorString in modMessage {
-				message.append("\n - \(errorString)")
-			}
-			
-			message.append("\nAssicurati di inserire tutti i dati prima di salvare.")
-			
-			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
-			
-			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
-				print("Dismissing UIAlertController")
-				alertController.dismiss(animated: true, completion: nil)
-			})
-			alertController.addAction(cancelAction)
-			
-			self.present(alertController, animated: true, completion: nil)
-		} else {
-			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
-			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, latitude: 45.4937389, longitude: 9.1083639, rating: 0, description: "Fuffa", table: nil)
-			
-			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: spot, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: nil, passengersList: nil)
-			
-		}*/
-		
-		print("In prepare...")
-	}*/
-	
-	//MARK: Action Methods
+    //MARK: Action Methods
 	
 	@IBAction func prepareForSave(_ sender: UIBarButtonItem) {
 		print("In prepareForSave")
@@ -175,7 +128,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			
 			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
 			let spotTable = SpotInfoTable.init(wave: "SX", wind: "SO moderato", swell: "SE-S", seabed: "Roccia")
-			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, latitude: 45.4937389, longitude: 9.1083639, rating: 0, description: "Fuffa", table: spotTable)
+			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, position: CLLocationCoordinate2D.init(latitude: 45.4937389, longitude: 9.1083639), rating: 0, description: "Fuffa", table: spotTable)
 			let user = User.init(id: "123456", name: "Giuseppe Fabio Trentadue", email: "gtmax_32@hotmail.it", notificationId: "abcdefgh")
 			
 			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: spot, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
@@ -337,7 +290,10 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		let buttonText = sender.title ?? ""
 		
 		if (buttonText == "Ok"){
-			spotRegionTextField.text = regionPickerSource[(spotRegionPicker?.selectedRow(inComponent: 0))!]
+			let selectedRegion = (spotRegionPicker?.selectedRow(inComponent: 0))!
+			spotRegionTextField.text = regionPickerSource[selectedRegion]
+			
+			namePickerSource = RegionSpotDict.getSpotNameFromKey(key: regionPickerSource[selectedRegion])
 		}
 		
 		spotRegionTextField.resignFirstResponder()
@@ -347,7 +303,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		let buttonText = sender.title ?? ""
 		
 		if (buttonText == "Ok"){
-			spotNameTextField.text = namePickerSource[(spotNamePicker?.selectedRow(inComponent: 0))!]
+			spotNameTextField.text = namePickerSource![(spotNamePicker?.selectedRow(inComponent: 0))!]
 		}
 		
 		spotNameTextField.resignFirstResponder()
@@ -397,7 +353,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		if pickerView == spotRegionPicker {
 			return regionPickerSource.count
 		} else if pickerView == spotNamePicker{
-			return namePickerSource.count
+			return namePickerSource!.count
 		} else if pickerView == carSupportTypePicker{
 			return supportTypePickerSource.count
 		}
@@ -410,7 +366,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		if pickerView == spotRegionPicker {
 			return regionPickerSource[row]
 		} else if pickerView == spotNamePicker{
-			return namePickerSource[row]
+			return namePickerSource![row]
 		} else if pickerView == carSupportTypePicker{
 			return supportTypePickerSource[row]
 		}
@@ -523,7 +479,7 @@ extension CreateViewController: GMSAutocompleteViewControllerDelegate {
 			
 			let provinceComponents = place.addressComponents?.first(where: {$0.type == "administrative_area_level_2"})
 			
-			travelAddress = AddressInfo.init(street: place.formattedAddress! , province: (provinceComponents?.name)!, longitude: place.coordinate.longitude, latitude: place.coordinate.latitude)
+			travelAddress = AddressInfo.init(street: place.formattedAddress! , province: RawProvinceDict.DICT[provinceComponents!.name]!, longitude: place.coordinate.longitude, latitude: place.coordinate.latitude)
 			
 			print(travelAddress?.description ?? "")
 			
