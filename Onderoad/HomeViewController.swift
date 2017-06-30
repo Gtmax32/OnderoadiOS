@@ -9,7 +9,11 @@
 import UIKit
 
 class HomeViewController: UITableViewController {
-
+	
+	//MARK: Properties
+	
+	var travels = [TravelInfo]()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,23 +33,30 @@ class HomeViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return travels.count
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cellIdentifier = "TravelDetailTableViewCell"
+		
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TravelDetailTableViewCell else{
+			fatalError("La cella non è di tipo TravelDetailTableViewCell")
+		}
+		
+		let travel = travels[indexPath.row]
+		
+		cell.travelDetailDateTimeLabel.text = travel.fromMillisToString()
+		cell.travelDetailPriceLabel.text = String(travel.priceTravel)
+		cell.travelDetailDepartureLabel.text = travel.addressDeparture.provinceInfo
+		cell.travelDetailDestinationLabel.text = travel.spotDestination.nameSpot
+		
+		return cell
+	}
 
     /*
     // Override to support conditional editing of the table view.

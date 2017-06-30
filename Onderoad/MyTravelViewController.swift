@@ -58,7 +58,8 @@ class MyTravelViewController: UITableViewController {
 		
 		let travel = travels[indexPath.row]
 		
-		//TODO: Implementare il resto della modifica dell'interfaccia
+		cell.travelDetailDateTimeLabel.text = travel.fromMillisToString()
+		cell.travelDetailPriceLabel.text = String(travel.priceTravel)
 		cell.travelDetailDepartureLabel.text = travel.addressDeparture.provinceInfo
 		cell.travelDetailDestinationLabel.text = travel.spotDestination.nameSpot
 		

@@ -39,4 +39,24 @@ class TravelInfo {
 		self.ownerTravel = owner
 		self.passengersTravel = nil
 	}
+	
+	public func fromMillisToString() -> String{
+		let date = Date(timeIntervalSince1970: (Double(self.dataTimeDeparture) / 1000.0))
+		
+		let formatter = DateFormatter()
+		
+		formatter.dateStyle = DateFormatter.Style.long
+		
+		formatter.timeStyle = DateFormatter.Style.short
+		
+		formatter.timeZone = TimeZone.current
+		
+		formatter.locale = Locale.current
+		
+		let stringDate = formatter.string(from: date)
+		
+		print(stringDate)
+		
+		return stringDate
+	}
 }

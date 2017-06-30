@@ -33,6 +33,10 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	let supportTypePickerSource = ["Barre porta pacchi", "Soft rack", "Dentro l'auto"]
 	
+	var selectedRegionSpots: [SpotInfo]?
+	
+	var selectedSpot: SpotInfo?
+	
 	//MARK: UI Reference
 	
 	var dateTimePickerView: UIDatePicker?
@@ -127,16 +131,36 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			print("Preparing travel to send")
 			
 			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
-			let spotTable = SpotInfoTable.init(wave: "SX", wind: "SO moderato", swell: "SE-S", seabed: "Roccia")
-			let spot = SpotInfo.init(region: spotRegionTextField.text!, province: spotRegionTextField.text!, city: spotNameTextField.text!, name: spotNameTextField.text!, position: CLLocationCoordinate2D.init(latitude: 45.4937389, longitude: 9.1083639), rating: 0, description: "Fuffa", table: spotTable)
 			let user = User.init(id: "123456", name: "Giuseppe Fabio Trentadue", email: "gtmax_32@hotmail.it", notificationId: "abcdefgh")
 			
-			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: spot, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
+			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
 			
-			print(travel?.description ?? "")
+			print(travel!.description )
+			print(travel!.fromMillisToString())
 			
 			self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
 		}
+	}
+	
+	@IBAction func cancelCreation(_ sender: UIBarButtonItem) {
+		let message = "Sicuro di voler annullare la creazione del viaggio?\nI dati inseriti non verranno salvati."
+		
+		let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+		
+		let noAction = UIAlertAction(title: "No", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		})
+		
+		let yesAction = UIAlertAction(title: "Si", style: .default, handler: {(action:UIAlertAction!) in
+			print("Dismissing CreateViewController")
+			self.dismiss(animated: true, completion: nil)
+		})
+		
+		alertController.addAction(yesAction)
+		alertController.addAction(noAction)
+		
+		self.present(alertController, animated: true, completion: nil)
+		
 	}
 	
 	@IBAction func autocompleteTextFieldClicked(_ sender: UITextField) {
@@ -220,13 +244,15 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		dateFormatter.timeStyle = DateFormatter.Style.short
 		
+		dateFormatter.timeZone = TimeZone.current
+		
 		dateFormatter.locale = locale
 		
 		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 		
 		let selectedDate: Date = gregorian.date(byAdding: .hour, value: +2, to: (dateTimePickerView?.date)!)!
 		
-		let selectedDateString = dateFormatter.string(from: (dateTimePickerView?.date)!)
+		let selectedDateString = dateFormatter.string(from: dateTimePickerView!.date)
 			
 		dateTimeTextField.text = selectedDateString
 		
@@ -290,10 +316,13 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		let buttonText = sender.title ?? ""
 		
 		if (buttonText == "Ok"){
-			let selectedRegion = (spotRegionPicker?.selectedRow(inComponent: 0))!
-			spotRegionTextField.text = regionPickerSource[selectedRegion]
+			let selectedRegionIndex = (spotRegionPicker?.selectedRow(inComponent: 0))!
+			spotRegionTextField.text = regionPickerSource[selectedRegionIndex]
 			
-			namePickerSource = RegionSpotDict.getSpotNameFromKey(key: regionPickerSource[selectedRegion])
+			let key = regionPickerSource[selectedRegionIndex]
+			
+			namePickerSource = RegionSpotDict.getSpotNameFromKey(key: key)
+			selectedRegionSpots = Array(RegionSpotDict.DICT[key]!)
 		}
 		
 		spotRegionTextField.resignFirstResponder()
@@ -303,7 +332,13 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		let buttonText = sender.title ?? ""
 		
 		if (buttonText == "Ok"){
-			spotNameTextField.text = namePickerSource![(spotNamePicker?.selectedRow(inComponent: 0))!]
+			let spotIndex = spotNamePicker!.selectedRow(inComponent: 0)
+			
+			spotNameTextField.text = namePickerSource![spotIndex]
+			
+			if selectedRegionSpots != nil {
+				selectedSpot = selectedRegionSpots![spotIndex]
+			}
 		}
 		
 		spotNameTextField.resignFirstResponder()

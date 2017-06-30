@@ -38,7 +38,7 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
     }
 	
 	override func loadView() {
-		let camera = GMSCameraPosition.camera(withLatitude: 42.416055, longitude: 12.848037, zoom: 5.3)
+		let camera = GMSCameraPosition.camera(withLatitude: 42.416055, longitude: 12.848037, zoom: 5)
 		mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
 		self.view = mapView
 	}
@@ -55,11 +55,13 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
 	
 	// MARK: - GMUMapViewDelegate
 	func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-		/*if let spot = marker.userData as? SpotInfo {
+		if let spot = marker.userData as? SpotInfo {
 			NSLog("Did tap marker for cluster item \(spot.nameSpot)")
+			marker.snippet = spot.descriptionSpot
+			marker.title = spot.nameSpot			
 		} else {
 			NSLog("Did tap a normal marker")
-		}*/
+		}
 		
 		return false
 	}

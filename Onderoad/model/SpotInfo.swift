@@ -22,11 +22,11 @@ class SpotInfo: NSObject, GMUClusterItem{
 	//var longitudeSpot: Double
 	var position: CLLocationCoordinate2D
 	var ratingSpot: Int
-	var descritionSpot: String
+	var descriptionSpot: String
 	var tableSpot: SpotInfoTable
 	
 	override public var description: String {
-		return "SpotInfo:\nRegion Spot: \(regionSpot)\nProvince Spot: \(provinceSpot)\nCity Spot: \(citySpot)\nName Spot: \(nameSpot)\nLocation Spot: \(position)\nRating Spot: \(ratingSpot)\nDescription Spot: \(descritionSpot)\nTable Spot: \(tableSpot.description)\n"
+		return "SpotInfo:\nRegion Spot: \(regionSpot)\nProvince Spot: \(provinceSpot)\nCity Spot: \(citySpot)\nName Spot: \(nameSpot)\nLocation Spot: \(position)\nRating Spot: \(ratingSpot)\nDescription Spot: \(descriptionSpot)\nTable Spot: \(tableSpot.description)\n"
 	}
 	
 	init(region: String, province: String, city: String, name: String, position: CLLocationCoordinate2D, rating: Int, description: String, table: SpotInfoTable) {
@@ -37,7 +37,7 @@ class SpotInfo: NSObject, GMUClusterItem{
 		self.nameSpot = name
 		self.position = position
 		self.ratingSpot = rating
-		self.descritionSpot = description
+		self.descriptionSpot = description
 		self.tableSpot = table
 	}
 }
