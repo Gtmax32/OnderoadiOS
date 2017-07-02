@@ -111,7 +111,7 @@ public class RawProvinceDict{
 		"Trapani" : "Trapani",
 		"Trento" : "Trento",
 		"Treviso" : "Treviso",
-		"Trieste" : "Trieste",
+		"Provincia di Trieste" : "Trieste",
 		"Udine" : "Udine",
 		"Varese" : "Varese",
 		"Città Metropolitana di Venezia" : "Venezia",

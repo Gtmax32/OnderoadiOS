@@ -218,6 +218,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		dateTimePickerView?.maximumDate = maxDate
 		
 		dateTimePickerView?.locale = Locale.current
+		dateTimePickerView?.timeZone = TimeZone.current
 		
 		let toolbar = UIToolbar()
 		toolbar.barStyle = UIBarStyle.default
@@ -250,7 +251,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 		
-		let selectedDate: Date = gregorian.date(byAdding: .hour, value: +2, to: (dateTimePickerView?.date)!)!
+		let selectedDate: Date = gregorian.date(byAdding: .hour, value: +2, to: dateTimePickerView!.date)!
 		
 		let selectedDateString = dateFormatter.string(from: dateTimePickerView!.date)
 			
@@ -507,9 +508,13 @@ extension CreateViewController: GMSAutocompleteViewControllerDelegate {
 		print("Place coordinate: latitude-\(place.coordinate.latitude) longitude-\(place.coordinate.longitude) ")
 		print("Place addressComponents:\n")
 		
-		let isRoute = place.addressComponents?.contains(where: {$0.type == "route"})
+		for component in place.addressComponents! {
+			print("Type: \(component.type) Name: \(component.name)")
+		}
 		
-		if (isRoute)! {
+		let isValid = place.addressComponents!.contains(where: {$0.type == "route" || $0.type == "neighborhood"})
+		
+		if isValid {
 			autocompleteTextField.text = place.formattedAddress ?? "Errore nella selezione, riprova!"
 			
 			let provinceComponents = place.addressComponents?.first(where: {$0.type == "administrative_area_level_2"})

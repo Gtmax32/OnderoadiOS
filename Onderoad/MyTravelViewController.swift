@@ -16,6 +16,8 @@ class MyTravelViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		//self.tabBarController?.tabBar.isHidden = false
 
         // Do any additional setup after loading the view.
     }
@@ -36,7 +38,39 @@ class MyTravelViewController: UITableViewController {
 			
 			tableView.insertRows(at: [newIndexPath], with: .automatic)
 		}
-	}	
+	}
+	
+	// MARK: - Navigation
+	// Get the new view controller using segue.destinationViewController.
+	// Pass the selected object to the new view controller.
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		super.prepare(for: segue, sender: sender)
+		
+		switch(segue.identifier ?? "") {
+			
+		case "CreateTravel":
+			print("Adding a new meal.")
+			
+		case "ShowTravel":
+			guard let travelDetailViewController = segue.destination as? TravelInfoViewController else {
+				fatalError("Unexpected destination: \(segue.destination)")
+			}
+			
+			guard let selectedTravelCell = sender as? TravelDetailTableViewCell else {
+				fatalError("Unexpected sender: \(String(describing: sender))")
+			}
+			
+			guard let indexPath = tableView.indexPath(for: selectedTravelCell) else {
+				fatalError("The selected cell is not being displayed by the table")
+			}
+			
+			let selectedTravel = travels[indexPath.row]
+			travelDetailViewController.travelToShow = selectedTravel
+			
+		default:
+			fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+		}
+	}
 	
 	//MARK: Table View Methods
 	
@@ -65,15 +99,4 @@ class MyTravelViewController: UITableViewController {
 		
 		return cell
 	}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

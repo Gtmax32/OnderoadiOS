@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11062BFD1EF822B500E78D9D /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11062BFC1EF822B500E78D9D /* CreateViewController.swift */; };
+		114ABE521F0970F400F3395B /* SpotInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114ABE511F0970F400F3395B /* SpotInfoViewController.swift */; };
 		1152A0901EFD69C10005F28A /* PriceStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1152A08F1EFD69C00005F28A /* PriceStepper.swift */; };
 		115A32361F0689CB003B1A78 /* TravelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115A32351F0689CB003B1A78 /* TravelInfoViewController.swift */; };
 		116810E91EF9898800561DE5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 116810E41EF9898800561DE5 /* GoogleMapsBase.framework */; };
@@ -86,6 +87,7 @@
 		11062BFC1EF822B500E78D9D /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		11415E341EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		11415E351EF9590000D24326 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		114ABE511F0970F400F3395B /* SpotInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfoViewController.swift; sourceTree = "<group>"; };
 		1152A08F1EFD69C00005F28A /* PriceStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceStepper.swift; sourceTree = "<group>"; };
 		115A32351F0689CB003B1A78 /* TravelInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelInfoViewController.swift; sourceTree = "<group>"; };
 		116810E41EF9898800561DE5 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 				117820651F01787C00F034D1 /* SpotViewController.swift */,
 				1178017D1F05182600B44D63 /* Onderoad-Bridging-Header.h */,
 				115A32351F0689CB003B1A78 /* TravelInfoViewController.swift */,
+				114ABE511F0970F400F3395B /* SpotInfoViewController.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				11DA29521EF577B200C4D54D /* TravelDetailTableViewCell.swift in Sources */,
 				116811151EF98E6200561DE5 /* AddressInfo.swift in Sources */,
 				11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */,
+				114ABE521F0970F400F3395B /* SpotInfoViewController.swift in Sources */,
 				117820641F01749900F034D1 /* HomeViewController.swift in Sources */,
 				117801741F05151C00B44D63 /* GMUGeometryCollection.m in Sources */,
 				1178017C1F05151C00B44D63 /* GQTPointQuadTreeChild.m in Sources */,

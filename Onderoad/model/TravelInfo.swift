@@ -43,6 +43,12 @@ class TravelInfo {
 	public func fromMillisToString() -> String{
 		let date = Date(timeIntervalSince1970: (Double(self.dataTimeDeparture) / 1000.0))
 		
+		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+		
+		let correctDate: Date = gregorian.date(byAdding: .hour, value: -2, to: date)!
+		
+		print("TimeMillis: \(self.dataTimeDeparture) Date from millis: \(date) Date with calendar: \(correctDate)")
+		
 		let formatter = DateFormatter()
 		
 		formatter.dateStyle = DateFormatter.Style.long
@@ -53,7 +59,7 @@ class TravelInfo {
 		
 		formatter.locale = Locale.current
 		
-		let stringDate = formatter.string(from: date)
+		let stringDate = formatter.string(from: correctDate)
 		
 		print(stringDate)
 		

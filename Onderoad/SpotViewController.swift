@@ -14,6 +14,8 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
 	private var mapView: GMSMapView!
 	private var clusterManager: GMUClusterManager!
 	
+	private var selectedSpot: SpotInfo?
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -43,6 +45,25 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
 		self.view = mapView
 	}
 	
+	// MARK: - Navigation
+	
+	// Get the new view controller using segue.destinationViewController.
+	// Pass the selected object to the new view controller.
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		super.prepare(for: segue, sender: sender)
+		
+		print("In SpotViewController")
+		
+		guard let spotDetailViewController = segue.destination as? SpotInfoViewController else {
+			fatalError("Unexpected destination: \(segue.destination)")
+		}
+		
+		let spot = selectedSpot!
+		
+		spotDetailViewController.spotToShow = spot
+		
+	}
+	
 	// MARK: - GMUClusterManagerDelegate
 	func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool{
 		let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: mapView.camera.zoom + 1)
@@ -58,12 +79,20 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
 		if let spot = marker.userData as? SpotInfo {
 			NSLog("Did tap marker for cluster item \(spot.nameSpot)")
 			marker.snippet = spot.descriptionSpot
-			marker.title = spot.nameSpot			
+			marker.title = spot.nameSpot
+			
+			print("Selected Spot: \(spot.description)")
+			selectedSpot = spot
 		} else {
 			NSLog("Did tap a normal marker")
 		}
 		
 		return false
+	}
+	
+	func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+		print("Info Windows Marker: \(String(describing: marker.title)) clicked")
+		self.performSegue(withIdentifier: "ShowSpotInfo", sender: self)
 	}
 	
 	//MARK: Private Methods
@@ -80,15 +109,4 @@ class SpotViewController: UIViewController, GMUClusterManagerDelegate, GMSMapVie
 			}
 		}
 	}
-	
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
