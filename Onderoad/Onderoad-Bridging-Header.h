@@ -12,3 +12,4 @@
 #endif /* Onderoad_Bridging_Header_h */
 
 #import "GMUMarkerClustering.h"
+#import "Firebase.h"

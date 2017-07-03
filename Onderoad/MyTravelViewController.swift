@@ -49,7 +49,7 @@ class MyTravelViewController: UITableViewController {
 		switch(segue.identifier ?? "") {
 			
 		case "CreateTravel":
-			print("Adding a new meal.")
+			print("Adding a new travel.")
 			
 		case "ShowTravel":
 			guard let travelDetailViewController = segue.destination as? TravelInfoViewController else {

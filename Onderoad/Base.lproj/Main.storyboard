@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Op8-LF-U0J">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ad4-nR-Kva">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,7 +14,7 @@
         <!--Dettagli Viaggio-->
         <scene sceneID="6wR-qW-hKJ">
             <objects>
-                <viewController id="pLX-P1-cWP" customClass="TravelInfoViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="pLX-P1-cWP" customClass="TravelInfoViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9dD-T7-5Xh"/>
                         <viewControllerLayoutGuide type="bottom" id="BLi-7K-b4e"/>
@@ -31,7 +31,7 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6x-t0-nCC">
-                                <rect key="frame" x="0.0" y="297" width="320" height="263"/>
+                                <rect key="frame" x="0.0" y="297" width="320" height="214"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departure Date Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPW-Wu-DYO">
                                         <rect key="frame" x="8" y="20" width="304" height="20.5"/>
@@ -263,7 +263,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addressProvince" destination="srP-Y4-KJr" id="QEY-RI-lEF"/>
                         <outlet property="addressRouteLabel" destination="JGW-sp-SHd" id="ObT-1x-XP5"/>
@@ -855,7 +854,7 @@
         <!--Dettagli Spot-->
         <scene sceneID="Pa5-1o-L0f">
             <objects>
-                <viewController title="Dettagli Spot" id="EyB-Ee-o70" customClass="SpotInfoViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Dettagli Spot" hidesBottomBarWhenPushed="YES" id="EyB-Ee-o70" customClass="SpotInfoViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RrH-Zr-Mur"/>
                         <viewControllerLayoutGuide type="bottom" id="TcM-4V-5nM"/>
@@ -986,11 +985,11 @@
                             <constraint firstItem="U2R-Kx-Ukb" firstAttribute="width" secondItem="5uC-Nn-fSF" secondAttribute="width" id="zaI-nS-OYE"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="noteValue" destination="mxD-hZ-Nqc" id="Slz-XW-WrK"/>
                         <outlet property="seabedValueLabel" destination="hjV-HO-SfY" id="qbQ-N8-rIX"/>
                         <outlet property="spotContainerMap" destination="cot-KW-Tze" id="47x-19-9fB"/>
+                        <outlet property="spotLocationLabel" destination="U2R-Kx-Ukb" id="VPu-IV-eXx"/>
                         <outlet property="swellValueLabel" destination="zhs-kj-p26" id="Eog-f8-vao"/>
                         <outlet property="waveValueLabel" destination="ceB-Dh-plz" id="oWa-rB-fqA"/>
                         <outlet property="windValueLabel" destination="mi2-Hw-uRb" id="vEh-Q9-UmM"/>
@@ -1000,10 +999,41 @@
             </objects>
             <point key="canvasLocation" x="2214" y="355"/>
         </scene>
-        <!--Main View Controller-->
+        <!--Login-->
+        <scene sceneID="lu3-JF-hy9">
+            <objects>
+                <viewController title="Login" id="ad4-nR-Kva" customClass="LoginViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gxr-mQ-Bqf"/>
+                        <viewControllerLayoutGuide type="bottom" id="oOb-pb-C3o"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xY3-Y3-CY1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3s-3p-3i1" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="137" y="269" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="g3s-3p-3i1" firstAttribute="centerY" secondItem="xY3-Y3-CY1" secondAttribute="centerY" id="9fv-3f-jWn"/>
+                            <constraint firstItem="g3s-3p-3i1" firstAttribute="centerX" secondItem="xY3-Y3-CY1" secondAttribute="centerX" id="Xh0-et-W9M"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="loginButton" destination="g3s-3p-3i1" id="9oK-qW-6FE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SFa-b1-dpN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1944" y="-161"/>
+        </scene>
+        <!--MainViewController-->
         <scene sceneID="040-fM-tcU">
             <objects>
-                <tabBarController id="Op8-LF-U0J" customClass="MainViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainViewController" title="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Op8-LF-U0J" customClass="MainViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="center" id="qZb-HD-tUR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

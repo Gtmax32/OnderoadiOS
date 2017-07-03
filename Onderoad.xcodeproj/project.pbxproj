@@ -63,6 +63,20 @@
 		117801811F055CA900B44D63 /* RegionSpotDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117801801F055CA900B44D63 /* RegionSpotDict.swift */; };
 		117820641F01749900F034D1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117820631F01749900F034D1 /* HomeViewController.swift */; };
 		117820661F01787C00F034D1 /* SpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117820651F01787C00F034D1 /* SpotViewController.swift */; };
+		119222621F0A874D0097D844 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192225C1F0A874D0097D844 /* FirebaseAnalytics.framework */; };
+		119222631F0A874D0097D844 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192225D1F0A874D0097D844 /* FirebaseCore.framework */; };
+		119222641F0A874D0097D844 /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192225E1F0A874D0097D844 /* FirebaseCoreDiagnostics.framework */; };
+		119222651F0A874D0097D844 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192225F1F0A874D0097D844 /* FirebaseInstanceID.framework */; };
+		119222661F0A874D0097D844 /* FirebaseNanoPB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222601F0A874D0097D844 /* FirebaseNanoPB.framework */; };
+		119222671F0A874D0097D844 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222611F0A874D0097D844 /* GoogleToolboxForMac.framework */; };
+		1192226A1F0A87A20097D844 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222681F0A87A20097D844 /* FirebaseAuth.framework */; };
+		1192226B1F0A87A20097D844 /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222691F0A87A20097D844 /* GTMSessionFetcher.framework */; };
+		119222721F0A8D460097D844 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192226E1F0A8D460097D844 /* FBSDKLoginKit.framework */; };
+		119222731F0A8D460097D844 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1192226F1F0A8D460097D844 /* FBSDKShareKit.framework */; };
+		119222741F0A8D460097D844 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222701F0A8D460097D844 /* Bolts.framework */; };
+		119222751F0A8D460097D844 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 119222711F0A8D460097D844 /* FBSDKCoreKit.framework */; };
+		119222771F0A96990097D844 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119222761F0A96990097D844 /* LoginViewController.swift */; };
+		119222791F0AA0220097D844 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 119222781F0AA0220097D844 /* GoogleService-Info.plist */; };
 		11DA292E1EF5456F00C4D54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA292D1EF5456F00C4D54D /* AppDelegate.swift */; };
 		11DA29331EF5456F00C4D54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29311EF5456F00C4D54D /* Main.storyboard */; };
 		11DA29351EF5456F00C4D54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11DA29341EF5456F00C4D54D /* Assets.xcassets */; };
@@ -179,6 +193,23 @@
 		117801801F055CA900B44D63 /* RegionSpotDict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSpotDict.swift; sourceTree = "<group>"; };
 		117820631F01749900F034D1 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		117820651F01787C00F034D1 /* SpotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotViewController.swift; sourceTree = "<group>"; };
+		1192225C1F0A874D0097D844 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		1192225D1F0A874D0097D844 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = "<group>"; };
+		1192225E1F0A874D0097D844 /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
+		1192225F1F0A874D0097D844 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		119222601F0A874D0097D844 /* FirebaseNanoPB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseNanoPB.framework; sourceTree = "<group>"; };
+		119222611F0A874D0097D844 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleToolboxForMac.framework; sourceTree = "<group>"; };
+		119222681F0A87A20097D844 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
+		119222691F0A87A20097D844 /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GTMSessionFetcher.framework; sourceTree = "<group>"; };
+		1192226C1F0A886E0097D844 /* Firebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
+		1192226D1F0A88C50097D844 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		1192226E1F0A8D460097D844 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Onderoad/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		1192226F1F0A8D460097D844 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Onderoad/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		119222701F0A8D460097D844 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Onderoad/Bolts.framework; sourceTree = "<group>"; };
+		119222711F0A8D460097D844 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Onderoad/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		119222761F0A96990097D844 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		119222781F0AA0220097D844 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1192227A1F0ABDAB0097D844 /* Onderoad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Onderoad.entitlements; sourceTree = "<group>"; };
 		11DA292A1EF5456F00C4D54D /* Onderoad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onderoad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DA292D1EF5456F00C4D54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11DA29321EF5456F00C4D54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -205,15 +236,27 @@
 				116811061EF98AAD00561DE5 /* CoreText.framework in Frameworks */,
 				116811071EF98AAD00561DE5 /* GLKit.framework in Frameworks */,
 				116811081EF98AAD00561DE5 /* ImageIO.framework in Frameworks */,
+				1192226A1F0A87A20097D844 /* FirebaseAuth.framework in Frameworks */,
 				116811091EF98AAD00561DE5 /* libc++.tbd in Frameworks */,
+				119222741F0A8D460097D844 /* Bolts.framework in Frameworks */,
 				1168110A1EF98AAD00561DE5 /* libz.tbd in Frameworks */,
 				1168110B1EF98AAD00561DE5 /* OpenGLES.framework in Frameworks */,
+				119222721F0A8D460097D844 /* FBSDKLoginKit.framework in Frameworks */,
 				1168110C1EF98AAD00561DE5 /* QuartzCore.framework in Frameworks */,
+				119222621F0A874D0097D844 /* FirebaseAnalytics.framework in Frameworks */,
 				1168110D1EF98AAD00561DE5 /* SystemConfiguration.framework in Frameworks */,
 				1168110E1EF98AAD00561DE5 /* UIKit.framework in Frameworks */,
 				116810EA1EF9898800561DE5 /* GoogleMaps.framework in Frameworks */,
+				1192226B1F0A87A20097D844 /* GTMSessionFetcher.framework in Frameworks */,
+				119222651F0A874D0097D844 /* FirebaseInstanceID.framework in Frameworks */,
 				116810EB1EF9898800561DE5 /* GoogleMapsCore.framework in Frameworks */,
+				119222631F0A874D0097D844 /* FirebaseCore.framework in Frameworks */,
 				116810ED1EF9898800561DE5 /* GooglePlacePicker.framework in Frameworks */,
+				119222661F0A874D0097D844 /* FirebaseNanoPB.framework in Frameworks */,
+				119222641F0A874D0097D844 /* FirebaseCoreDiagnostics.framework in Frameworks */,
+				119222751F0A8D460097D844 /* FBSDKCoreKit.framework in Frameworks */,
+				119222731F0A8D460097D844 /* FBSDKShareKit.framework in Frameworks */,
+				119222671F0A874D0097D844 /* GoogleToolboxForMac.framework in Frameworks */,
 				116810E91EF9898800561DE5 /* GoogleMapsBase.framework in Frameworks */,
 				116810EC1EF9898800561DE5 /* GooglePlaces.framework in Frameworks */,
 			);
@@ -247,6 +290,10 @@
 		116810F41EF98AAD00561DE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1192226E1F0A8D460097D844 /* FBSDKLoginKit.framework */,
+				1192226F1F0A8D460097D844 /* FBSDKShareKit.framework */,
+				119222701F0A8D460097D844 /* Bolts.framework */,
+				119222711F0A8D460097D844 /* FBSDKCoreKit.framework */,
 				116810F51EF98AAD00561DE5 /* Accelerate.framework */,
 				116810F61EF98AAD00561DE5 /* CoreData.framework */,
 				116810F71EF98AAD00561DE5 /* CoreGraphics.framework */,
@@ -398,31 +445,44 @@
 		11DA292C1EF5456F00C4D54D /* Onderoad */ = {
 			isa = PBXGroup;
 			children = (
-				117801281F0514CA00B44D63 /* Google-Maps-iOS-Utils */,
-				11DA292D1EF5456F00C4D54D /* AppDelegate.swift */,
-				11DA29341EF5456F00C4D54D /* Assets.xcassets */,
-				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
+				1192227A1F0ABDAB0097D844 /* Onderoad.entitlements */,
 				116810F01EF98A0500561DE5 /* GoogleMaps.bundle */,
+				116810F21EF98A1800561DE5 /* GooglePlacePicker.bundle */,
+				116810EE1EF989CF00561DE5 /* GooglePlaces.bundle */,
+				1192225C1F0A874D0097D844 /* FirebaseAnalytics.framework */,
+				119222681F0A87A20097D844 /* FirebaseAuth.framework */,
+				1192225D1F0A874D0097D844 /* FirebaseCore.framework */,
+				1192225E1F0A874D0097D844 /* FirebaseCoreDiagnostics.framework */,
+				1192225F1F0A874D0097D844 /* FirebaseInstanceID.framework */,
+				119222601F0A874D0097D844 /* FirebaseNanoPB.framework */,
 				116810E51EF9898800561DE5 /* GoogleMaps.framework */,
 				116810E41EF9898800561DE5 /* GoogleMapsBase.framework */,
 				116810E61EF9898800561DE5 /* GoogleMapsCore.framework */,
-				116810F21EF98A1800561DE5 /* GooglePlacePicker.bundle */,
 				116810E81EF9898800561DE5 /* GooglePlacePicker.framework */,
-				116810EE1EF989CF00561DE5 /* GooglePlaces.bundle */,
 				116810E71EF9898800561DE5 /* GooglePlaces.framework */,
-				117820631F01749900F034D1 /* HomeViewController.swift */,
+				119222611F0A874D0097D844 /* GoogleToolboxForMac.framework */,
+				119222691F0A87A20097D844 /* GTMSessionFetcher.framework */,
+				1192226C1F0A886E0097D844 /* Firebase.h */,
+				1178017D1F05182600B44D63 /* Onderoad-Bridging-Header.h */,
+				1192226D1F0A88C50097D844 /* module.modulemap */,
+				119222781F0AA0220097D844 /* GoogleService-Info.plist */,
 				11DA29391EF5456F00C4D54D /* Info.plist */,
-				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
-				11DA29311EF5456F00C4D54D /* Main.storyboard */,
+				11DA292D1EF5456F00C4D54D /* AppDelegate.swift */,
+				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
+				117820631F01749900F034D1 /* HomeViewController.swift */,
+				119222761F0A96990097D844 /* LoginViewController.swift */,
 				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
-				110817D01EF6DF7B00581BE0 /* model */,
 				11DA294F1EF5741400C4D54D /* MyTravelViewController.swift */,
 				1152A08F1EFD69C00005F28A /* PriceStepper.swift */,
-				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
-				117820651F01787C00F034D1 /* SpotViewController.swift */,
-				1178017D1F05182600B44D63 /* Onderoad-Bridging-Header.h */,
-				115A32351F0689CB003B1A78 /* TravelInfoViewController.swift */,
 				114ABE511F0970F400F3395B /* SpotInfoViewController.swift */,
+				117820651F01787C00F034D1 /* SpotViewController.swift */,
+				11DA29511EF577B200C4D54D /* TravelDetailTableViewCell.swift */,
+				115A32351F0689CB003B1A78 /* TravelInfoViewController.swift */,
+				11DA29341EF5456F00C4D54D /* Assets.xcassets */,
+				117801281F0514CA00B44D63 /* Google-Maps-iOS-Utils */,
+				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
+				11DA29311EF5456F00C4D54D /* Main.storyboard */,
+				110817D01EF6DF7B00581BE0 /* model */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";
@@ -482,11 +542,16 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
-				ORGANIZATIONNAME = "Giuseppe Trentadue";
+				ORGANIZATIONNAME = "Giuseppe Fabio Trentadue";
 				TargetAttributes = {
 					11DA29291EF5456F00C4D54D = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					11DA293D1EF5456F00C4D54D = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -525,6 +590,7 @@
 				11DA29351EF5456F00C4D54D /* Assets.xcassets in Resources */,
 				11DA29331EF5456F00C4D54D /* Main.storyboard in Resources */,
 				116810F11EF98A0500561DE5 /* GoogleMaps.bundle in Resources */,
+				119222791F0AA0220097D844 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +636,7 @@
 				114ABE521F0970F400F3395B /* SpotInfoViewController.swift in Sources */,
 				117820641F01749900F034D1 /* HomeViewController.swift in Sources */,
 				117801741F05151C00B44D63 /* GMUGeometryCollection.m in Sources */,
+				119222771F0A96990097D844 /* LoginViewController.swift in Sources */,
 				1178017C1F05151C00B44D63 /* GQTPointQuadTreeChild.m in Sources */,
 				115A32361F0689CB003B1A78 /* TravelInfoViewController.swift in Sources */,
 				117801681F05151C00B44D63 /* GMUGridBasedClusterAlgorithm.m in Sources */,
@@ -673,7 +740,9 @@
 		116810D81EF979BB00561DE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Onderoad/Onderoad.entitlements;
 				DEVELOPMENT_TEAM = QZFEK3DRW9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -681,11 +750,13 @@
 				);
 				INFOPLIST_FILE = Onderoad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LIBTOOLFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.Onderoad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.Onderoad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Onderoad/Onderoad-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = module.modulemap;
 			};
 			name = Debug;
 		};
@@ -753,7 +824,9 @@
 		11DA29491EF5456F00C4D54D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Onderoad/Onderoad.entitlements;
 				DEVELOPMENT_TEAM = QZFEK3DRW9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -761,11 +834,13 @@
 				);
 				INFOPLIST_FILE = Onderoad/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LIBTOOLFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.onderoad.Onderoad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.unimi.mobidev.Onderoad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Onderoad/Onderoad-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				USER_HEADER_SEARCH_PATHS = module.modulemap;
 			};
 			name = Release;
 		};

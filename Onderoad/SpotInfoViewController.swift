@@ -12,6 +12,8 @@ class SpotInfoViewController: UIViewController {
 	
 	var spotToShow: SpotInfo?
 	
+	@IBOutlet weak var spotLocationLabel: UILabel!
+	
 	@IBOutlet weak var spotContainerMap: GMSMapView!
 	
 	@IBOutlet weak var waveValueLabel: UILabel!
@@ -29,12 +31,31 @@ class SpotInfoViewController: UIViewController {
 		
 		let camera: GMSCameraPosition
 		
-		camera = GMSCameraPosition.camera(withLatitude: 42.416055, longitude: 12.848037, zoom: 5)
-		self.spotContainerMap.camera = camera
-		
 		if let spot = spotToShow {
-			print("In SpotInfoViewController: \(spot.description)")
+			spotLocationLabel.text = spot.nameSpot + ", " + spot.citySpot + ", " + spot.provinceSpot + ", " + spot.regionSpot
+			
+			waveValueLabel.text = spot.tableSpot.waveSpot
+			windValueLabel.text = spot.tableSpot.windSpot
+			swellValueLabel.text = spot.tableSpot.swellSpot
+			seabedValueLabel.text = spot.tableSpot.seabedSpot
+			
+			noteValue.text = spot.descriptionSpot
+			
+			camera = GMSCameraPosition.camera(withLatitude: spot.position.latitude, longitude: spot.position.longitude, zoom: 7)
+			self.spotContainerMap.camera = camera
+			
+			let marker = GMSMarker()
+			marker.position = CLLocationCoordinate2D(latitude: spot.position.latitude, longitude: spot.position.longitude)
+			marker.title = spot.nameSpot
+			marker.snippet = spot.descriptionSpot
+			marker.map = self.spotContainerMap
 		}
+		else {
+			camera = GMSCameraPosition.camera(withLatitude: 42.416055, longitude: 12.848037, zoom: 5)
+			self.spotContainerMap.camera = camera
+		}
+		
+		setupBottomToolbar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +71,7 @@ class SpotInfoViewController: UIViewController {
 		bottomToolbar.isTranslucent = true
 		bottomToolbar.sizeToFit()
 		
-		let contactButton = UIBarButtonItem(title: "Contatta", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SpotInfoViewController.contactButtonClicked))
+		let contactButton = UIBarButtonItem(title: "Crea un viaggio qui", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SpotInfoViewController.createButtonClicked))
 		let spotMapButton = UIBarButtonItem(title: "Vai allo spot", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SpotInfoViewController.spotMapButtonClicked))
 		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		
@@ -60,8 +81,8 @@ class SpotInfoViewController: UIViewController {
 		self.view.addSubview(bottomToolbar)
 	}
 	
-	func contactButtonClicked(sender: UIBarButtonItem){
-		print("Contact button pressed")
+	func createButtonClicked(sender: UIBarButtonItem){
+		print("Creation button pressed")
 	}
 	
 	func spotMapButtonClicked(sender: UIBarButtonItem){
