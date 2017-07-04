@@ -65,4 +65,17 @@ class TravelInfo {
 		
 		return stringDate
 	}
+	
+	func toServer() -> [String: Any]{
+		let travelFormatted = ["addressDeparture": self.addressDeparture.toServer(),
+		                     "dataTimeDeparture": self.dataTimeDeparture,
+		                     "spotDestination": self.spotDestination.toServer(),
+		                     "priceTravel": self.priceTravel,
+		                     "carTravel": self.carTravel.toServer(),
+		                     "isOutbound" : self.isOutbound,
+		                     "noteTravel": self.noteTravel,
+		                     "ownerTravel": self.ownerTravel.toServer()] as [String: Any]
+		
+		return travelFormatted
+	}
 }

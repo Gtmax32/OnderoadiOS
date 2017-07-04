@@ -18,14 +18,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	
+	override init() {
+		super.init()
+		FirebaseApp.configure()
+	}
+	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
 		GMSPlacesClient.provideAPIKey("AIzaSyAgpF7el0pPO-w8hmdFlmciTRF1_7jwXLc")
-		GMSServices.provideAPIKey("AIzaSyAgpF7el0pPO-w8hmdFlmciTRF1_7jwXLc")
-		
-		FirebaseApp.configure()
+		GMSServices.provideAPIKey("AIzaSyAgpF7el0pPO-w8hmdFlmciTRF1_7jwXLc")		
 		
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+				
+		if let currentUser = Auth.auth().currentUser {
+			print("User \(currentUser.displayName ?? "") already authenticated!")
+			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+			let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as UIViewController
+			self.window?.rootViewController = viewController
+		}
+		else {
+			print("User not authenticated!")
+			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+			let viewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as UIViewController
+			self.window?.rootViewController = viewController
+		}
 		
 		return true
 	}

@@ -1002,7 +1002,7 @@
         <!--Login-->
         <scene sceneID="lu3-JF-hy9">
             <objects>
-                <viewController title="Login" id="ad4-nR-Kva" customClass="LoginViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ad4-nR-Kva" customClass="LoginViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gxr-mQ-Bqf"/>
                         <viewControllerLayoutGuide type="bottom" id="oOb-pb-C3o"/>
@@ -1010,21 +1010,8 @@
                     <view key="view" contentMode="scaleToFill" id="xY3-Y3-CY1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3s-3p-3i1" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="137" y="269" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="g3s-3p-3i1" firstAttribute="centerY" secondItem="xY3-Y3-CY1" secondAttribute="centerY" id="9fv-3f-jWn"/>
-                            <constraint firstItem="g3s-3p-3i1" firstAttribute="centerX" secondItem="xY3-Y3-CY1" secondAttribute="centerX" id="Xh0-et-W9M"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="loginButton" destination="g3s-3p-3i1" id="9oK-qW-6FE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SFa-b1-dpN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

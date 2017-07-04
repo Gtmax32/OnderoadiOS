@@ -9,21 +9,22 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 import FBSDKLoginKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
-
-	@IBOutlet weak var loginButton: FBSDKLoginButton!
+	
+	var ref : DatabaseReference = Database.database().reference()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		print("In LoginViewController")
+		
+		let loginButton = FBSDKLoginButton()
 		loginButton.center = self.view.center
 		self.view.addSubview(loginButton)
 		
 		loginButton.delegate = self
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,86 +38,47 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 			return
 		}
 		
-		let fbLoginManager = FBSDKLoginManager()
-		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
-			if let error = error {
-				print("Failed to login: \(error.localizedDescription)")
-				return
-			}
-			
-			guard let accessToken = FBSDKAccessToken.current() else {
-				print("Failed to get access token")
-				return
-			}
-			
-			let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-			
-			// Perform login by calling Firebase APIs
-			Auth.auth().signIn(with: credential, completion: { (user, error) in
-				if let error = error {
-					print("Login error: \(error.localizedDescription)")
-					let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
-					let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-					alertController.addAction(okayAction)
-					self.present(alertController, animated: true, completion: nil)
-					
-					return
-				}
-				
-				/* Present the main view
-				if let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainView") {
-					UIApplication.shared.keyWindow?.rootViewController = viewController
-					self.dismiss(animated: true, completion: nil)
-				}*/
-				
-				if(user != nil){
-					print("User: \(user!.displayName) Email: \(user!.email) Other: \(user!.uid)")
-					
-					let viewController = self.storyboard!.instantiateViewController(withIdentifier: "MainViewController") as UIViewController
-					self.present(viewController, animated: true, completion: nil)
-				}
-			})
+		guard let accessToken = FBSDKAccessToken.current() else {
+			print("Failed to get access token")
+			return
 		}
+		
+		let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+		
+		// Perform login by calling Firebase APIs
+		Auth.auth().signIn(with: credential, completion: { (user, error) in
+			if let error = error {
+				print("Login error: \(error.localizedDescription)")
+				let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
+				let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+				alertController.addAction(okayAction)
+				self.present(alertController, animated: true, completion: nil)
+				
+				return
+			}
+			
+			if(user != nil){
+				print("User: \(user!)")
+				
+				let currentUser = User.init(id: user!.uid, name: user!.displayName!, email: user!.email!, notificationId: "abcdefghilmnopqrstuvz")
+				
+				self.ref.child("users").child(user!.uid).setValue(currentUser.toServer())
+				
+				let viewController = self.storyboard!.instantiateViewController(withIdentifier: "MainViewController") as UIViewController
+				self.present(viewController, animated: true, completion: nil)
+			}
+		})
 	}
 	
 	func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
 		print("Log out from Facebook")
+		do {
+			try Auth.auth().signOut()
+		} catch let signOutError as NSError {
+			print ("Error signing out: %@", signOutError)
+		}
 	}
 	
-	/*@IBAction func facebookLogin(sender: UIButton) {
-		print("In facebookLogin")
-		let fbLoginManager = FBSDKLoginManager()
-		fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
-			if let error = error {
-				print("Failed to login: \(error.localizedDescription)")
-				return
-			}
-			
-			guard let accessToken = FBSDKAccessToken.current() else {
-				print("Failed to get access token")
-				return
-			}
-			
-			let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-			
-			// Perform login by calling Firebase APIs
-			Auth.auth().signIn(with: credential, completion: { (user, error) in
-				if let error = error {
-					print("Login error: \(error.localizedDescription)")
-					let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
-					let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-					alertController.addAction(okayAction)
-					self.present(alertController, animated: true, completion: nil)
-					
-					return
-				}
-				
-				// Present the main view
-				
-			})
-			
-		}
-	}*/
 	/*
 	// MARK: - Navigation
 

@@ -11,15 +11,11 @@ import GoogleMaps
 
 class SpotInfo: NSObject, GMUClusterItem{
 	
-
-
 	//MARK: Properties
 	var regionSpot: String
 	var provinceSpot: String
 	var citySpot: String
 	var nameSpot: String
-	//var latitudeSpot: Double
-	//var longitudeSpot: Double
 	var position: CLLocationCoordinate2D
 	var ratingSpot: Int
 	var descriptionSpot: String
@@ -40,4 +36,19 @@ class SpotInfo: NSObject, GMUClusterItem{
 		self.descriptionSpot = description
 		self.tableSpot = table
 	}
+	
+	func toServer() -> [String: Any]{
+		let spotFormatted = ["regionSpot": self.regionSpot,
+		                          "provinceSpot": self.provinceSpot,
+		                          "citySpot": self.citySpot,
+		                          "title": self.nameSpot,
+		                          "latitudeSpot": self.position.latitude,
+		                          "longitudeSpot": self.position.longitude,
+		                          "ratingSpot" : self.ratingSpot,
+		                          "snippet": self.descriptionSpot,
+		                          "tableSpot": self.tableSpot.toServer()] as [String: Any]
+		
+		return spotFormatted
+	}
+	
 }

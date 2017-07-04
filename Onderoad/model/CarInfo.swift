@@ -28,4 +28,12 @@ class CarInfo{
 		self.surfboardType = type
 	}
 	
+	func toServer() -> [String: Any]{
+		let carFormatted = ["passengerNumber":self.passengerNumber,
+		                    "surfboardNumber":self.surfboardNumber,
+		                    "surfboardType":self.surfboardType] as [String : Any]
+		
+		return carFormatted
+	}
+	
 }

@@ -29,4 +29,13 @@ class AddressInfo {
 		self.latitudeInfo = latitude
 	}
 	
+	func toServer() -> [String: Any]{
+		let addressFormatted = ["streetInfo" : self.streetInfo,
+		                     "provinceInfo": self.provinceInfo,
+		                     "longitudeInfo": self.longitudeInfo,
+		                     "latitudeInfo": self.latitudeInfo] as [String : Any]
+		
+		return addressFormatted
+	}
+	
 }

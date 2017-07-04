@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import FirebaseDatabase
 
 class CreateViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 	
@@ -131,14 +132,19 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			print("Preparing travel to send")
 			
 			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
-			let user = User.init(id: "123456", name: "Giuseppe Fabio Trentadue", email: "gtmax_32@hotmail.it", notificationId: "abcdefgh")
-			
-			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
-			
-			print(travel!.description )
-			print(travel!.fromMillisToString())
-			
-			self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
+			if let currentUser = Auth.auth().currentUser {
+				let user = User.init(id: currentUser.uid, name: currentUser.displayName!, email: currentUser.email!, notificationId: "abcdefgh")
+				
+				travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
+				
+				let ref : DatabaseReference = Database.database().reference().child("travels")
+				ref.childByAutoId().setValue(travel!.toServer())
+				
+				print(travel!.description )
+				print(travel!.fromMillisToString())
+				
+				self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
+			}			
 		}
 	}
 	

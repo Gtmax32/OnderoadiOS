@@ -29,4 +29,13 @@ class SpotInfoTable{
 		self.swellSpot = swell
 		self.seabedSpot = seabed
 	}
+	
+	func toServer() -> [String: Any]{
+		let spotTableFormatted = ["waveSpot": self.waveSpot,
+		                          "windSpot": self.windSpot,
+		                          "swellSpot": self.swellSpot,
+		                          "seabedSpot": self.seabedSpot] as [String: Any]
+	
+		return spotTableFormatted
+	}
 }

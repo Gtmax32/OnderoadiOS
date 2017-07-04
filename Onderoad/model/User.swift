@@ -8,7 +8,7 @@
 
 import UIKit
 
-class User {
+class User: NSObject {
 	
 	//MARK: Properties
 	var idUser: String
@@ -16,7 +16,7 @@ class User {
 	var emailUser: String
 	var notificationIdUser: String
 	
-	public var description: String {
+	override public var description: String {
 		return "User:\nId User: \(idUser)\nName User: \(nameUser)\nEmail User: \(emailUser)\nNotification Id User: \(notificationIdUser)\n"
 	}
 	
@@ -25,5 +25,14 @@ class User {
 		self.nameUser = name
 		self.emailUser = email
 		self.notificationIdUser = notificationId
+	}
+	
+	func toServer() -> [String: Any]{
+		let userFormatted = ["idUser" : self.idUser,
+		                     "nameUser": self.nameUser,
+		                     "emailUser": self.emailUser,
+		                     "notificationIdUser": self.notificationIdUser] as [String: Any]
+		
+		return userFormatted
 	}
 }
