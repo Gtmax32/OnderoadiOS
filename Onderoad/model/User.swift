@@ -27,6 +27,13 @@ class User: NSObject {
 		self.notificationIdUser = notificationId
 	}
 	
+	init(dict: [String: String]){
+		self.idUser = dict["idUser"]!
+		self.nameUser = dict["nameUser"]!
+		self.emailUser = dict["emailUser"]!
+		self.notificationIdUser = dict["notificationIdUser"]!
+	}
+	
 	func toServer() -> [String: Any]{
 		let userFormatted = ["idUser" : self.idUser,
 		                     "nameUser": self.nameUser,

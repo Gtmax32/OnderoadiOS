@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class HomeViewController: UITableViewController {
 	
 	//MARK: Properties
 	
 	var travels = [TravelInfo]()
+	var travelRef: DatabaseReference!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,33 +24,86 @@ class HomeViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		
+		travelRef = Database.database().reference().child("travels")
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		
+		travels.removeAll()
+		
+		travelRef.observe(DataEventType.value, with: { snapshot in
+			for child in snapshot.children.allObjects as! [DataSnapshot]{
+				//let travelDict = child.value as? [String:Any] ?? [:]
+				
+				let serverTravel = TravelInfo.init(snapshot: child)
+				print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
+				if serverTravel?.ownerTravel.idUser != Auth.auth().currentUser?.uid{
+					let newIndexPath = IndexPath(row: self.travels.count, section: 0)
+					print("In HomeViewController - newIndexPath: \(newIndexPath)")
+					
+					self.travels.append(serverTravel!)
+					
+					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+				}				
+			}
+		})
+		
+		tableView.reloadData()
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+	
+	// MARK: - Navigation
+	
+	// In a storyboard-based application, you will often want to do a little preparation before navigation
+	// Get the new view controller using segue.destinationViewController.
+	// Pass the selected object to the new view controller.
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		print("In prepareForSegue")
+		
+		super.prepare(for: segue, sender: sender)
+		
+		guard let travelDetailViewController = segue.destination as? TravelInfoViewController else {
+		fatalError("Unexpected destination: \(segue.destination)")
+		}
+		
+		guard let selectedTravelCell = sender as? HomeTravelDetailTableCell else {
+		fatalError("Unexpected sender: \(String(describing: sender))")
+		}
+		
+		guard let indexPath = tableView.indexPath(for: selectedTravelCell) else {
+		fatalError("The selected cell is not being displayed by the table")
+		}
+		
+		let selectedTravel = travels[indexPath.row]
+		travelDetailViewController.travelToShow = selectedTravel
+	}
+	
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return travels.count
+		return travels.count
     }
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cellIdentifier = "TravelDetailTableViewCell"
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {		
+		let cellIdentifier = "HomeTravelDetailTableCell"
 		
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TravelDetailTableViewCell else{
-			fatalError("La cella non è di tipo TravelDetailTableViewCell")
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? HomeTravelDetailTableCell else{
+			fatalError("La cella non è di tipo HomeTravelDetailTableCell")
 		}
 		
 		let travel = travels[indexPath.row]
+		
+		print("In tableView:cellForRowAt: " + travel.description)
 		
 		cell.travelDetailDateTimeLabel.text = travel.fromMillisToString()
 		cell.travelDetailPriceLabel.text = String(travel.priceTravel)
@@ -90,16 +145,6 @@ class HomeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     */
 

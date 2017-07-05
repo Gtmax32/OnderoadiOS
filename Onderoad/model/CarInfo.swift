@@ -12,24 +12,30 @@ class CarInfo{
 	
 	//MARK: Properties
 	
-	var passengerNumber: Int
+	var passengersNumber: Int
 	var surfboardNumber: Int
 	var surfboardType: String
 	
 	public var description: String {
-		return "CarInfo:\nPassenger Number: \(passengerNumber)\nSurfboard Number: \(surfboardNumber)\nSupport type: \(surfboardType)\n"
+		return "CarInfo:\nPassenger Number: \(passengersNumber)\nSurfboard Number: \(surfboardNumber)\nSupport type: \(surfboardType)\n"
 	}
 	
 	//MARK: Initialization
 	
 	init(passengers: Int, surfboards: Int, type: String) {
-		self.passengerNumber = passengers
+		self.passengersNumber = passengers
 		self.surfboardNumber = surfboards
 		self.surfboardType = type
 	}
 	
+	init(dict: [String: Any]){
+		self.passengersNumber = dict["passengersNumber"] as! Int
+		self.surfboardNumber = dict["surfboardNumber"] as! Int
+		self.surfboardType = dict["surfboardType"] as! String
+	}
+	
 	func toServer() -> [String: Any]{
-		let carFormatted = ["passengerNumber":self.passengerNumber,
+		let carFormatted = ["passengersNumber":self.passengersNumber,
 		                    "surfboardNumber":self.surfboardNumber,
 		                    "surfboardType":self.surfboardType] as [String : Any]
 		

@@ -30,6 +30,13 @@ class SpotInfoTable{
 		self.seabedSpot = seabed
 	}
 	
+	init(dict: [String: String]){
+		self.waveSpot = dict["windSpot"]!
+		self.windSpot = dict["waveSpot"]!
+		self.swellSpot = dict["swellSpot"]!
+		self.seabedSpot = dict["seabedSpot"]!
+	}
+	
 	func toServer() -> [String: Any]{
 		let spotTableFormatted = ["waveSpot": self.waveSpot,
 		                          "windSpot": self.windSpot,

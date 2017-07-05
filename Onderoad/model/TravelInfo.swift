@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class TravelInfo {
 	
 	//MARK: Properties
 	
 	var addressDeparture: AddressInfo
-	var dataTimeDeparture: Int64
+	var dateTimeDeparture: Int64
 	var spotDestination: SpotInfo
 	var priceTravel: Int
 	var carTravel: CarInfo
@@ -23,14 +24,14 @@ class TravelInfo {
 	var passengersTravel: [User]?
 	
 	public var description: String {
-		return "TravelInfo:\n\(addressDeparture.description)\nDataTime in Millis: \(dataTimeDeparture)\n\(spotDestination.description)\nPrice Travel: \(priceTravel)\n\(carTravel.description)\nIsOutbound: \(isOutbound)\nNote Travel: \(noteTravel)\n\(ownerTravel.description)\nPassenger List: \(String(describing: passengersTravel ?? nil))"
+		return "TravelInfo:\n\(addressDeparture.description)\nDataTime in Millis: \(dateTimeDeparture)\n\(spotDestination.description)\nPrice Travel: \(priceTravel)\n\(carTravel.description)\nIsOutbound: \(isOutbound)\nNote Travel: \(noteTravel)\n\(ownerTravel.description)\nPassenger List: \(String(describing: passengersTravel ?? nil))"
 	}
 	
 	//MARK: Initialization
 	
 	init(address: AddressInfo, dataTime: Int64, destination: SpotInfo, price: Int, car: CarInfo, outbounded: Bool, note: String, owner: User, passengersList: [User]?) {
 		self.addressDeparture = address
-		self.dataTimeDeparture = dataTime
+		self.dateTimeDeparture = dataTime
 		self.spotDestination = destination
 		self.priceTravel = price
 		self.carTravel = car
@@ -40,14 +41,81 @@ class TravelInfo {
 		self.passengersTravel = nil
 	}
 	
+	init?(snapshot: DataSnapshot){
+		guard let travelDict = snapshot.value as? [String:Any] else {
+			print("Error to reading travelDict from server")
+			return nil
+		}
+		
+		guard let address = travelDict["addressDeparture"] as? [String: Any] else{
+			print("Error to reading address from travelDict")
+			return nil
+		}
+		
+		self.addressDeparture = AddressInfo.init(dict: address)
+		
+		guard let dateTime = travelDict["dateTimeDeparture"] as? Int64 else{
+			print("Error to reading dateTime from travelDict")
+			return nil
+		}
+		self.dateTimeDeparture = dateTime
+		
+		guard let destination = travelDict["spotDestination"] as? [String: Any] else{
+			print("Error to reading destination from travelDict")
+			return nil
+		}
+		
+		self.spotDestination = SpotInfo.init(dict: destination)
+		
+		guard let price = travelDict["priceTravel"] as? Int else{
+			print("Error to reading price from travelDict")
+			return nil
+		}
+		
+		self.priceTravel = price
+		
+		guard let car = travelDict["carTravel"] as? [String: Any] else {
+			print("Error to reading car from travelDict")
+			return nil
+		}
+		self.carTravel = CarInfo.init(dict: car)
+		
+		guard let outbound = travelDict["outbound"] as? Bool else{
+			print("Error to reading outbound from travelDict")
+			return nil
+		}
+		
+		self.isOutbound = outbound
+		
+		guard let note = travelDict["noteTravel"] as? String else{
+			print("Error to reading note from travelDict")
+			return nil
+		}
+		
+		self.noteTravel = note
+		
+		guard let owner = travelDict["ownerTravel"] as? [String: String] else {
+			print("Error to reading owner from travelDict")
+			return nil
+		}
+		self.ownerTravel = User.init(dict: owner)
+		
+		if let list = travelDict["passengersTravel"]{
+			print("There are passengers!")
+			self.passengersTravel = list as? [User]
+		} else{
+			print("There aren't passenger...")
+		}
+	}
+	
 	public func fromMillisToString() -> String{
-		let date = Date(timeIntervalSince1970: (Double(self.dataTimeDeparture) / 1000.0))
+		let date = Date(timeIntervalSince1970: (Double(self.dateTimeDeparture) / 1000.0))
 		
 		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 		
 		let correctDate: Date = gregorian.date(byAdding: .hour, value: -2, to: date)!
 		
-		print("TimeMillis: \(self.dataTimeDeparture) Date from millis: \(date) Date with calendar: \(correctDate)")
+		print("TimeMillis: \(self.dateTimeDeparture) Date from millis: \(date) Date with calendar: \(correctDate)")
 		
 		let formatter = DateFormatter()
 		
@@ -68,14 +136,16 @@ class TravelInfo {
 	
 	func toServer() -> [String: Any]{
 		let travelFormatted = ["addressDeparture": self.addressDeparture.toServer(),
-		                     "dataTimeDeparture": self.dataTimeDeparture,
+		                     "dateTimeDeparture": self.dateTimeDeparture,
 		                     "spotDestination": self.spotDestination.toServer(),
 		                     "priceTravel": self.priceTravel,
 		                     "carTravel": self.carTravel.toServer(),
-		                     "isOutbound" : self.isOutbound,
+		                     "outbound" : self.isOutbound,
 		                     "noteTravel": self.noteTravel,
 		                     "ownerTravel": self.ownerTravel.toServer()] as [String: Any]
 		
 		return travelFormatted
 	}
+	
+	
 }

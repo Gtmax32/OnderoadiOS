@@ -57,7 +57,7 @@ class TravelInfoViewController: UIViewController {
 				passengers = travel.passengersTravel!.count
 			}
 			
-			passengerNumberLabel.text = String(passengers) + "/" + String(travel.carTravel.passengerNumber) + " posti occupati"
+			passengerNumberLabel.text = String(passengers) + "/" + String(travel.carTravel.passengersNumber) + " posti occupati"
 			
 			priceTravelLabel.text = String(travel.priceTravel) + " €"
 			

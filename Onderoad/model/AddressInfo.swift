@@ -29,6 +29,13 @@ class AddressInfo {
 		self.latitudeInfo = latitude
 	}
 	
+	init(dict: [String: Any]){
+		self.streetInfo = dict["streetInfo"] as! String
+		self.provinceInfo = dict["provinceInfo"] as! String
+		self.longitudeInfo = dict["longitudeInfo"] as! Double
+		self.latitudeInfo = dict["latitudeInfo"] as! Double
+	}
+	
 	func toServer() -> [String: Any]{
 		let addressFormatted = ["streetInfo" : self.streetInfo,
 		                     "provinceInfo": self.provinceInfo,

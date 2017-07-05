@@ -295,7 +295,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mhk-oE-aMz" id="NUm-xF-d8j">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="travelDetailMainLayout" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="uZv-f5-bhL">
@@ -1045,11 +1045,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TravelDetailTableViewCell" rowHeight="90" id="Mud-lj-dwk" customClass="TravelDetailTableViewCell" customModule="Onderoad" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeTravelDetailTableCell" rowHeight="90" id="Mud-lj-dwk" customClass="HomeTravelDetailTableCell" customModule="Onderoad" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mud-lj-dwk" id="ih6-yF-Mpu">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="travelDetailMainLayout" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TtX-92-X6g">
@@ -1127,10 +1127,10 @@
                                                     <rect key="frame" x="0.0" y="51" width="304" height="25.5"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destinationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="JtY-h2-Q9e">
-                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="48" height="25.5"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Destination" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oej-xB-ZLy">
-                                                            <rect key="frame" x="35" y="0.0" width="87" height="25.5"/>
+                                                            <rect key="frame" x="58" y="0.0" width="87" height="25.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1147,6 +1147,9 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="eJG-ZQ-VHH" firstAttribute="width" secondItem="JtY-h2-Q9e" secondAttribute="width" id="OtN-rf-nzN"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
@@ -1156,6 +1159,13 @@
                                         <constraint firstItem="TtX-92-X6g" firstAttribute="centerX" secondItem="ih6-yF-Mpu" secondAttribute="centerX" id="fGc-oy-SKj"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="travelDetailDateTimeLabel" destination="t1A-a6-fib" id="c0i-pa-jwU"/>
+                                    <outlet property="travelDetailDepartureLabel" destination="pWz-Cn-Kui" id="aHE-tZ-sGg"/>
+                                    <outlet property="travelDetailDestinationLabel" destination="oej-xB-ZLy" id="Z0f-Ke-KhO"/>
+                                    <outlet property="travelDetailPriceLabel" destination="hXX-jp-tH8" id="mN5-k2-fU5"/>
+                                    <segue destination="pLX-P1-cWP" kind="show" identifier="ShowTravel" id="cD5-7Q-juG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1255,4 +1265,7 @@
         <image name="shareIcon" width="25" height="25"/>
         <image name="spotIcon" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="cD5-7Q-juG"/>
+    </inferredMetricsTieBreakers>
 </document>

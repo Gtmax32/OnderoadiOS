@@ -7,38 +7,64 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class MyTravelViewController: UITableViewController {
 	
 	//MARK: Properties
 	
-	var travels = [TravelInfo]()
-
+	var driverTravels = [TravelInfo]()
+	var passengerTravels = [TravelInfo]()
+	var travelRef: DatabaseReference!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		//self.tabBarController?.tabBar.isHidden = false
-
-        // Do any additional setup after loading the view.
+		travelRef = Database.database().reference().child("travels")
     }
-
+	
+	override func viewWillAppear(_ animated: Bool) {
+		
+		driverTravels.removeAll()
+		
+		travelRef.observe(DataEventType.value, with: { snapshot in
+			for child in snapshot.children.allObjects as! [DataSnapshot]{
+				//let travelDict = child.value as? [String:Any] ?? [:]
+				
+				let serverTravel = TravelInfo.init(snapshot: child)
+				//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
+				if serverTravel?.ownerTravel.idUser == Auth.auth().currentUser?.uid{
+					let newIndexPath = IndexPath(row: self.driverTravels.count, section: 0)
+					
+					self.driverTravels.append(serverTravel!)
+					
+					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+				}
+			}
+		})
+		
+		tableView.reloadData()
+	}
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 	
 	//MARK: Action Methods
-	@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
+	/*@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
 		print("In unwindToTravelList")
 		
 		if let sourceViewController = sender.source as? CreateViewController, let travel = sourceViewController.travel {
 			let newIndexPath = IndexPath(row: travels.count, section: 0)
 			
+			
+			
 			travels.append(travel)
 			
 			tableView.insertRows(at: [newIndexPath], with: .automatic)
 		}
-	}
+	}*/
 	
 	// MARK: - Navigation
 	// Get the new view controller using segue.destinationViewController.
@@ -64,7 +90,7 @@ class MyTravelViewController: UITableViewController {
 				fatalError("The selected cell is not being displayed by the table")
 			}
 			
-			let selectedTravel = travels[indexPath.row]
+			let selectedTravel = driverTravels[indexPath.row]
 			travelDetailViewController.travelToShow = selectedTravel
 			
 		default:
@@ -76,11 +102,20 @@ class MyTravelViewController: UITableViewController {
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		//TODO: Forse dovrei mettere 2, per visualizzare i viaggi creati da me e quelli di cui sono passeggero
-		return 1
+		return 2
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return travels.count
+		var rowCount = 0
+		
+		if section == 0{
+			rowCount = driverTravels.count
+		}
+		else if section == 1{
+			rowCount = passengerTravels.count
+		}
+		
+		return rowCount
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,13 +125,32 @@ class MyTravelViewController: UITableViewController {
 			fatalError("La cella non è di tipo TravelDetailTableViewCell")
 		}
 		
-		let travel = travels[indexPath.row]
+		var travel: TravelInfo? = nil
 		
-		cell.travelDetailDateTimeLabel.text = travel.fromMillisToString()
-		cell.travelDetailPriceLabel.text = String(travel.priceTravel)
-		cell.travelDetailDepartureLabel.text = travel.addressDeparture.provinceInfo
-		cell.travelDetailDestinationLabel.text = travel.spotDestination.nameSpot
+		if indexPath.section == 0{
+			travel = driverTravels[indexPath.row]
+		} else {
+			travel = passengerTravels[indexPath.row]
+		}
+		
+		cell.travelDetailDateTimeLabel.text = travel!.fromMillisToString()
+		cell.travelDetailPriceLabel.text = String(travel!.priceTravel)
+		cell.travelDetailDepartureLabel.text = travel!.addressDeparture.provinceInfo
+		cell.travelDetailDestinationLabel.text = travel!.spotDestination.nameSpot
 		
 		return cell
+	}
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		var title = ""
+		
+		if section == 0 {
+			title = "Guido io"
+		}
+		else if section == 1 {
+			title = "Sono un passeggero"
+		}
+		
+		return title
 	}
 }
