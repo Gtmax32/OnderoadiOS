@@ -21,15 +21,15 @@ class TravelInfo {
 	var isOutbound: Bool
 	var noteTravel: String
 	var ownerTravel: User
-	var passengersTravel: [User]?
+	var passengersTravel = [User]()
 	
 	public var description: String {
-		return "TravelInfo:\n\(addressDeparture.description)\nDataTime in Millis: \(dateTimeDeparture)\n\(spotDestination.description)\nPrice Travel: \(priceTravel)\n\(carTravel.description)\nIsOutbound: \(isOutbound)\nNote Travel: \(noteTravel)\n\(ownerTravel.description)\nPassenger List: \(String(describing: passengersTravel ?? nil))"
+		return "TravelInfo:\n\(addressDeparture.description)\nDataTime in Millis: \(dateTimeDeparture)\n\(spotDestination.description)\nPrice Travel: \(priceTravel)\n\(carTravel.description)\nIsOutbound: \(isOutbound)\nNote Travel: \(noteTravel)\n\(ownerTravel.description)\nPassenger List: \(passengersTravel.description)"
 	}
 	
 	//MARK: Initialization
 	
-	init(address: AddressInfo, dataTime: Int64, destination: SpotInfo, price: Int, car: CarInfo, outbounded: Bool, note: String, owner: User, passengersList: [User]?) {
+	init(address: AddressInfo, dataTime: Int64, destination: SpotInfo, price: Int, car: CarInfo, outbounded: Bool, note: String, owner: User, passengersList: [User]) {
 		self.addressDeparture = address
 		self.dateTimeDeparture = dataTime
 		self.spotDestination = destination
@@ -38,14 +38,11 @@ class TravelInfo {
 		self.isOutbound = outbounded
 		self.noteTravel = note
 		self.ownerTravel = owner
-		self.passengersTravel = nil
+		self.passengersTravel = passengersList
 	}
 	
-	init?(snapshot: DataSnapshot){
-		guard let travelDict = snapshot.value as? [String:Any] else {
-			print("Error to reading travelDict from server")
-			return nil
-		}
+	init?(travelDict: [String: Any]){		
+		//print("In TravelInfo: \(travelDict)")
 		
 		guard let address = travelDict["addressDeparture"] as? [String: Any] else{
 			print("Error to reading address from travelDict")
@@ -102,7 +99,13 @@ class TravelInfo {
 		
 		if let list = travelDict["passengersTravel"]{
 			print("There are passengers!")
-			self.passengersTravel = list as? [User]
+			
+			for elem in list as! NSArray{
+				//print(elem)
+				let user = User.init(dict: elem as! [String: String])
+				
+				self.passengersTravel.append(user)
+			}
 		} else{
 			print("There aren't passenger...")
 		}
@@ -115,7 +118,7 @@ class TravelInfo {
 		
 		let correctDate: Date = gregorian.date(byAdding: .hour, value: -2, to: date)!
 		
-		print("TimeMillis: \(self.dateTimeDeparture) Date from millis: \(date) Date with calendar: \(correctDate)")
+		//print("TimeMillis: \(self.dateTimeDeparture) Date from millis: \(date) Date with calendar: \(correctDate)")
 		
 		let formatter = DateFormatter()
 		
@@ -129,9 +132,25 @@ class TravelInfo {
 		
 		let stringDate = formatter.string(from: correctDate)
 		
-		print(stringDate)
+		//print(stringDate)
 		
 		return stringDate
+	}
+	
+	func listToTravel() -> [String:Any] {
+		var passengersDict = [String:Any]()
+		if self.passengersTravel.count > 0 {
+			var index = 0
+			for passenger in passengersTravel {
+				passengersDict.updateValue(passenger.toServer(), forKey: String(index))
+				index += 1
+			}
+		}
+		else {
+			passengersDict = [:]
+		}
+		
+		return passengersDict
 	}
 	
 	func toServer() -> [String: Any]{
@@ -142,7 +161,8 @@ class TravelInfo {
 		                     "carTravel": self.carTravel.toServer(),
 		                     "outbound" : self.isOutbound,
 		                     "noteTravel": self.noteTravel,
-		                     "ownerTravel": self.ownerTravel.toServer()] as [String: Any]
+		                     "ownerTravel": self.ownerTravel.toServer(),
+		                     "passengersTravel": listToTravel()] as [String: Any]
 		
 		return travelFormatted
 	}

@@ -21,6 +21,8 @@ class TravelDetailTableViewCell: UITableViewCell {
 	
 	@IBOutlet weak var travelDetailDestinationLabel: UILabel!
 	
+	var travelServerKey = ""
+	
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

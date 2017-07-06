@@ -135,7 +135,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			if let currentUser = Auth.auth().currentUser {
 				let user = User.init(id: currentUser.uid, name: currentUser.displayName!, email: currentUser.email!, notificationId: "abcdefgh")
 				
-				travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: nil)
+				travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: [User]())
 				
 				let ref : DatabaseReference = Database.database().reference().child("travels")
 				ref.childByAutoId().setValue(travel!.toServer())
@@ -196,6 +196,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	@IBAction func passengerSCIndexChanged(_ sender: UISegmentedControl) {
 		passengerNumber = sender.selectedSegmentIndex
+		print("In passengerSCIndexChanged - passengerNumber: \(passengerNumber)")
 	}
 	
 	@IBAction func outboundSwitchValueChanged(_ sender: UISwitch) {
@@ -265,7 +266,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		dateTimeMillis = Int64((selectedDate.timeIntervalSince1970 * 1000.0).rounded())
 		
-		print("Date: \(selectedDateString)\nDateTime in millis:\(dateTimeMillis)")
+		//print("Date: \(selectedDateString)\nDateTime in millis:\(dateTimeMillis)")
 	}
 	
 	func datePickerToolbarButtonClicked(sender: UIBarButtonItem){
@@ -461,11 +462,11 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		mainScrollView.contentInset = contentInset
 		mainScrollView.scrollIndicatorInsets = contentInset
 		
-		print("In keyboardWillShow: \(keyboardFrame.size.height)")
+		//print("In keyboardWillShow: \(keyboardFrame.size.height)")
 	}
 	
 	func keyboardWillHide(notification:NSNotification){
-		print("In keyboardWillHide")
+		//print("In keyboardWillHide")
 		let contentInset:UIEdgeInsets = UIEdgeInsets.zero
 		mainScrollView.contentInset = contentInset
 		mainScrollView.scrollIndicatorInsets = contentInset
@@ -477,7 +478,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		mainScrollView.setContentOffset(point, animated: true)
 		
-		print("In textViewShouldBeginEditing: \(textViewOffset)")
+		//print("In textViewShouldBeginEditing: \(textViewOffset)")
 		
 		return true
 	}
@@ -514,9 +515,9 @@ extension CreateViewController: GMSAutocompleteViewControllerDelegate {
 		print("Place coordinate: latitude-\(place.coordinate.latitude) longitude-\(place.coordinate.longitude) ")
 		print("Place addressComponents:\n")
 		
-		for component in place.addressComponents! {
+		/*for component in place.addressComponents! {
 			print("Type: \(component.type) Name: \(component.name)")
-		}
+		}*/
 		
 		let isValid = place.addressComponents!.contains(where: {$0.type == "route" || $0.type == "neighborhood"})
 		

@@ -7,11 +7,18 @@
 //
 
 import UIKit
+import MapKit
+import MessageUI
+import FirebaseDatabase
 
-class TravelInfoViewController: UIViewController {
+class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDelegate {
 	
 	//MARK: Properties
 	var travelToShow: TravelInfo?
+	var travelToShowKey: String?
+	
+	private var isPassenger = false
+	private var isOwner = false
 	
 	@IBOutlet weak var mapContainerView: GMSMapView!
 	
@@ -43,6 +50,10 @@ class TravelInfoViewController: UIViewController {
 		let camera: GMSCameraPosition
 		
 		if let travel = travelToShow {
+			print("Travel Showed: \(travel.description)")
+			let currentUserID = Auth.auth().currentUser?.uid
+			
+			isOwner = travel.ownerTravel.idUser == currentUserID
 			
 			departureDateTimeLabel.text = travel.fromMillisToString()
 			addressRouteLabel.text = travel.addressDeparture.streetInfo
@@ -51,11 +62,9 @@ class TravelInfoViewController: UIViewController {
 			spotNameLabel.text = travel.spotDestination.nameSpot + ", " + travel.spotDestination.citySpot
 			spotProvinceLabel.text = travel.spotDestination.provinceSpot + ", " + travel.spotDestination.regionSpot
 			
-			var passengers = 0
+			let passengers = travel.passengersTravel.count
 			
-			if travel.passengersTravel != nil {
-				passengers = travel.passengersTravel!.count
-			}
+			isPassenger = travel.passengersTravel.contains(where: {$0.idUser == currentUserID})
 			
 			passengerNumberLabel.text = String(passengers) + "/" + String(travel.carTravel.passengersNumber) + " posti occupati"
 			
@@ -100,25 +109,325 @@ class TravelInfoViewController: UIViewController {
 		let bottomToolbar = UIToolbar(frame: toolbarPosition)
 		
 		bottomToolbar.barStyle = UIBarStyle.default
-		bottomToolbar.isTranslucent = true
+		bottomToolbar.isTranslucent = false
 		bottomToolbar.sizeToFit()
 		
-		let contactButton = UIBarButtonItem(title: "Contatta", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.contactButtonClicked))
-		let spotMapButton = UIBarButtonItem(title: "Vai allo spot", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.spotMapButtonClicked))
 		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		
-		bottomToolbar.setItems([contactButton, spaceButton, spotMapButton], animated: false)
+		var contactButton: UIBarButtonItem, mapButton: UIBarButtonItem, passengerButton: UIBarButtonItem
+		
+		if isOwner {
+			contactButton = UIBarButtonItem(title: "Contatta passeggeri", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.contactPassengerButtonClicked))
+			mapButton = UIBarButtonItem(title: "Vai allo spot", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.spotMapButtonClicked))
+			
+			bottomToolbar.setItems([contactButton, spaceButton, mapButton], animated: false)
+			
+		} else {
+			contactButton = UIBarButtonItem(title: "Contatta guidatore", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.contactDriverButtonClicked))
+			mapButton = UIBarButtonItem(title: "Vai al punto d'incontro", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.meetingMapButtonClicked))
+			
+			if isPassenger {
+				passengerButton = UIBarButtonItem(title: "Rinuncia", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.removeButtonClicked))
+			} else {
+				passengerButton = UIBarButtonItem(title: "Parti", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TravelInfoViewController.addButtonClicked))
+			}
+			
+			bottomToolbar.setItems([contactButton, spaceButton, passengerButton, spaceButton, mapButton], animated: false)
+		}
+		
 		bottomToolbar.isUserInteractionEnabled = true
 		
 		self.view.addSubview(bottomToolbar)
 	}
 	
-	func contactButtonClicked(sender: UIBarButtonItem){
-		print("Contact button pressed")
+	func contactPassengerButtonClicked(sender: UIBarButtonItem){
+		print("Contact passenger button pressed")
+		let list = travelToShow!.passengersTravel
+		
+		if list.count > 0{
+			var array = [String]()
+			
+			for user in list{
+				array.append(user.emailUser)
+			}
+			
+			let mailComposeViewController = configuredMailComposeViewController(mailArray: array)
+			
+			if MFMailComposeViewController.canSendMail() {
+				self.present(mailComposeViewController, animated: true, completion: nil)
+			} else {
+				self.showSendMailErrorAlert()
+			}
+		} else {
+			let message = "Non ci sono passeggeri a cui inviare la mail."
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		}
+	}
+	
+	func contactDriverButtonClicked(sender: UIBarButtonItem){
+		print("Contact driver button pressed")
+		let array = [travelToShow!.ownerTravel.emailUser]
+		
+		let mailComposeViewController = configuredMailComposeViewController(mailArray: array)
+		
+		if MFMailComposeViewController.canSendMail() {
+			self.present(mailComposeViewController, animated: true, completion: nil)
+		} else {
+			self.showSendMailErrorAlert()
+		}
 	}
 	
 	func spotMapButtonClicked(sender: UIBarButtonItem){
 		print("SpotMap button pressed")
+		
+		let regionDistance:CLLocationDistance = 10000
+		let coordinates = travelToShow!.spotDestination.position
+		let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+		let options = [
+			MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+			MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+		]
+		let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+		let mapItem = MKMapItem(placemark: placemark)
+		mapItem.name = "Spot"
+		mapItem.openInMaps(launchOptions: options)
+	}
+	
+	func meetingMapButtonClicked(sender: UIBarButtonItem){
+		print("MeetingPointMap button pressed")
+		
+		let latitude: CLLocationDegrees = travelToShow!.addressDeparture.latitudeInfo
+		let longitude: CLLocationDegrees = travelToShow!.addressDeparture.longitudeInfo
+		
+		let regionDistance:CLLocationDistance = 10000
+		let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+		let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+		let options = [
+			MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+			MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+		]
+		let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+		let mapItem = MKMapItem(placemark: placemark)
+		mapItem.name = "Punto d'incontro"
+		mapItem.openInMaps(launchOptions: options)
+	}
+	
+	func addButtonClicked(sender: UIBarButtonItem){
+		print("Add button pressed")
+		let ref = Database.database().reference().child("travels").child(travelToShowKey!)
+		let list = travelToShow!.passengersTravel
+		let availablePlace = travelToShow!.carTravel.passengersNumber
+		
+		if list.count < availablePlace{
+			if let FIRUser = Auth.auth().currentUser{
+				let user = User.init(id: FIRUser.uid, name: FIRUser.displayName!, email: FIRUser.email!, notificationId: "abcdefghilmnopqrstuvz")
+				
+				travelToShow!.passengersTravel.append(user)
+				print(travelToShow!.description)
+				//ref.updateChildValues(travelToShow!.toServer())
+				ref.setValue(travelToShow!.toServer())
+				let message = "Sei stato aggiunto al viaggio. Inizia a preparare i bagagli!"
+				
+				let alertController = UIAlertController(title: "Informazioni", message: message, preferredStyle: .alert)
+				
+				let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+					print("Dismissing UIAlertController")
+				})
+				alertController.addAction(cancelAction)
+				
+				self.present(alertController, animated: true, completion: nil)
+				
+				/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+					if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){
+						travel.passengersTravel.append(user)
+						
+						// Set value and report transaction success
+						currentData.value = travel.toServer()
+						
+						return TransactionResult.success(withValue: currentData)
+					}
+					return TransactionResult.success(withValue: currentData)
+				}) { (error, committed, snapshot) in
+					if let error = error {
+						print(error.localizedDescription)
+						let message = "Errore nell'aggiunta al viaggio.\nRiprova tra un po'."
+						
+						let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+						
+						let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+							print("Dismissing UIAlertController")
+						})
+						alertController.addAction(cancelAction)
+						
+						self.present(alertController, animated: true, completion: nil)
+					} else {
+						//Suppongo che, se error=nil, sia andato tutto a posto
+						let message = "Sei stato aggiunto al viaggio. Inizia a preparare i bagagli!"
+						
+						let alertController = UIAlertController(title: "Informazioni", message: message, preferredStyle: .alert)
+						
+						let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+							print("Dismissing UIAlertController")
+						})
+						alertController.addAction(cancelAction)
+						
+						self.present(alertController, animated: true, completion: nil)
+					}
+				}*/
+				
+				
+				
+			} else {
+				print("Error in reading currentUser")
+				let message = "Errore nell'aggiunta al viaggio.\nRiprova tra un po'."
+				
+				let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+				
+				let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+					print("Dismissing UIAlertController")
+				})
+				alertController.addAction(cancelAction)
+				
+				self.present(alertController, animated: true, completion: nil)
+			}
+		} else {
+			let message = "Il viaggio è già completo purtroppo.\nCerca nella Home altri viaggi!"
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		}
+		
+	}
+	
+	func removeButtonClicked(sender: UIBarButtonItem){
+		print("Remove button pressed")
+		let message = "Sei sicuro di voler rinunciare al tuo posto?"
+		
+		let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+		
+		let cancelAction = UIAlertAction(title: "Annulla", style: .cancel) { (action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		}
+		alertController.addAction(cancelAction)
+		
+		let destroyAction = UIAlertAction(title: "Conferma", style: .destructive) { (action:UIAlertAction!) in
+			self.removePassenger()
+		}
+		alertController.addAction(destroyAction)
+		
+		self.present(alertController, animated: true, completion: nil)		
+	}
+	
+	private func removePassenger(){
+		let ref = Database.database().reference().child("travels").child(travelToShowKey!)
+		
+		if let FIRUser = Auth.auth().currentUser{
+			let user = travelToShow!.passengersTravel.first(where: {$0.idUser == FIRUser.uid})
+			//print("User to remove: \(user?.description)")			
+			
+			let index = travelToShow!.passengersTravel.index(of: user!)
+			print("Index: \(index!)")
+			travelToShow!.passengersTravel.remove(at: index!)
+			
+			print(travelToShow!.description)
+			//ref.updateChildValues(travelToShow!.toServer())
+			ref.setValue(travelToShow!.toServer())
+			
+			/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+			if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){
+			travel.passengersTravel.append(user)
+			
+			// Set value and report transaction success
+			currentData.value = travel.toServer()
+			
+			return TransactionResult.success(withValue: currentData)
+			}
+			return TransactionResult.success(withValue: currentData)
+			}) { (error, committed, snapshot) in
+			if let error = error {
+			print(error.localizedDescription)
+			let message = "Errore nell'aggiunta al viaggio.\nRiprova tra un po'."
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+			} else {
+			//Suppongo che, se error=nil, sia andato tutto a posto
+			let message = "Sei stato aggiunto al viaggio. Inizia a preparare i bagagli!"
+			
+			let alertController = UIAlertController(title: "Informazioni", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+			}
+			}*/
+		} else {
+			print("Error in reading currentUser")
+			let message = "Errore nella rimozione dal viaggio.\nRiprova tra un po'."
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		}
+	}
+	
+	func configuredMailComposeViewController(mailArray: [String]) -> MFMailComposeViewController {
+		let mailComposerVC = MFMailComposeViewController()
+		mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+		
+		mailComposerVC.setToRecipients(mailArray)
+		mailComposerVC.setSubject("Comunicazione")
+		//mailComposerVC.setMessageBody("Prova", isHTML: false)
+		
+		return mailComposerVC
+	}
+	
+	func showSendMailErrorAlert() {
+		let message = "Errore nell'invio della mail.\nControlla di avere una connessione attiva."
+		
+		let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+		
+		let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		})
+		alertController.addAction(cancelAction)
+		
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
+	// MARK: MFMailComposeViewControllerDelegate
+	
+	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?){
+		controller.dismiss(animated: true, completion: nil)
+		
 	}
 	/*
     // MARK: - Navigation

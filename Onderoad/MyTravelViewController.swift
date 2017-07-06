@@ -14,7 +14,9 @@ class MyTravelViewController: UITableViewController {
 	//MARK: Properties
 	
 	var driverTravels = [TravelInfo]()
+	var driverTravelsKey = [String]()
 	var passengerTravels = [TravelInfo]()
+	var passengerTravelsKey = [String]()
 	var travelRef: DatabaseReference!
 	
     override func viewDidLoad() {
@@ -26,17 +28,36 @@ class MyTravelViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		
 		driverTravels.removeAll()
+		driverTravelsKey.removeAll()
+		
+		passengerTravels.removeAll()
+		passengerTravelsKey.removeAll()
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
 			for child in snapshot.children.allObjects as! [DataSnapshot]{
-				//let travelDict = child.value as? [String:Any] ?? [:]
+				let currentUserID = Auth.auth().currentUser?.uid
+				//Leggo il viaggio, lo converto in dizionario
+				let travelDict = child.value as? [String:Any] ?? [:]
 				
-				let serverTravel = TravelInfo.init(snapshot: child)
-				//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
-				if serverTravel?.ownerTravel.idUser == Auth.auth().currentUser?.uid{
+				let serverTravel = TravelInfo.init(travelDict: travelDict)
+				
+				if serverTravel!.ownerTravel.idUser == currentUserID{
+					
+					//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
+				
 					let newIndexPath = IndexPath(row: self.driverTravels.count, section: 0)
 					
 					self.driverTravels.append(serverTravel!)
+					self.driverTravelsKey.append(child.key)
+					
+					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+				} else if serverTravel!.passengersTravel.contains(where: {$0.idUser == currentUserID}){
+					//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
+					
+					let newIndexPath = IndexPath(row: self.passengerTravels.count, section: 1)
+					
+					self.passengerTravels.append(serverTravel!)
+					self.passengerTravelsKey.append(child.key)
 					
 					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
 				}
@@ -52,19 +73,12 @@ class MyTravelViewController: UITableViewController {
     }
 	
 	//MARK: Action Methods
-	/*@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
+	@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
 		print("In unwindToTravelList")
 		
-		if let sourceViewController = sender.source as? CreateViewController, let travel = sourceViewController.travel {
-			let newIndexPath = IndexPath(row: travels.count, section: 0)
-			
-			
-			
-			travels.append(travel)
-			
-			tableView.insertRows(at: [newIndexPath], with: .automatic)
-		}
-	}*/
+		
+		
+	}
 	
 	// MARK: - Navigation
 	// Get the new view controller using segue.destinationViewController.
@@ -90,8 +104,19 @@ class MyTravelViewController: UITableViewController {
 				fatalError("The selected cell is not being displayed by the table")
 			}
 			
-			let selectedTravel = driverTravels[indexPath.row]
+			var selectedTravel: TravelInfo?
+			var selectedTravelKey: String?
+			
+			if indexPath.section == 0 {
+				selectedTravel = driverTravels[indexPath.row]
+				selectedTravelKey = driverTravelsKey[indexPath.row]
+			} else if indexPath.section == 1{
+				selectedTravel = passengerTravels[indexPath.row]
+				selectedTravelKey = passengerTravelsKey[indexPath.row]
+			}
+				
 			travelDetailViewController.travelToShow = selectedTravel
+			travelDetailViewController.travelToShowKey = selectedTravelKey
 			
 		default:
 			fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")

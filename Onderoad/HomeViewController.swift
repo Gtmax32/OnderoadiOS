@@ -14,6 +14,7 @@ class HomeViewController: UITableViewController {
 	//MARK: Properties
 	
 	var travels = [TravelInfo]()
+	var travelKeys = [String]()
 	var travelRef: DatabaseReference!
 	
     override func viewDidLoad() {
@@ -31,20 +32,29 @@ class HomeViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		
 		travels.removeAll()
+		travelKeys.removeAll()
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
 			for child in snapshot.children.allObjects as! [DataSnapshot]{
 				//let travelDict = child.value as? [String:Any] ?? [:]
+				let currentUserID = Auth.auth().currentUser?.uid
 				
-				let serverTravel = TravelInfo.init(snapshot: child)
-				print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
-				if serverTravel?.ownerTravel.idUser != Auth.auth().currentUser?.uid{
-					let newIndexPath = IndexPath(row: self.travels.count, section: 0)
-					print("In HomeViewController - newIndexPath: \(newIndexPath)")
+				let travelDict = child.value as? [String:Any] ?? [:]
+				let idOwnerTravel = (travelDict["ownerTravel"] as! [String : String])["idUser"] ?? "Error reading user from serverDict"
+				
+				if idOwnerTravel !=  currentUserID{
+					let serverTravel = TravelInfo.init(travelDict: travelDict)
+					//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
+					let isPassenger = serverTravel!.passengersTravel.contains(where: {$0.idUser == currentUserID})
 					
-					self.travels.append(serverTravel!)
-					
-					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+					if !isPassenger{
+						let newIndexPath = IndexPath(row: self.travels.count, section: 0)
+						
+						self.travels.append(serverTravel!)
+						self.travelKeys.append(child.key)
+						
+						self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+					}
 				}				
 			}
 		})
@@ -81,7 +91,9 @@ class HomeViewController: UITableViewController {
 		}
 		
 		let selectedTravel = travels[indexPath.row]
+		let selectedTravelKey = travelKeys[indexPath.row]
 		travelDetailViewController.travelToShow = selectedTravel
+		travelDetailViewController.travelToShowKey = selectedTravelKey
 	}
 	
     // MARK: - Table view data source
@@ -103,7 +115,7 @@ class HomeViewController: UITableViewController {
 		
 		let travel = travels[indexPath.row]
 		
-		print("In tableView:cellForRowAt: " + travel.description)
+		//print("In tableView:cellForRowAt: " + travel.description)
 		
 		cell.travelDetailDateTimeLabel.text = travel.fromMillisToString()
 		cell.travelDetailPriceLabel.text = String(travel.priceTravel)
