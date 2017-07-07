@@ -19,22 +19,13 @@ class HomeViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-		
 		travelRef = Database.database().reference().child("travels")
-    }
-	
-	override func viewWillAppear(_ animated: Bool) {
-		
-		travels.removeAll()
-		travelKeys.removeAll()
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
+			self.travels.removeAll()
+			self.travelKeys.removeAll()
+			self.tableView.reloadData()
+			
 			for child in snapshot.children.allObjects as! [DataSnapshot]{
 				//let travelDict = child.value as? [String:Any] ?? [:]
 				let currentUserID = Auth.auth().currentUser?.uid
@@ -55,12 +46,18 @@ class HomeViewController: UITableViewController {
 						
 						self.tableView.insertRows(at: [newIndexPath], with: .automatic)
 					}
-				}				
+				}
 			}
 		})
 		
-		tableView.reloadData()
-	}
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		
+		travelRef = Database.database().reference().child("travels")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

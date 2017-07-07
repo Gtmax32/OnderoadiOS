@@ -98,7 +98,7 @@ class TravelInfo {
 		self.ownerTravel = User.init(dict: owner)
 		
 		if let list = travelDict["passengersTravel"]{
-			print("There are passengers!")
+			//print("There are passengers!")
 			
 			for elem in list as! NSArray{
 				//print(elem)
@@ -106,9 +106,9 @@ class TravelInfo {
 				
 				self.passengersTravel.append(user)
 			}
-		} else{
+		} /*else{
 			print("There aren't passenger...")
-		}
+		}*/
 	}
 	
 	public func fromMillisToString() -> String{

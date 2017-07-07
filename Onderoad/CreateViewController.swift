@@ -80,13 +80,12 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.hideKeyboardWhenTappedAround()
+		//self.hideKeyboardWhenTappedAround()
 		
 		setupDateTimePicker()
 		setupRegionNamePicker()
 		setupSupportTypePicker()
-		
-		travelNoteTextView.delegate = self
+		setupNoteTextView()
 		
 		locationManager = CLLocationManager()
 		locationManager?.delegate = self
@@ -195,8 +194,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	}
 	
 	@IBAction func passengerSCIndexChanged(_ sender: UISegmentedControl) {
-		passengerNumber = sender.selectedSegmentIndex
-		print("In passengerSCIndexChanged - passengerNumber: \(passengerNumber)")
+		passengerNumber = sender.selectedSegmentIndex + 1
 	}
 	
 	@IBAction func outboundSwitchValueChanged(_ sender: UISwitch) {
@@ -204,7 +202,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	}
 	
 	@IBAction func boardSCIndexChanged(_ sender: UISegmentedControl) {
-		boardNumber = sender.selectedSegmentIndex
+		boardNumber = sender.selectedSegmentIndex + 1
 	}
 
 	//MARK: DatePicker Methods
@@ -386,6 +384,33 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		carSupportTypeTextField.resignFirstResponder()
 	}
 	
+	//MARK: Note TextView Methods
+	
+	func setupNoteTextView(){
+		travelNoteTextView.delegate = self
+		
+		let toolbar = UIToolbar()
+		toolbar.barStyle = UIBarStyle.default
+		toolbar.isTranslucent = true
+		toolbar.sizeToFit()
+		
+		let doneButton = UIBarButtonItem(title: "Fine", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateViewController.noteTextViewToolbarButtonClicked))
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		
+		toolbar.setItems([spaceButton, doneButton], animated: false)
+		toolbar.isUserInteractionEnabled = true
+		
+		travelNoteTextView.inputAccessoryView = toolbar
+	}
+	
+	func noteTextViewToolbarButtonClicked(sender: UIBarButtonItem){
+		let buttonText = sender.title ?? ""
+		
+		if (buttonText == "Fine"){
+			travelNoteTextView.resignFirstResponder()
+		}
+	}
+	
 	//MARK: UIPickerViewDataSource and UIPickerViewDelegate protocol Methods
 	
 	func numberOfComponents(in : UIPickerView) -> Int{
@@ -484,7 +509,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	}
 	
 	func textViewDidEndEditing(_ textView: UITextView) {
-		print("In textViewDidEndEditing")
+		//print("In textViewDidEndEditing")
 		
 		textViewOffset = 0
 		
@@ -492,7 +517,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	}
 }
 
-extension CreateViewController {
+/*extension CreateViewController {
 	func hideKeyboardWhenTappedAround() {
 		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateViewController.dismissKeyboard))
 		tap.cancelsTouchesInView = false
@@ -502,7 +527,7 @@ extension CreateViewController {
 	func dismissKeyboard() {
 		view.endEditing(true)
 	}
-}
+}*/
 
 //MARK: Google Places AutoComplete Manager
 
@@ -515,9 +540,9 @@ extension CreateViewController: GMSAutocompleteViewControllerDelegate {
 		print("Place coordinate: latitude-\(place.coordinate.latitude) longitude-\(place.coordinate.longitude) ")
 		print("Place addressComponents:\n")
 		
-		/*for component in place.addressComponents! {
+		for component in place.addressComponents! {
 			print("Type: \(component.type) Name: \(component.name)")
-		}*/
+		}
 		
 		let isValid = place.addressComponents!.contains(where: {$0.type == "route" || $0.type == "neighborhood"})
 		

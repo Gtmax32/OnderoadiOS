@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import MessageUI
 import FirebaseDatabase
+import Social
 
 class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDelegate {
 	
@@ -50,7 +51,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		let camera: GMSCameraPosition
 		
 		if let travel = travelToShow {
-			print("Travel Showed: \(travel.description)")
+			//print("Travel Showed: \(travel.description)")
 			let currentUserID = Auth.auth().currentUser?.uid
 			
 			isOwner = travel.ownerTravel.idUser == currentUserID
@@ -102,6 +103,13 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	
 	@IBAction func shareTravelButtonPressed(_ sender: UIBarButtonItem) {
 		print("Share Travel Button Pressed")
+		
+		if let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
+			vc.setInitialText("Look at this great picture!")
+			
+			vc.add(URL(string: "https://travelsharing.com/info_travel/" + travelToShowKey!))
+			self.present(vc, animated: true)
+		}
 	}
 	
 	private func setupBottomToolbar(){
@@ -222,11 +230,12 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	
 	func addButtonClicked(sender: UIBarButtonItem){
 		print("Add button pressed")
-		let ref = Database.database().reference().child("travels").child(travelToShowKey!)
-		let list = travelToShow!.passengersTravel
-		let availablePlace = travelToShow!.carTravel.passengersNumber
 		
-		if list.count < availablePlace{
+		let ref = Database.database().reference().child("travels").child(travelToShowKey!)
+		let occupiedPlace = travelToShow!.passengersTravel.count
+		let maxPlaces = travelToShow!.carTravel.passengersNumber
+		
+		if occupiedPlace < maxPlaces{
 			if let FIRUser = Auth.auth().currentUser{
 				let user = User.init(id: FIRUser.uid, name: FIRUser.displayName!, email: FIRUser.email!, notificationId: "abcdefghilmnopqrstuvz")
 				
@@ -245,6 +254,13 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 				
 				self.present(alertController, animated: true, completion: nil)
 				
+				let passengers = travelToShow!.passengersTravel.count
+				
+				passengerNumberLabel.text = String(passengers) + "/" + String(maxPlaces) + " posti occupati"
+				
+				if let toolbar = self.view.subviews.last as? UIToolbar{
+					toolbar.items?[2].isEnabled = false
+				}
 				/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
 					if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){
 						travel.passengersTravel.append(user)
@@ -343,9 +359,17 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 			print("Index: \(index!)")
 			travelToShow!.passengersTravel.remove(at: index!)
 			
-			print(travelToShow!.description)
+			//print(travelToShow!.description)
 			//ref.updateChildValues(travelToShow!.toServer())
 			ref.setValue(travelToShow!.toServer())
+			
+			let passengers = travelToShow!.passengersTravel.count
+			
+			passengerNumberLabel.text = String(passengers) + "/" + String(travelToShow!.carTravel.passengersNumber) + " posti occupati"
+			
+			if let toolbar = self.view.subviews.last as? UIToolbar{
+				toolbar.items?[2].isEnabled = false
+			}
 			
 			/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
 			if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){

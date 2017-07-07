@@ -23,17 +23,16 @@ class MyTravelViewController: UITableViewController {
         super.viewDidLoad()
 		
 		travelRef = Database.database().reference().child("travels")
-    }
-	
-	override func viewWillAppear(_ animated: Bool) {
-		
-		driverTravels.removeAll()
-		driverTravelsKey.removeAll()
-		
-		passengerTravels.removeAll()
-		passengerTravelsKey.removeAll()
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
+			self.driverTravels.removeAll()
+			self.driverTravelsKey.removeAll()
+			
+			self.passengerTravels.removeAll()
+			self.passengerTravelsKey.removeAll()
+			
+			self.tableView.reloadData()
+			
 			for child in snapshot.children.allObjects as! [DataSnapshot]{
 				let currentUserID = Auth.auth().currentUser?.uid
 				//Leggo il viaggio, lo converto in dizionario
@@ -44,11 +43,11 @@ class MyTravelViewController: UITableViewController {
 				if serverTravel!.ownerTravel.idUser == currentUserID{
 					
 					//print("Server Travel: \(serverTravel?.description ?? "Error on converting TravelInfo Object")")
-				
-					let newIndexPath = IndexPath(row: self.driverTravels.count, section: 0)
 					
 					self.driverTravels.append(serverTravel!)
 					self.driverTravelsKey.append(child.key)
+					
+					let newIndexPath = IndexPath(row: self.driverTravels.count - 1, section: 0)
 					
 					self.tableView.insertRows(at: [newIndexPath], with: .automatic)
 				} else if serverTravel!.passengersTravel.contains(where: {$0.idUser == currentUserID}){
@@ -63,9 +62,7 @@ class MyTravelViewController: UITableViewController {
 				}
 			}
 		})
-		
-		tableView.reloadData()
-	}
+    }
 	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -74,10 +71,7 @@ class MyTravelViewController: UITableViewController {
 	
 	//MARK: Action Methods
 	@IBAction func unwindToTravelList(sender: UIStoryboardSegue){
-		print("In unwindToTravelList")
-		
-		
-		
+		print("In unwindToTravelList")		
 	}
 	
 	// MARK: - Navigation
