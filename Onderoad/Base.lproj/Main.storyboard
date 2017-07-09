@@ -295,7 +295,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mhk-oE-aMz" id="NUm-xF-d8j">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="travelDetailMainLayout" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="uZv-f5-bhL">
@@ -435,7 +435,7 @@
         <!--Crea il tuo viaggio-->
         <scene sceneID="qP0-TG-kp2">
             <objects>
-                <viewController id="peX-cO-I4A" customClass="CreateViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="peX-cO-I4A" customClass="CreateViewController" customModule="Onderoad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8U8-F7-t53"/>
                         <viewControllerLayoutGuide type="bottom" id="txJ-nJ-2is"/>
@@ -827,7 +827,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4j-n8-PcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="shO-xg-7gx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6210" y="299"/>
+            <point key="canvasLocation" x="5333" y="1224"/>
         </scene>
         <!--Spot-->
         <scene sceneID="ncc-g0-VOy">
@@ -993,11 +993,12 @@
                         <outlet property="swellValueLabel" destination="zhs-kj-p26" id="Eog-f8-vao"/>
                         <outlet property="waveValueLabel" destination="ceB-Dh-plz" id="oWa-rB-fqA"/>
                         <outlet property="windValueLabel" destination="mi2-Hw-uRb" id="vEh-Q9-UmM"/>
+                        <segue destination="52Q-Xq-FaP" kind="presentation" identifier="CreateFromSpot" id="Iys-Hx-QMZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AX4-OI-OVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2214" y="355"/>
+            <point key="canvasLocation" x="2333" y="454"/>
         </scene>
         <!--Login-->
         <scene sceneID="lu3-JF-hy9">
@@ -1049,7 +1050,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mud-lj-dwk" id="ih6-yF-Mpu">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="travelDetailMainLayout" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TtX-92-X6g">
@@ -1267,5 +1268,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cD5-7Q-juG"/>
+        <segue reference="Iys-Hx-QMZ"/>
     </inferredMetricsTieBreakers>
 </document>

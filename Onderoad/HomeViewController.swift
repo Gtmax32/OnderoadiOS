@@ -19,6 +19,11 @@ class HomeViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+				
+		/*navigationController?.navigationBar.barTintColor = UIColor(red: 102, green: 203, blue: 255, alpha: 0)
+		navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]*/
+		
 		travelRef = Database.database().reference().child("travels")
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
@@ -56,7 +61,6 @@ class HomeViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
 		
-		travelRef = Database.database().reference().child("travels")
     }
 
     override func didReceiveMemoryWarning() {

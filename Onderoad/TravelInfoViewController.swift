@@ -104,11 +104,11 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	@IBAction func shareTravelButtonPressed(_ sender: UIBarButtonItem) {
 		print("Share Travel Button Pressed")
 		
-		if let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
-			vc.setInitialText("Look at this great picture!")
+		if let shareViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
+			shareViewController.title = "Vieni a surfare con me?"
 			
-			vc.add(URL(string: "https://travelsharing.com/info_travel/" + travelToShowKey!))
-			self.present(vc, animated: true)
+			shareViewController.add(URL(string: "https://travelsharing.com/info_travel/" + travelToShowKey!))
+			self.present(shareViewController, animated: true)
 		}
 	}
 	

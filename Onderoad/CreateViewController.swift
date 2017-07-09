@@ -18,6 +18,10 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	var travelAddress: AddressInfo?
 	
+	var regionFromSpot: String?
+	
+	var nameFromSpot: String?
+	
 	var dateTimeMillis: Int64 = 0
 	
 	var locationManager: CLLocationManager?
@@ -81,6 +85,8 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		//self.hideKeyboardWhenTappedAround()
+		
+		print("In CreateViewController - regionSpot: \(regionFromSpot ?? "") nameSpot: \(nameFromSpot ?? "")")
 		
 		setupDateTimePicker()
 		setupRegionNamePicker()
@@ -316,13 +322,29 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 		
 		spotNameTextField.inputView = spotNamePicker
 		spotNameTextField.inputAccessoryView = nameToolbar
+		
+		if let region = regionFromSpot, let name = nameFromSpot{
+			spotRegionTextField.text = region
+			spotNameTextField.text = name
+			
+			namePickerSource = RegionSpotDict.getSpotNameFromKey(key: region)
+			selectedRegionSpots = Array(RegionSpotDict.DICT[region]!)
+			
+			if let index = namePickerSource?.index(where: {$0 == name}) {
+				selectedSpot = selectedRegionSpots?[index]
+				print("Spot from CreateVC: " + selectedSpot!.description)
+			}
+			else {
+				fatalError("Error in retrieving spot, from region and name!")
+			}
+		}
 	}
 	
 	func regionPickerToolbarButtonClicked(sender: UIBarButtonItem){
 		let buttonText = sender.title ?? ""
 		
 		if (buttonText == "Ok"){
-			let selectedRegionIndex = (spotRegionPicker?.selectedRow(inComponent: 0))!
+			let selectedRegionIndex = spotRegionPicker!.selectedRow(inComponent: 0)
 			spotRegionTextField.text = regionPickerSource[selectedRegionIndex]
 			
 			let key = regionPickerSource[selectedRegionIndex]
