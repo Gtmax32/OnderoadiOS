@@ -22,6 +22,8 @@ class MyTravelViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		self.navigationItem.leftBarButtonItem = editButtonItem
+		
 		travelRef = Database.database().reference().child("travels")
 		
 		travelRef.observe(DataEventType.value, with: { snapshot in
@@ -172,4 +174,51 @@ class MyTravelViewController: UITableViewController {
 		
 		return title
 	}
+	
+	
+	// Override to support conditional editing of the table view.
+	// Return false if you do not want the specified item to be editable.
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		if indexPath.section == 0{
+			return true
+		}
+		
+		return false
+	}
+
+	
+	
+	// Override to support editing the table view.
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		// Delete the row from the data source
+		if editingStyle == .delete {
+			
+			let message = "Sicuro di voler eliminare questo viaggio?"
+			
+			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
+			
+			let noAction = UIAlertAction(title: "No", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			
+			let yesAction = UIAlertAction(title: "Si", style: .default, handler: {(action:UIAlertAction!) in
+				let key = self.driverTravelsKey[indexPath.row]
+				self.travelRef.child(key).removeValue()
+				
+				self.driverTravels.remove(at: indexPath.row)
+				self.driverTravelsKey.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
+			})
+			
+			alertController.addAction(yesAction)
+			alertController.addAction(noAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+			
+			
+		} else if editingStyle == .insert {
+			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+		}
+	}
+
 }

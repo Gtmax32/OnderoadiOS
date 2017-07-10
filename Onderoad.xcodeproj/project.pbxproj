@@ -757,6 +757,7 @@
 					"$(PROJECT_DIR)/Onderoad",
 				);
 				INFOPLIST_FILE = Onderoad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LIBTOOLFLAGS[arch=*]" = "-ObjC";
@@ -764,6 +765,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Onderoad/Onderoad-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = module.modulemap;
 			};
 			name = Debug;
@@ -841,6 +843,7 @@
 					"$(PROJECT_DIR)/Onderoad",
 				);
 				INFOPLIST_FILE = Onderoad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LIBTOOLFLAGS[arch=*]" = "-ObjC";
@@ -848,6 +851,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Onderoad/Onderoad-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = module.modulemap;
 			};
 			name = Release;

@@ -17,12 +17,16 @@ class HomeViewController: UITableViewController {
 	var travelKeys = [String]()
 	var travelRef: DatabaseReference!
 	
+	var message = UILabel()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-				
-		/*navigationController?.navigationBar.barTintColor = UIColor(red: 102, green: 203, blue: 255, alpha: 0)
-		navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]*/
+		/*message.center = self.view.center
+		message.text = "Non ci sono viaggi?\nVai in MyTravel e crea il tuo viaggio!"
+		message.isHidden = false
+		
+		view.addSubview(message)*/
 		
 		travelRef = Database.database().reference().child("travels")
 		
@@ -53,6 +57,16 @@ class HomeViewController: UITableViewController {
 					}
 				}
 			}
+			
+			/*if self.travels.isEmpty {
+				self.tableView.isHidden = true
+				
+				self.message.isHidden = false
+			} else {
+				self.tableView.isHidden = false
+				
+				self.message.isHidden = true
+			}*/
 		})
 		
         // Uncomment the following line to preserve selection between presentations

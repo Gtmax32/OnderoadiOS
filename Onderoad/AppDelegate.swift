@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		GMSServices.provideAPIKey("AIzaSyAgpF7el0pPO-w8hmdFlmciTRF1_7jwXLc")		
 		
 		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-				
+		
 		if let currentUser = Auth.auth().currentUser {
 			print("User \(currentUser.displayName ?? "") already authenticated!")
 			let storyboard = UIStoryboard(name: "Main", bundle: nil)
