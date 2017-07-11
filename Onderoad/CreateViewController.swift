@@ -34,8 +34,6 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	var isOutbound = false
 	
-	var boardNumber = 4
-	
 	let supportTypePickerSource = ["Barre porta pacchi", "Soft rack", "Dentro l'auto"]
 	
 	var selectedRegionSpots: [SpotInfo]?
@@ -75,8 +73,6 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	@IBOutlet weak var passengerNumberSegmentedControl: UISegmentedControl!
 	
 	@IBOutlet weak var isOutboundSwitch: UISwitch!
-	
-	@IBOutlet weak var boardNumberSegmentedControl: UISegmentedControl!
 	
 	@IBOutlet weak var carSupportTypeTextField: UITextField!
 	
@@ -134,22 +130,40 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			
 			self.present(alertController, animated: true, completion: nil)
 		} else {
-			print("Preparing travel to send")
+			let message = "Confermi la creazione del viaggio?"
 			
-			let car = CarInfo.init(passengers: passengerNumber, surfboards: boardNumber, type: carSupportTypeTextField.text!)
-			if let currentUser = Auth.auth().currentUser {
-				let user = User.init(id: currentUser.uid, name: currentUser.displayName!, email: currentUser.email!, notificationId: "abcdefgh")
+			let alertController = UIAlertController(title: "Terminata creazione", message: message, preferredStyle: .alert)
+			
+			let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: {(action:UIAlertAction!) in
+				print("Dismissing UIAlertController")
+			})
+			alertController.addAction(cancelAction)
+			
+			let doneAction = UIAlertAction(title: "Si", style: .default, handler: {(action:UIAlertAction!) in
+				print("Preparing travel to send")
+				self.saveTravel()
 				
-				travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: [User]())
-				
-				let ref : DatabaseReference = Database.database().reference().child("travels")
-				ref.childByAutoId().setValue(travel!.toServer())
-				
-				print(travel!.description )
-				print(travel!.fromMillisToString())
-				
-				self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
-			}			
+			})
+			alertController.addAction(doneAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		}
+	}
+	
+	func saveTravel(){
+		let car = CarInfo.init(passengers: passengerNumber, surfboards: 0, type: carSupportTypeTextField.text!)
+		if let currentUser = Auth.auth().currentUser {
+			let user = User.init(id: currentUser.uid, name: currentUser.displayName!, email: currentUser.email!, notificationId: "abcdefgh")
+			
+			travel = TravelInfo.init(address: travelAddress!, dataTime: dateTimeMillis, destination: selectedSpot!, price: travelPriceStepper.value, car: car, outbounded: isOutbound, note: travelNoteTextView.text, owner: user, passengersList: [User]())
+			
+			let ref : DatabaseReference = Database.database().reference().child("travels")
+			ref.childByAutoId().setValue(travel!.toServer())
+			
+			print(travel!.description )
+			print(travel!.fromMillisToString())
+			
+			self.performSegue(withIdentifier: "unwindSegueToMyTravel", sender: self)
 		}
 	}
 	
@@ -205,10 +219,6 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 	
 	@IBAction func outboundSwitchValueChanged(_ sender: UISwitch) {
 		isOutbound = sender.isOn
-	}
-	
-	@IBAction func boardSCIndexChanged(_ sender: UISegmentedControl) {
-		boardNumber = sender.selectedSegmentIndex + 1
 	}
 
 	//MARK: DatePicker Methods

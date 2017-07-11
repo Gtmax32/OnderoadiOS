@@ -39,8 +39,6 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	
 	@IBOutlet weak var priceTravelLabel: UILabel!
 	
-	@IBOutlet weak var surfboardNumberLabel: UILabel!
-	
 	@IBOutlet weak var supportTypeLabel: UILabel!
 	
 	@IBOutlet weak var noteTravel: UILabel!
@@ -66,10 +64,6 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 			passengerNumberLabel.text = String(passengers) + "/" + String(travel.carTravel.passengersNumber) + " posti occupati"
 			
 			priceTravelLabel.text = String(travel.priceTravel) + " €"
-			
-			//TODO: Sistemare la visualizzazione del numero di tavole trasportabili, dopo aver capito come tener traccia di questo, magari facendo diventare la lista dei passegeri un hashmap composto da <User,Bool>, dove il bool indica se porta o meno la tavola.
-			
-			surfboardNumberLabel.text = String(travel.carTravel.surfboardNumber)
 			
 			supportTypeLabel.text = travel.carTravel.surfboardType
 			

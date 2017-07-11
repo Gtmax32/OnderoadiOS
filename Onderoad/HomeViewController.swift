@@ -25,7 +25,7 @@ class HomeViewController: UITableViewController {
 		
 		travelRef = Database.database().reference().child("travels")
 		
-		travelRef.observe(DataEventType.value, with: { snapshot in
+		travelRef.queryOrdered(byChild: "dateTimeDeparture").observe(DataEventType.value, with: { snapshot in
 			self.travels.removeAll()
 			self.travelKeys.removeAll()
 			self.tableView.reloadData()
