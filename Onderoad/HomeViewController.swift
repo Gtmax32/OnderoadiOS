@@ -18,15 +18,10 @@ class HomeViewController: UITableViewController {
 	var travelRef: DatabaseReference!
 	
 	var message = UILabel()
+	var messageContainer: UIView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		/*message.center = self.view.center
-		message.text = "Non ci sono viaggi?\nVai in MyTravel e crea il tuo viaggio!"
-		message.isHidden = false
-		
-		view.addSubview(message)*/
 		
 		travelRef = Database.database().reference().child("travels")
 		
@@ -57,17 +52,9 @@ class HomeViewController: UITableViewController {
 					}
 				}
 			}
-			
-			/*if self.travels.isEmpty {
-				self.tableView.isHidden = true
-				
-				self.message.isHidden = false
-			} else {
-				self.tableView.isHidden = false
-				
-				self.message.isHidden = true
-			}*/
 		})
+		let frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+		messageContainer = UIView(frame: frame)
 		
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -118,7 +105,32 @@ class HomeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return travels.count
+		let count = travels.count
+		
+		if count == 0 {
+			message.center = self.view.center
+			
+			message.text = "Non ci sono viaggi? Vai in MyTravel e crea il tuo viaggio!"
+			message.lineBreakMode = .byWordWrapping
+			message.numberOfLines = 0
+			message.sizeToFit()
+			message.translatesAutoresizingMaskIntoConstraints = false
+			
+			messageContainer.addSubview(message)
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .leading, relatedBy: .equal, toItem: messageContainer, attribute: .leading, multiplier: 1, constant: 15))
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .trailing, relatedBy: .equal, toItem: messageContainer, attribute: .trailing, multiplier: 1, constant: -15))
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .top, relatedBy: .equal, toItem: messageContainer, attribute: .top, multiplier: 1, constant: self.view.bounds.height/2 - 20))
+			messageContainer.isHidden = false
+			
+			tableView.backgroundView = messageContainer
+			tableView.separatorStyle = .none
+		} else {
+			messageContainer.isHidden = true
+			tableView.separatorStyle = .singleLine
+		}
+		
+		return count
+
     }
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {		

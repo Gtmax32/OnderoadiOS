@@ -16,13 +16,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 	
 	var ref : DatabaseReference = Database.database().reference()
 	
+	@IBOutlet weak var loginButton: FBSDKLoginButton!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		print("In LoginViewController")
-		
-		let loginButton = FBSDKLoginButton()
-		loginButton.center = self.view.center
-		self.view.addSubview(loginButton)
 		
 		loginButton.delegate = self
     }
@@ -58,7 +56,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 			}
 			
 			if(user != nil){
-				print("User: \(user!)")
+				print("User: \(user!.displayName ?? "User error")")
 				
 				let currentUser = User.init(id: user!.uid, name: user!.displayName!, email: user!.email!, notificationId: "abcdefghilmnopqrstuvz")
 				

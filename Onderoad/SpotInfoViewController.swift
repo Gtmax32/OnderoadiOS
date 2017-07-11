@@ -30,6 +30,8 @@ class SpotInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Opzioni", style: .plain, target: self, action: #selector(SpotInfoViewController.optionButtonClicked))
+		
 		let camera: GMSCameraPosition
 		
 		if let spot = spotToShow {
@@ -56,7 +58,7 @@ class SpotInfoViewController: UIViewController {
 			self.spotContainerMap.camera = camera
 		}
 		
-		setupBottomToolbar()
+		//setupBottomToolbar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,6 +83,30 @@ class SpotInfoViewController: UIViewController {
 		createViewController.nameFromSpot = spotToShow!.nameSpot
 	}
 	
+	func optionButtonClicked(){
+		print("Option button clicked")
+		
+		let optionAlertController = UIAlertController(title: nil, message: "Cosa vuoi fare con questo spot?", preferredStyle: .actionSheet)
+		
+		let createButton = UIAlertAction(title: "Crea un viaggio qui", style: .default, handler: {(action:UIAlertAction!) in
+			self.createButtonClicked()
+		})
+		
+		let mapButton = UIAlertAction(title: "Vai allo Spot", style: .default, handler: {(action: UIAlertAction!) in
+			self.spotMapButtonClicked()
+		})
+		
+		let cancelAction = UIAlertAction(title: "Annulla", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		})
+		
+		optionAlertController.addAction(createButton)
+		optionAlertController.addAction(mapButton)
+		optionAlertController.addAction(cancelAction)
+		
+		self.present(optionAlertController, animated: true, completion: nil)
+	}
+	
 	private func setupBottomToolbar(){
 		let toolbarPosition = CGRect(x: 0, y: self.view.bounds.height - 44, width: self.view.bounds.width, height: 44)
 		let bottomToolbar = UIToolbar(frame: toolbarPosition)
@@ -99,11 +125,11 @@ class SpotInfoViewController: UIViewController {
 		self.view.addSubview(bottomToolbar)
 	}
 	
-	func createButtonClicked(sender: UIBarButtonItem){
+	func createButtonClicked(){
 		print("Creation button pressed")
 		
 		//prepare(for: segue, sender: sender)
-		performSegue(withIdentifier: "CreateFromSpot", sender: sender)
+		performSegue(withIdentifier: "CreateFromSpot", sender: self)
 		/*super.prepare(for: segue, sender: sender)
 		
 		guard let travelDetailViewController = segue.destination as? TravelInfoViewController else {
@@ -124,7 +150,7 @@ class SpotInfoViewController: UIViewController {
 		travelDetailViewController.travelToShowKey = selectedTravelKey*/
 	}
 	
-	func spotMapButtonClicked(sender: UIBarButtonItem){
+	func spotMapButtonClicked(){
 		print("SpotMap button pressed")
 		
 		let regionDistance:CLLocationDistance = 10000

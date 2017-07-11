@@ -450,15 +450,15 @@
 		11DA292C1EF5456F00C4D54D /* Onderoad */ = {
 			isa = PBXGroup;
 			children = (
-				1192227A1F0ABDAB0097D844 /* Onderoad.entitlements */,
-				1112639E1F0B9FAE00699461 /* FirebaseDatabase.framework */,
 				116810F01EF98A0500561DE5 /* GoogleMaps.bundle */,
 				116810F21EF98A1800561DE5 /* GooglePlacePicker.bundle */,
 				116810EE1EF989CF00561DE5 /* GooglePlaces.bundle */,
+				1192227A1F0ABDAB0097D844 /* Onderoad.entitlements */,
 				1192225C1F0A874D0097D844 /* FirebaseAnalytics.framework */,
 				119222681F0A87A20097D844 /* FirebaseAuth.framework */,
 				1192225D1F0A874D0097D844 /* FirebaseCore.framework */,
 				1192225E1F0A874D0097D844 /* FirebaseCoreDiagnostics.framework */,
+				1112639E1F0B9FAE00699461 /* FirebaseDatabase.framework */,
 				1192225F1F0A874D0097D844 /* FirebaseInstanceID.framework */,
 				119222601F0A874D0097D844 /* FirebaseNanoPB.framework */,
 				116810E51EF9898800561DE5 /* GoogleMaps.framework */,
@@ -475,6 +475,7 @@
 				11DA29391EF5456F00C4D54D /* Info.plist */,
 				11DA292D1EF5456F00C4D54D /* AppDelegate.swift */,
 				11062BFC1EF822B500E78D9D /* CreateViewController.swift */,
+				1157D67E1F0D75A000574907 /* HomeTravelDetailTableCell.swift */,
 				117820631F01749900F034D1 /* HomeViewController.swift */,
 				119222761F0A96990097D844 /* LoginViewController.swift */,
 				11DA294D1EF5711300C4D54D /* MainViewController.swift */,
@@ -489,7 +490,6 @@
 				11DA29361EF5456F00C4D54D /* LaunchScreen.storyboard */,
 				11DA29311EF5456F00C4D54D /* Main.storyboard */,
 				110817D01EF6DF7B00581BE0 /* model */,
-				1157D67E1F0D75A000574907 /* HomeTravelDetailTableCell.swift */,
 			);
 			path = Onderoad;
 			sourceTree = "<group>";

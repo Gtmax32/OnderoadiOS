@@ -18,6 +18,8 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	var travelToShow: TravelInfo?
 	var travelToShowKey: String?
 	
+	var currentUserID = ""
+	
 	private var isPassenger = false
 	private var isOwner = false
 	
@@ -46,15 +48,11 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
-		//self.tabBarController?.tabBar.isHidden = true
-		
 		let camera: GMSCameraPosition
 		
 		if let travel = travelToShow {
 			//print("Travel Showed: \(travel.description)")
-			let currentUserID = Auth.auth().currentUser?.uid
-			
-			isOwner = travel.ownerTravel.idUser == currentUserID
+			currentUserID = (Auth.auth().currentUser?.uid)!
 			
 			departureDateTimeLabel.text = travel.fromMillisToString()
 			addressRouteLabel.text = travel.addressDeparture.streetInfo
@@ -64,8 +62,6 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 			spotProvinceLabel.text = travel.spotDestination.provinceSpot + ", " + travel.spotDestination.regionSpot
 			
 			let passengers = travel.passengersTravel.count
-			
-			isPassenger = travel.passengersTravel.contains(where: {$0.idUser == currentUserID})
 			
 			passengerNumberLabel.text = String(passengers) + "/" + String(travel.carTravel.passengersNumber) + " posti occupati"
 			
@@ -93,7 +89,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 			self.mapContainerView.camera = camera
 		}
 		
-		setupBottomToolbar()
+		//setupBottomToolbar()
 	}
 
     override func didReceiveMemoryWarning() {
@@ -101,18 +97,69 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
         // Dispose of any resources that can be recreated.
     }
 	
-	@IBAction func shareTravelButtonPressed(_ sender: UIBarButtonItem) {
-		print("Share Travel Button Pressed")
+	@IBAction func optionButtonPressed(_ sender: UIBarButtonItem) {
+		print("Option Button Pressed")
 		
-		if let shareViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
-			shareViewController.title = "Vieni a surfare con me?"
+		let isOwner = travelToShow!.ownerTravel.idUser == currentUserID
+		let isPassenger = travelToShow!.passengersTravel.contains(where: {$0.idUser == currentUserID})
+		
+		let optionAlertController = UIAlertController(title: nil, message: "Cosa vuoi fare con questo viaggio?", preferredStyle: .actionSheet)
+		
+		let cancelAction = UIAlertAction(title: "Annulla", style: .cancel, handler: {(action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		})
+		optionAlertController.addAction(cancelAction)
+		
+		var contactButton: UIAlertAction, mapButton: UIAlertAction, passengerButton: UIAlertAction, shareButton: UIAlertAction
+		
+		if isOwner {
+			contactButton = UIAlertAction(title: "Contatta passeggeri", style: .default, handler: {(action:UIAlertAction!) in
+				self.contactPassengerButtonClicked()
+			})
 			
-			shareViewController.add(URL(string: "https://travelsharing.com/info_travel/" + travelToShowKey!))
-			self.present(shareViewController, animated: true)
+			mapButton = UIAlertAction(title: "Vai allo Spot", style: .default, handler: {(action: UIAlertAction!) in
+				self.spotMapButtonClicked()
+			})
+			
+			shareButton = UIAlertAction(title: "Condividi viaggio", style: .default, handler: {(action: UIAlertAction!) in
+				self.shareButtonClicked()
+			})
+			
+		} else {
+			contactButton = UIAlertAction(title: "Contatta guidatore", style: .default, handler: {(action:UIAlertAction!) in
+				self.contactDriverButtonClicked()
+			})
+			
+			mapButton = UIAlertAction(title: "Vai allo punto d'incontro", style: .default, handler: {(action: UIAlertAction!) in
+				self.meetingMapButtonClicked()
+			})
+			
+			shareButton = UIAlertAction(title: "Condividi viaggio", style: .default, handler: {(action: UIAlertAction!) in
+				self.shareButtonClicked()
+			})
+			
+			if isPassenger {
+				passengerButton = UIAlertAction(title: "Rinuncia al viaggio", style: .default, handler: {(action:UIAlertAction!) in
+					self.removeButtonClicked()
+				})
+				
+			} else {
+				passengerButton = UIAlertAction(title: "Parti", style: .default, handler: {(action:UIAlertAction!) in
+					self.addButtonClicked()
+				})
+			}
+			
+			optionAlertController.addAction(passengerButton)
 		}
+		
+		optionAlertController.addAction(contactButton)
+		optionAlertController.addAction(mapButton)
+		optionAlertController.addAction(shareButton)
+		
+		self.present(optionAlertController, animated: true, completion: nil)
 	}
 	
-	private func setupBottomToolbar(){
+	/*private func setupBottomToolbar(){
 		let toolbarPosition = CGRect(x: 0, y: self.view.bounds.height - 44, width: self.view.bounds.width, height: 44)
 		let bottomToolbar = UIToolbar(frame: toolbarPosition)
 		
@@ -146,9 +193,9 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		bottomToolbar.isUserInteractionEnabled = true
 		
 		self.view.addSubview(bottomToolbar)
-	}
+	}*/
 	
-	func contactPassengerButtonClicked(sender: UIBarButtonItem){
+	func contactPassengerButtonClicked(){
 		print("Contact passenger button pressed")
 		let list = travelToShow!.passengersTravel
 		
@@ -180,7 +227,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		}
 	}
 	
-	func contactDriverButtonClicked(sender: UIBarButtonItem){
+	func contactDriverButtonClicked(){
 		print("Contact driver button pressed")
 		let array = [travelToShow!.ownerTravel.emailUser]
 		
@@ -193,7 +240,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		}
 	}
 	
-	func spotMapButtonClicked(sender: UIBarButtonItem){
+	func spotMapButtonClicked(){
 		print("SpotMap button pressed")
 		
 		let regionDistance:CLLocationDistance = 10000
@@ -209,7 +256,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		mapItem.openInMaps(launchOptions: options)
 	}
 	
-	func meetingMapButtonClicked(sender: UIBarButtonItem){
+	func meetingMapButtonClicked(){
 		print("MeetingPointMap button pressed")
 		
 		let latitude: CLLocationDegrees = travelToShow!.addressDeparture.latitudeInfo
@@ -228,9 +275,27 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		mapItem.openInMaps(launchOptions: options)
 	}
 	
-	func addButtonClicked(sender: UIBarButtonItem){
+	func addButtonClicked(){
 		print("Add button pressed")
 		
+		let message = "Vuoi diventare un passeggero del viaggio per " + travelToShow!.spotDestination.nameSpot + "? Ricorda che puoi portare al massimo una tavola. Altrimenti contatta il guidatore."
+		
+		let alertController = UIAlertController(title: "Informazioni", message: message, preferredStyle: .alert)
+		
+		let cancelAction = UIAlertAction(title: "Annulla", style: .cancel) { (action:UIAlertAction!) in
+			print("Dismissing UIAlertController")
+		}
+		alertController.addAction(cancelAction)
+		
+		let confirmAction = UIAlertAction(title: "Conferma", style: .default) { (action:UIAlertAction!) in
+			self.addPassenger()
+		}
+		alertController.addAction(confirmAction)
+		
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
+	func addPassenger(){
 		let ref = Database.database().reference().child("travels").child(travelToShowKey!)
 		let occupiedPlace = travelToShow!.passengersTravel.count
 		let maxPlaces = travelToShow!.carTravel.passengersNumber
@@ -258,9 +323,6 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 				
 				passengerNumberLabel.text = String(passengers) + "/" + String(maxPlaces) + " posti occupati"
 				
-				if let toolbar = self.view.subviews.last as? UIToolbar{
-					toolbar.items?[2].isEnabled = false
-				}
 				/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
 					if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){
 						travel.passengersTravel.append(user)
@@ -329,7 +391,7 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		
 	}
 	
-	func removeButtonClicked(sender: UIBarButtonItem){
+	func removeButtonClicked(){
 		print("Remove button pressed")
 		let message = "Sei sicuro di voler rinunciare al tuo posto?"
 		
@@ -366,10 +428,6 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 			let passengers = travelToShow!.passengersTravel.count
 			
 			passengerNumberLabel.text = String(passengers) + "/" + String(travelToShow!.carTravel.passengersNumber) + " posti occupati"
-			
-			if let toolbar = self.view.subviews.last as? UIToolbar{
-				toolbar.items?[2].isEnabled = false
-			}
 			
 			/*ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
 			if let dict = currentData.value as? [String : Any], let travel = TravelInfo.init(travelDict: dict){
@@ -423,6 +481,16 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 		}
 	}
 	
+	func shareButtonClicked(){
+		print("Share button pressed")
+		if let shareViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
+			shareViewController.title = "Vieni a surfare con me?"
+			
+			shareViewController.add(URL(string: "https://travelsharing.com/info_travel/" + travelToShowKey!))
+			self.present(shareViewController, animated: true)
+		}
+	}
+	
 	func configuredMailComposeViewController(mailArray: [String]) -> MFMailComposeViewController {
 		let mailComposerVC = MFMailComposeViewController()
 		mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
@@ -452,6 +520,20 @@ class TravelInfoViewController: UIViewController, MFMailComposeViewControllerDel
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?){
 		controller.dismiss(animated: true, completion: nil)
 		
+	}
+	
+	func createSwitch () -> UISwitch{
+		let switchControl = UISwitch(frame:CGRect(x: 10,y: 20,width: 0,height: 0))
+		switchControl.isOn = true
+		switchControl.setOn(true, animated: false)
+		switchControl.addTarget(self, action: #selector(TravelInfoViewController.switchValueDidChange), for: .valueChanged)
+		
+		return switchControl
+	}
+	
+	func switchValueDidChange(sender:UISwitch!){
+		
+		print("Switch Value : \(sender.isOn)")
 	}
 	/*
     // MARK: - Navigation

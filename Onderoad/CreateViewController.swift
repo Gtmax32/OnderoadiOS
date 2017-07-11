@@ -162,7 +162,7 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			print("Dismissing UIAlertController")
 		})
 		
-		let yesAction = UIAlertAction(title: "Si", style: .default, handler: {(action:UIAlertAction!) in
+		let yesAction = UIAlertAction(title: "Si", style: .destructive, handler: {(action:UIAlertAction!) in
 			print("Dismissing CreateViewController")
 			self.dismiss(animated: true, completion: nil)
 		})
@@ -351,6 +351,8 @@ class CreateViewController: UIViewController, UITextViewDelegate, CLLocationMana
 			
 			namePickerSource = RegionSpotDict.getSpotNameFromKey(key: key)
 			selectedRegionSpots = Array(RegionSpotDict.DICT[key]!)
+			
+			spotNameTextField.text = ""
 		}
 		
 		spotRegionTextField.resignFirstResponder()

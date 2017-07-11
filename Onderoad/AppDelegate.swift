@@ -38,9 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		else {
 			print("User not authenticated!")
-			let storyboard = UIStoryboard(name: "Main", bundle: nil)
-			let viewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as UIViewController
-			self.window?.rootViewController = viewController
+			/*let storyboard = UIStoryboard(name: "Main", bundle: nil)
+			let navigationController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as UINavigationController
+			self.window?.rootViewController = navigationController*/
 		}
 		
 		UINavigationBar.appearance().barTintColor = UIColor(red: 102/255, green: 203/255, blue: 255/255, alpha: 1)

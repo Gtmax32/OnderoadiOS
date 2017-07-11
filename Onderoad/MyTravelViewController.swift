@@ -15,9 +15,14 @@ class MyTravelViewController: UITableViewController {
 	
 	var driverTravels = [TravelInfo]()
 	var driverTravelsKey = [String]()
+	
 	var passengerTravels = [TravelInfo]()
 	var passengerTravelsKey = [String]()
+	
 	var travelRef: DatabaseReference!
+	
+	var message = UILabel()
+	var messageContainer: UIView!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +69,9 @@ class MyTravelViewController: UITableViewController {
 				}
 			}
 		})
+		
+		let frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+		messageContainer = UIView(frame: frame)
     }
 	
     override func didReceiveMemoryWarning() {
@@ -129,11 +137,32 @@ class MyTravelViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		var rowCount = 0
 		
-		if section == 0{
-			rowCount = driverTravels.count
-		}
-		else if section == 1{
-			rowCount = passengerTravels.count
+		if driverTravels.count == 0 && passengerTravels.count == 0{
+			message.center = self.view.center
+			message.text = "Cosa aspetti a partire? Tocca il pulsante + e crea il tuo viaggio!"
+			message.lineBreakMode = .byWordWrapping
+			message.numberOfLines = 0
+			message.sizeToFit()
+			message.translatesAutoresizingMaskIntoConstraints = false
+			
+			messageContainer.addSubview(message)
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .leading, relatedBy: .equal, toItem: messageContainer, attribute: .leading, multiplier: 1, constant: 15))
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .trailing, relatedBy: .equal, toItem: messageContainer, attribute: .trailing, multiplier: 1, constant: -15))
+			messageContainer.addConstraint(NSLayoutConstraint(item: message, attribute: .top, relatedBy: .equal, toItem: messageContainer, attribute: .top, multiplier: 1, constant: self.view.bounds.height/2 - 20))
+			messageContainer.isHidden = false
+			
+			tableView.backgroundView = messageContainer
+			tableView.separatorStyle = .none
+		} else {
+			if section == 0{
+				rowCount = driverTravels.count
+			}
+			else if section == 1{
+				rowCount = passengerTravels.count
+			}
+			
+			messageContainer.isHidden = true
+			tableView.separatorStyle = .singleLine
 		}
 		
 		return rowCount
@@ -193,7 +222,7 @@ class MyTravelViewController: UITableViewController {
 		// Delete the row from the data source
 		if editingStyle == .delete {
 			
-			let message = "Sicuro di voler eliminare questo viaggio?"
+			let message = "Sicuro di voler eliminare questo viaggio?\nNon sarà possibile recuperarlo."
 			
 			let alertController = UIAlertController(title: "Attenzione", message: message, preferredStyle: .alert)
 			
@@ -201,7 +230,7 @@ class MyTravelViewController: UITableViewController {
 				print("Dismissing UIAlertController")
 			})
 			
-			let yesAction = UIAlertAction(title: "Si", style: .default, handler: {(action:UIAlertAction!) in
+			let yesAction = UIAlertAction(title: "Si", style: .destructive, handler: {(action:UIAlertAction!) in
 				let key = self.driverTravelsKey[indexPath.row]
 				self.travelRef.child(key).removeValue()
 				
