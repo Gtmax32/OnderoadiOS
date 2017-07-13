@@ -9,8 +9,8 @@
 import Foundation
 
 public class RawProvinceDict{
-
-	let DICT = [
+	
+	public static let DICT = [
 		"Provincia di Agrigento" : "Agrigento",
 		"Provincia di Alessandria" : "Alessandria",
 		"Provincia di Ancona" : "Ancona",
@@ -53,8 +53,8 @@ public class RawProvinceDict{
 		"Provincia di Grosseto" : "Grosseto",
 		"Provincia di Imperia" : "Imperia",
 		"Provincia di Isernia" : "Isernia",
-		"Provincia di L'Aquila" : "L'Aquila",
-		"Provincia di La Spezia" : "La Spezia",
+		"Provincia dell'Aquila" : "L'Aquila",
+		"Provincia della Spezia" : "La Spezia",
 		"Provincia di Latina" : "Latina",
 		"Provincia di Lecce" : "Lecce",
 		"Provincia di Lecco" : "Lecco",
@@ -63,9 +63,9 @@ public class RawProvinceDict{
 		"Provincia di Lucca" : "Lucca",
 		"Provincia di Macerata" : "Macerata",
 		"Provincia di Mantova" : "Mantova",
-		"Provincia di Massa-Carrara" : "Massa-Carrara",
+		"Provincia di Massa e Carrara" : "Massa-Carrara",
 		"Provincia di Matera" : "Matera",
-		"Provincia di Medio Campidano" : "Medio Campidano",
+		"Provincia del Medio Campidano" : "Medio Campidano",
 		"Città Metropolitana di Messina" : "Messina",
 		"Città Metropolitana di Milano" : "Milano",
 		"Provincia di Modena" : "Modena",
@@ -92,7 +92,7 @@ public class RawProvinceDict{
 		"Provincia di Prato" : "Prato",
 		"Provincia di Ragusa" : "Ragusa",
 		"Provincia di Ravenna" : "Ravenna",
-		"Città Metropolitana di Reggio Calabria" : "Reggio Calabria",
+		"Provincia di Reggio Calabria" : "Reggio Calabria",
 		"Provincia di Reggio Emilia" : "Reggio Emilia",
 		"Provincia di Rieti" : "Rieti",
 		"Provincia di Rimini" : "Rimini",

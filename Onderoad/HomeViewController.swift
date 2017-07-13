@@ -16,6 +16,7 @@ class HomeViewController: UITableViewController {
 	var travels = [TravelInfo]()
 	var travelKeys = [String]()
 	var travelRef: DatabaseReference!
+	var travelQuery: DatabaseQuery!
 	
 	var message = UILabel()
 	var messageContainer: UIView!
@@ -23,9 +24,16 @@ class HomeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		travelRef = Database.database().reference().child("travels")
+		let date = Date.init()
+		let gregorian: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
 		
-		travelRef.queryOrdered(byChild: "dateTimeDeparture").observe(DataEventType.value, with: { snapshot in
+		let selectedDate: Date = gregorian.date(byAdding: .hour, value: +12, to: date)!
+		let timestamp = selectedDate.timeIntervalSince1970
+		
+		travelRef = Database.database().reference().child("travels")
+		travelQuery = travelRef.queryOrdered(byChild: "dateTimeDeparture").queryStarting(atValue: timestamp)
+		
+		travelQuery.observe(DataEventType.value, with: { snapshot in
 			self.travels.removeAll()
 			self.travelKeys.removeAll()
 			self.tableView.reloadData()
